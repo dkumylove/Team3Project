@@ -1,4 +1,4 @@
-package org.team3.controllers;
+package org.team3.controllers.member;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
