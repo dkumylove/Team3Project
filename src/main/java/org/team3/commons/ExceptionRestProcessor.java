@@ -1,19 +1,21 @@
-package org.team3.restcontrollers;
+package org.team3.commons;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.team3.commons.exceptions.CommonException;
 import org.team3.commons.rests.JSONData;
 
-@RestControllerAdvice("org.team3.restcontrollers")
-public class RestCommonController {
+/**
+ * Rest 컨트롤러 예외처리
+ */
+public interface ExceptionRestProcessor {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<JSONData<Object>> errorHandler(Exception e) {
+    default ResponseEntity<JSONData<Object>> errorHandler(Exception e) {
 
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;  // 기본 500
+
         if(e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
             status = commonException.getStatus();
@@ -27,7 +29,6 @@ public class RestCommonController {
         e.printStackTrace();
 
         return ResponseEntity.status(status).body(data);
+
     }
-
-
 }
