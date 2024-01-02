@@ -3,13 +3,14 @@ package org.team3.commons.interceptors;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class CommonInterceptor implements HandlerInterceptor  {
+@Component
+public class CommonInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-                             Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         checkDevice(request);
 
@@ -17,14 +18,14 @@ public class CommonInterceptor implements HandlerInterceptor  {
     }
 
     /**
-     * PC,MOBILE 수동 변경 처리
+     * pc, 모바일 수동 변경 처리
      *
-     * // device - PC : PC 뷰, MOBILE : MOBILE 뷰
+     * // device - pc: pc뷰, mobile : mobile뷰
      * @param request
      */
     private void checkDevice(HttpServletRequest request) {
         String device = request.getParameter("device");
-        if(!StringUtils.hasText(device)) {
+        if (!StringUtils.hasText(device)) {
             return;
         }
 
@@ -32,6 +33,6 @@ public class CommonInterceptor implements HandlerInterceptor  {
 
         HttpSession session = request.getSession();
         session.setAttribute("device", device);
-
     }
 }
+

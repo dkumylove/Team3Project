@@ -14,7 +14,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(commonInterceptor);
-
+              //.addPathPatterns("/**");   // "/**" 모든경로 : 모든 경로일때는 따로 사용하지 않아도 가능
     }
 
 }
