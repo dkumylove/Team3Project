@@ -3,6 +3,7 @@ package org.team3.member.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
 
@@ -36,4 +37,13 @@ public class Member extends Base {
 
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
+
+    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
+    private List<Follow> follows = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
+    private List<Follow> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<BoardData> favoriteBoardDataList = new ArrayList<>();
 }
