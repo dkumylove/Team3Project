@@ -13,11 +13,12 @@ import java.util.List;
 @Data
 @Entity
 public class Member extends Base {
+
     @Id @GeneratedValue
-    private Long seq;
+    private Long seq;  // 회원번호
 
     @Column(length=65, nullable = false)
-    private String gid;
+    private String gid;  // 그룹아이디
 
     @Column(length=80, nullable = false, unique = true)
     private String email;
