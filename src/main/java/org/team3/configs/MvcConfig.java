@@ -12,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableJpaAuditing
 @EnableConfigurationProperties(FileProperties.class)
-@EnableJpaAuditing  //@EntityListeners 활성화
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -26,6 +26,10 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(fileProperties.getUrl() + "**")
                 .addResourceLocations("file:///" + fileProperties.getPath());
+
+        // 정적 경로
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
     }
 
     /**
@@ -45,5 +49,4 @@ public class MvcConfig implements WebMvcConfigurer {
     public HiddenHttpMethodFilter httpMethodFilter() {
         return new HiddenHttpMethodFilter();
     }
-
 }
