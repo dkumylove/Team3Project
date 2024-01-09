@@ -1,5 +1,8 @@
 package org.team3.configs;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.team3.member.service.LoginFailurdHandler;
 import org.team3.member.service.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     /**
@@ -18,7 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        /* 인증설정 S - 로그인 */
+        /* 인증설정 S - 로그인, 로그아웃 */
         http.formLogin(f -> {
             f.loginPage("/member/login")
                     .usernameParameter("username")
@@ -26,7 +30,39 @@ public class SecurityConfig {
                     .successHandler(new LoginSuccessHandler())
                     .failureHandler(new LoginFailurdHandler());
         });
-        /* 인증설정 E - 로그인 */
+
+        http.logout(c -> {
+            c.logoutRequestMatcher(new AntPathRequestMatcher(".member/logout"))
+                    .logoutSuccessUrl("/member/login");
+        });
+        /* 인증설정 E - 로그인, 로그아웃 */
+
+        /* 인가설정 S - 접근 통제 */
+        http.authorizeHttpRequests(c -> {
+            c.requestMatchers("/mypage/**").authenticated() // 회원 전용
+                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
+                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
+        });
+
+
+
+        http.exceptionHandling(c -> {
+
+            c.authenticationEntryPoint(( req,  res,  e) -> {
+                String URL = req.getRequestURI();
+                if(URL.indexOf("/admin") != -1) {  // 관리자 페이지
+                    res.sendError(HttpServletResponse.SC_UNAUTHORIZED);  //401
+                } else {  // 회원 전용 페이지
+                    res.sendRedirect(req.getContextPath()+"/member/login");
+                }
+            });
+        });
+        /* 인가설정 E - 접근 통제 */
+
+        /**
+         * 같은 출처의 사이트에서는 ifrm 사용할수 있게 허용
+         */
+        http.headers(c -> c.frameOptions(f -> f.sameOrigin()));
 
         return http.build();
     }
