@@ -5,6 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 public class Board {
+    /*
+     * Board entity 작업
+     * 이기흥 - 1월 9일
+     */
     @Id
     @GeneratedValue
     private Long bId; // 게시판 아이디

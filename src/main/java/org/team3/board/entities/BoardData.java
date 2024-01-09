@@ -13,7 +13,10 @@ import java.util.List;
 @Data
 @Entity
 public class BoardData extends BaseMember {
-
+    /*
+     * BoardData entity 작업
+     * 이기흥 - 1월 9일
+     */
     @Id
     @GeneratedValue
     private Long seq; // 게시글 번호
@@ -22,7 +25,6 @@ public class BoardData extends BaseMember {
     private String gid = UUID.randomUUID().toString(); // 그룹 아이디
 
     private Board board; // 게시판 정보
-    private Member member; // 유저 정보
     private String category; // 분류
 
     @Column(length = 30, nullable = false)
