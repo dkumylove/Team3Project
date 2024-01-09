@@ -26,6 +26,7 @@ public class BoardController implements ExceptionProcessor {
 
     @ModelAttribute("subMenus")
     public List<MenuDetail> getSubMenus() {  // 서브메뉴
+
         return Menu.getMenus("board");
     }
 
