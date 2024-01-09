@@ -38,12 +38,17 @@ public class Member extends Base {
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
 
+    /* 팔로워 */
     @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
-    private List<Follow> follows = new ArrayList<>();
-
-    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
     private List<Follow> followers = new ArrayList<>();
 
+    /* 팔로잉 */
+    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
+    private List<Follow> followings = new ArrayList<>();
+
+    /* 내가 찜한 게시글 - 보류
+    * 이다은 - 1월 9일
+    * */
     @OneToMany(mappedBy = "member")
     private List<BoardData> favoriteBoardDataList = new ArrayList<>();
 }
