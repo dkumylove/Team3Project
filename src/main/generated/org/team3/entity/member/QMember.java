@@ -21,8 +21,6 @@ public class QMember extends EntityPathBase<Member> {
 
     public final org.team3.commons.entities.QBase _super = new org.team3.commons.entities.QBase(this);
 
-    public final BooleanPath agree = createBoolean("agree");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
@@ -31,15 +29,11 @@ public class QMember extends EntityPathBase<Member> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final EnumPath<MemberType> mtype = createEnum("mtype", MemberType.class);
-
-    public final StringPath nickname = createString("nickname");
+    public final StringPath name = createString("name");
 
     public final StringPath password = createString("password");
 
     public final NumberPath<Long> seq = createNumber("seq", Long.class);
-
-    public final EnumPath<org.team3.entity.IndicatorsType> sIndicator = createEnum("sIndicator", org.team3.entity.IndicatorsType.class);
 
     public final StringPath userId = createString("userId");
 
