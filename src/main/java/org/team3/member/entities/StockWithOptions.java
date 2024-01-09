@@ -1,12 +1,14 @@
 package org.team3.member.entities;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
-
+/**
+ * 미완성(보류)
+ * 보조지표와 주식은 M:M 매핑...
+ * 이다은 - 1월 9일
+ */
+@Entity
 @Data
 public class StockWithOptions {
 

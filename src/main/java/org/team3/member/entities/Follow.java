@@ -12,15 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Follow {
+
     @Id
     @GeneratedValue
     @Column(name = "follow_id")
     private Long id;
 
+    /* 팔로워 */
     @ManyToOne
     @JoinColumn(name = "from_member")
     private Member fromMember;
 
+    /* 팔로잉 */
     @ManyToOne
     @JoinColumn(name = "to_member")
     private Member toMember;
