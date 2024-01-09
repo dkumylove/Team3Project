@@ -23,14 +23,10 @@ public class QMember extends EntityPathBase<Member> {
 
     public final BooleanPath agree = createBoolean("agree");
 
-    public final StringPath confirmPw = createString("confirmPw");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final StringPath email = createString("email");
-
-    public final BooleanPath emailAuthentication = createBoolean("emailAuthentication");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
@@ -41,11 +37,11 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
+    public final NumberPath<Long> seq = createNumber("seq", Long.class);
+
     public final EnumPath<org.team3.entity.IndicatorsType> sIndicator = createEnum("sIndicator", org.team3.entity.IndicatorsType.class);
 
     public final StringPath userId = createString("userId");
-
-    public final NumberPath<Long> userNo = createNumber("userNo", Long.class);
 
     public QMember(String variable) {
         super(Member.class, forVariable(variable));
