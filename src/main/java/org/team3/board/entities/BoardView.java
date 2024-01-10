@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import lombok.Data;
 
+
 @Data
 @Entity
 @IdClass(BoardViewId.class)
