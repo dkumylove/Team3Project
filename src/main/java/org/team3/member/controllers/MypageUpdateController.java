@@ -18,7 +18,7 @@ import org.team3.member.validator.currentUser;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/mypage/{uesrId}")
+@RequestMapping()
 public class MypageUpdateController {
 
     private final JoinService joinService;
@@ -28,7 +28,7 @@ public class MypageUpdateController {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     // 마이페이지 포워딩
-    @RequestMapping()
+    @GetMapping()
     public String myPage() {
 
         return "";
@@ -57,7 +57,7 @@ public class MypageUpdateController {
     }
 
     // 비밀번호 수정 시 현재 비밀번호 확인
-    @RequestMapping()
+    @PostMapping()
     public String passwordCheck(String oldPassword, HttpSession session) {
 
         String newPassword = ((Member)session.getAttribute("profile")).getPassword();
@@ -66,7 +66,7 @@ public class MypageUpdateController {
     }
 
     // 비밀번호 변경
-    @RequestMapping()
+    @PostMapping()
     public String updateMemberPassword(@ModelAttribute  Member member, HttpSession session, String newPassword) {
         //새 비밀번호 암호화
         newPassword = bcryptPasswordEncoder.encode(member.getPassword());
@@ -82,13 +82,13 @@ public class MypageUpdateController {
     }
 
     // 회원탈퇴 포워딩
-    @RequestMapping()
+    @GetMapping()
     public String deleteView() {
         return "";
     }
 
     // 회원탈퇴
-    @RequestMapping()
+    @PostMapping()
     public ModelAndView deleteMember(Member member, HttpSession session, ModelAndView mv) {
 
         // 전달받은 객체에 비밀번호 있을 때
