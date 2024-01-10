@@ -8,7 +8,9 @@ import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -32,6 +34,9 @@ public class Member extends Base {
     @Column(length=40, nullable = false)
     private String name;
 
+    @Column(length = 20, nullable = false)
+    private String nickName; // 닉네임
+
     @ToString.Exclude  // 순환참조 방지
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Authorities> authorities = new ArrayList<>();
@@ -50,6 +55,8 @@ public class Member extends Base {
     /* 내가 찜한 게시글 - 보류
     * 이다은 - 1월 9일
     * */
+    /* 수정 중... map으로 해야되는지 favorite 엔티티를 만들어야 되는지..
     @OneToMany(mappedBy = "member")
-    private List<BoardData> favoriteBoardDataList = new ArrayList<>();
+    private Map<Boolean, BoardData> favoriteBoardDataList = new HashMap<>();
+     */
 }

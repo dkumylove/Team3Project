@@ -39,6 +39,7 @@ public class BoardData extends BaseMember {
     @Column(length = 100, nullable = false)
     private String content;
 
+
     @Column(length = 100)
     private String reply; //답글
 
@@ -49,8 +50,10 @@ public class BoardData extends BaseMember {
     @ManyToOne
     private Member member;  // 유저정보
 
+    /* 연관관계 필요합니다 */
+    // @OneToMany
     @Transient
-    private List<CommentData> comments; // 댓글 목록
+    private List<CommentData> comments; // 댓글 목록 -> 댓글
 
     @Transient
     private List<FileInfo> editorImages;  // 첨부이미지
