@@ -4,13 +4,16 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
     <h1 th:text="#{회원가입}"></h1>
-
+    <!--autocomplete="off" : 자동완성-->
     <form name="frmJoin" method="post" th:action="@{/member/join}" autocomplete="off" th:object="${requestJoin}">
         <input type="hidden" name="gid" th:field="*{gid}">
-        <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+        <div class="error global" th:each="err : ${#fields.globalErrors()}"
+             th:text="${err}"></div>
 
         <dl>
-            <dt th:text="#{프로필_이미지}"></dt>
+            <div class="circle"></div>
+            <dt th:text="#{프로필_이미지}">
+            </dt>
             <dd>
                 <div id="profile_image"></div>
                 <button type="button" class="upload_files"
@@ -18,21 +21,25 @@
             </dd>
         </dl>
 
+        <script th:replace="~{common/_file_tpl::image1_tpl}"></script>
+
+        <!--
+        <dl>
+            <dt th:text="#{이메일_확인}"></dt>
+            <dd>
+                <input type="text" name="confirmEmail" th:field="*{email}">
+                <div class="error" th:each ="err : ${#fields.errors('email')}" th:text="${err}"></div>
+            </dd>
+        </dl>
+        -->
 
         <dl>
             <dt th:text="#{아이디}"></dt>
             <dd>
                 <input type="text" name="userId" th:field="*{userId}">
-                <div class="error" th:each="err : ${#fields.errors('userId')}" th:text="${err}"></div>
+                <!--th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified-->
                 <button id="userId_verify" th:text="#{중복확인}" type="button"></button>
-            </dd>
-        </dl>
-
-        <dl>
-            <dt th:text="#{회원명}"></dt>
-            <dd>
-                <input type="text" name="name" th:field="*{name}">
-                <div class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></div>
+                <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
             </dd>
         </dl>
 
@@ -40,7 +47,7 @@
             <dt th:text="#{비밀번호}"></dt>
             <dd>
                 <input type="password" name="password" th:field="*{password}">
-                <div class="error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></div>
+                <div class="error" th:each ="err : ${#fields.errors('password')}" th:text="${err}"></div>
             </dd>
         </dl>
 
@@ -48,7 +55,15 @@
             <dt th:text="#{비밀번호_확인}"></dt>
             <dd>
                 <input type="password" name="confirmPassword" th:field="*{confirmPassword}">
-                <div class="error" th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
+                <div class="error" th:each ="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt th:text="#{회원명}"></dt>
+            <dd>
+                <input type="text" name="name" th:field="*{name}">
+                <div class="error" th:each ="err : ${#fields.errors('name')}" th:text="${err}"></div>
             </dd>
         </dl>
 
@@ -56,23 +71,56 @@
         <dl>
             <dt th:text="#{이메일}"></dt>
             <dd>
-                <input type="text" name="email" th:field="*{email}">
+                <div>
+                    <input name="email" th:field="*{email}" th:placeholder="#{이메일}"
+                           th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}"
+                           type="text">
+                    <button id="email_verify" th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
+                            th:text="#{인증코드전송}" type="button"></button>
+                </div>
+
+                <div class="auth_box">
+                    <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                        <input type="text" id="auth_num" th:placeholder="#{인증코드_입력}">
+                        <span id="auth_count">03:00</span>
+                        <button type="button" id="email_confirm" th:text="#{확인}" disabled></button>
+                        <button type="button" id="email_re_verify" th:text="#{재전송}" disabled></button>
+                    </th:block>
+                    <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                        <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
+                    </th:block>
+                </div>
                 <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
             </dd>
         </dl>
 
 
+        <dl>
+            <dt th:text="#{보조지표}"></dt>
+            <dd>
+                <button type="button" onclick="showOptionSelection()">선택</button>
+                <div id="optionSelection">
+                    <label>
+                        <input type="checkbox" name="optionChoice" value="value1"> 지표1
+                    </label>
+                    <label>
+                        <input type="checkbox" name="optionChoice" value="value2"> 지표2
+                    </label>
+                    <button type="button" onclick="applySelectedOptions()">적용</button>
+                </div>
+            </dd>
+        </dl>
+
+
+        <!--약관은 관리자 페이지에서 추가 자리만 만들어주자!-->
         <div th:text="#{회원가입_약관}"></div>
-        <div class="terms" th:utext="${@utils.nl2br(siteConfig.joinTerms)}"></div>
+        <div class="terms" th:if="${siteConfig.joinTerms != null}" th:utext="${@utils.nl2br(siteConfig.joinTerms)}"}>약관...</div>
         <div class="terms_agree">
             <input type="checkbox" name="agree" value="true" id="agree" th:field="*{agree}">
             <label for="agree" th:text="#{회원가입_약관에_동의합니다.}"></label>
-
             <div class="error" th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
         </div>
         <button type="submit" th:text="#{가입하기}"></button>
     </form>
-
-    <script th:replace="~{common/_file_tpl::image1_tpl}"></script>
 </main>
 </html>
