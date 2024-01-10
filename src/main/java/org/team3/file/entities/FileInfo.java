@@ -32,7 +32,7 @@ public class FileInfo extends BaseMember {
     private Long seq;  // 파일 등록 번홉, 서버에 업로드하는 파일명 기준
 
     @Column(length = 65, nullable = false)
-    private String gid = UUID.randomUUID().toString();  // 게시글 하나의 여러개 파일
+    private String gid = UUID.randomUUID().toString();  // 그룹아이디, 게시글 하나의 여러개 파일
 
     @Column(length = 65)
     private String location;  // 이미지 출처
