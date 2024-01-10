@@ -1,8 +1,8 @@
 package org.team3.email.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.choongang.commons.rests.JSONData;
-import org.choongang.email.service.EmailVerifyService;
+import org.team3.commons.rests.JSONData;
+import org.team3.email.service.EmailVerifyService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

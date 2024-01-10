@@ -2,7 +2,7 @@ package org.team3.email.service;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.choongang.commons.Utils;
+import org.team3.commons.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

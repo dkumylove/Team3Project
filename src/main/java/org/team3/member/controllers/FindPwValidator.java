@@ -1,7 +1,7 @@
 package org.team3.member.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.choongang.member.repositories.MemberRepository;
+import org.team3.member.repositories.MemberRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
