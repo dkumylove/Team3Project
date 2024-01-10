@@ -1,8 +1,16 @@
 package org.team3.board.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.team3.commons.entities.BaseMember;
 
+@Entity
+@Data
+@Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Board extends BaseMember {
     /**
      * Board entity 작업
