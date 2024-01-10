@@ -1,6 +1,7 @@
 package org.team3.configs;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.team3.member.service.LoginFailurdHandler;
@@ -11,11 +12,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.team3.member.service.MemberInfoService;
 
 @Configuration
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final MemberInfoService memberInfoService;
     /**
      * 설정 무력화
      */
@@ -38,11 +42,11 @@ public class SecurityConfig {
         /* 인증설정 E - 로그인, 로그아웃 */
 
         /* 인가설정 S - 접근 통제 */
-//        http.authorizeHttpRequests(c -> {
-//            c.requestMatchers("/mypage/**").authenticated() // 회원 전용
-//                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
-//                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
-//        });
+        http.authorizeHttpRequests(c -> {
+            c.requestMatchers("/mypage/**").authenticated() // 회원 전용
+                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
+                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
+        });
 
 
 
@@ -63,6 +67,16 @@ public class SecurityConfig {
          * 같은 출처의 사이트에서는 ifrm 사용할수 있게 허용
          */
         http.headers(c -> c.frameOptions(f -> f.sameOrigin()));
+
+        /* 자동 로그인 설정 S */
+        http.rememberMe(c -> {
+            c.rememberMeParameter("autoLogin") // 자동 로그인으로 사용할 요청 파리미터 명, 기본값은 remember-me
+                    .tokenValiditySeconds(60 * 60 * 24 * 30) // 로그인을 유지할 기간(30일로 설정), 기본값은 14일
+                    .userDetailsService(memberInfoService) // 재로그인을 하기 위해서 인증을 위한 필요 UserDetailsService 구현 객체
+                    .authenticationSuccessHandler(new LoginSuccessHandler()); // 자동 로그인 성공시 처리 Handler
+
+        });
+        /* 자동 로그인 설정 E */
 
         return http.build();
     }

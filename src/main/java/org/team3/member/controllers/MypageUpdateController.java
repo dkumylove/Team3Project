@@ -18,7 +18,7 @@ import org.team3.member.validator.currentUser;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/mypage/{uesrId}")
+@RequestMapping("/mypage")
 public class MypageUpdateController {
 
     private final JoinService joinService;
@@ -28,37 +28,39 @@ public class MypageUpdateController {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     // 마이페이지 포워딩
-    @RequestMapping()
+    @GetMapping
     public String myPage() {
 
-        return "";
+        return "mypage";
     }
 
     // 회원정보 가져오기
-    @GetMapping()
+    @GetMapping("/update")
     public String mypageUpdateForm(@currentUser Member member, Model model) {
-        model.addAttribute(member);
-        model.addAttribute(new Profile(member));
-        return "";
+        model.addAttribute("member", member);
+        model.addAttribute("profile", new Profile(member));
+        return "/mypage";
     }
 
     // 수정 확인 여부 후 포워딩
-    @PostMapping()
-    public String updateProfile(@currentUser Member member, @Valid @ModelAttribute Profile profile, Errors errors,
+    @PostMapping("/update")
+    public String updateProfile(@ModelAttribute("currentUser") Member member,
+                                @Valid @ModelAttribute Profile profile, Errors errors,
                                 Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
-            model.addAttribute(member);
-            return "";
+            model.addAttribute("member", member);
+            return "/mypage";
         }
 
         joinService.updateProfile(member, profile);
         attributes.addFlashAttribute("message", "프로필을 수정했습니다.");
-        return "redirect:" + "";
+        return "redirect:/mypage";
     }
 
     // 비밀번호 수정 시 현재 비밀번호 확인
-    @RequestMapping()
-    public String passwordCheck(String oldPassword, HttpSession session) {
+    @PostMapping("/changePwd")
+    public String passwordCheck(@RequestParam("oldPassword") String oldPassword,
+                                HttpSession session) {
 
         String newPassword = ((Member)session.getAttribute("profile")).getPassword();
 
@@ -66,10 +68,11 @@ public class MypageUpdateController {
     }
 
     // 비밀번호 변경
-    @RequestMapping()
-    public String updateMemberPassword(@ModelAttribute  Member member, HttpSession session, String newPassword) {
+    @PostMapping("/updatePwd")
+    public String updateMemberPassword(@ModelAttribute("currentUser") Member member,
+                                       HttpSession session, @RequestParam("newPassword") String newPassword) {
         //새 비밀번호 암호화
-        newPassword = bcryptPasswordEncoder.encode(member.getPassword());
+        newPassword = bcryptPasswordEncoder.encode(newPassword);
 
         member.setPassword(newPassword);
 
@@ -82,14 +85,15 @@ public class MypageUpdateController {
     }
 
     // 회원탈퇴 포워딩
-    @RequestMapping()
+    @GetMapping("/delete")
     public String deleteView() {
         return "";
     }
 
     // 회원탈퇴
-    @RequestMapping()
-    public ModelAndView deleteMember(Member member, HttpSession session, ModelAndView mv) {
+    @PostMapping("/delete")
+    public ModelAndView deleteMember(@ModelAttribute("currentUser") Member member,
+                                     HttpSession session, ModelAndView mv) {
 
         // 전달받은 객체에 비밀번호 있을 때
         if(member.getPassword() != null) {
