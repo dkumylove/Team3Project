@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.team3.commons.ExceptionProcessor;
 import org.team3.member.entities.Member;
 import org.team3.member.entities.Profile;
 import org.team3.member.service.JoinService;
@@ -19,7 +20,7 @@ import org.team3.member.validator.currentUser;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
-public class MypageUpdateController {
+public class MypageUpdateController implements ExceptionProcessor {
 
     private final JoinService joinService;
 
@@ -28,10 +29,10 @@ public class MypageUpdateController {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     // 마이페이지 포워딩
-    @GetMapping
+    @GetMapping("/main")
     public String myPage() {
 
-        return "mypage";
+        return "mypage/index";
     }
 
     // 회원정보 가져오기
