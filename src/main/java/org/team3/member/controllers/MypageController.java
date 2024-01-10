@@ -19,6 +19,7 @@ public class MypageController {
 
     Member member = new Member();
 
+    // model 엔티티 받기
     @GetMapping("/")
     public String mypage(Model model) {
         model.addAttribute(new Member());
