@@ -11,53 +11,47 @@ import java.util.List;
 import java.util.UUID;
 
 
+/**
+ * 삭제 방지를 위해 작성자와 수정자를 체크해야함
+ */
 @Data
 @Entity
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(indexes = {
-        @Index(name = "idx_fInfo_gid", columnList = "gid"),
-        @Index(name = "idx_fInfo_gid_loc", columnList = "gid,location")
-})  // 자주 검색하는것은 인덱스화 하는 것이 좋음
+@NoArgsConstructor @AllArgsConstructor
+@Table(indexes = { // 조회가 많은 부분에 인덱스 추가할 수 있음
+        @Index(name = "idx_fInfo_gid", columnList = "gid"), // gid ASC 방향성 추가 가능
+        @Index(name = "idx_fInfo_gid_loc", columnList = "gid, location")
+})
 public class FileInfo extends BaseMember {
+    @Id @GeneratedValue
+    private Long seq; // 파일 등록 번호, 서버에 업로드 하는 파일명 기준
+    @Column(length = 65, nullable = false)
+    private String gid = UUID.randomUUID().toString(); // 중복되지 않는 아이디를 랜덤으로 문자열로 만들어줌
+    @Column(length = 65)
+    private String location; // 아이콘 이미지, 상세이미지, 첨부이미지등등 -> 하나의 그룹안에서 용도가 다를 수 있음
+    @Column(length = 80)
+    private String fileName; // 원래 파일명
+    @Column(length = 30)
+    private String extension; // 확장자
+
+    @Column(length = 65)
+    private String fileType; // 파일 타입 이미지인지...
 
     /**
-     * 내가 올린 파일만 삭제하기 위해 누가 작성했는지 기억해야함.
-     * BaseMember의 createdBy 사용
-     * (java,util)
-     * UUID.randomUUID() 유니크 아이디를 랜덤으로 만들수 있음
+     * DB아니고 자바에서만 관리하는(?) 필드
+     * 영속성 컨텍스트에 저장하지 않도록 지정하는 데 사용
      */
-    @Id @GeneratedValue
-    private Long seq;  // 파일 등록 번홉, 서버에 업로드하는 파일명 기준
+    @Transient
+    private String filePath; // 서버에 실제 올라간 경로
 
-    @Column(length = 65, nullable = false)
-    private String gid = UUID.randomUUID().toString();  // 그룹아이디, 게시글 하나의 여러개 파일
+    @Transient
+    private String fileUrl; // 브라우저 주소창에 입력해서 접근할 수 있는 경로
 
-    @Column(length = 65)
-    private String location;  // 이미지 출처
+    @Transient
+    private List<String> thumbsPath; // 썸네일 이미지 경로 : 삭제할 때 필요함(서버에)
 
-    @Column(length = 80)  // 한글 3바이트 100자면 33자 정도 입력가능
-    private String fileName;  // 원래파일명, 오리지널 파일이름
+    @Transient
+    private List<String> thumbsUrl; // 브라우저 주소창에 입력해서 접근할 수 있는 경로
 
-    @Column(length = 30)
-    private String extension;  // 확장자
-
-    @Column(length = 65)
-    private String fileType;  // 파일 타입
-
-    @Transient  // 내부에서만 사용
-    private String filePath;  // 서버에 실제 올라간 경로
-
-    @Transient  // 내부에서만 사용
-    private String fileUrl;  // 브라우저 주소창에 입력해서 접근 할 수 있는 경로
-
-    @Transient  // 내부에서만 사용
-    private List<String> thumbsPath;  // 썸네일 이미지 경로
-
-    @Transient  // 내부에서만 사용
-    private List<String> thumbsUrl;   // 브라우저 주소창에 입력해서 접근할 수 있는 경로
-
-    private boolean done;  // 작업 완료 유무
-
+    private boolean done; // 파일 저장 성공 여부
 }

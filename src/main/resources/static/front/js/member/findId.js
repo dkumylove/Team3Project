@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", function() {
     const emailConfirmEl = document.getElementById("email_confirm"); // 확인 버튼
     const emailReVerifyEl = document.getElementById("email_re_verify"); // 재전송 버튼
     const authNumEl = document.getElementById("auth_num"); // 인증코드
-    const findIdButton = document.getElementById("find_id_button"); // 아이디 찾기 버튼
+
 
     if (emailVerifyEl) {
         emailVerifyEl.addEventListener("click", function() {
@@ -22,11 +22,11 @@ window.addEventListener("DOMContentLoaded", function() {
                     if (data.success) { // 존재하는 이메일인 경우
                         sendEmailVerify(email); // 이메일 인증 코드 전송
                         this.disabled = frmFindId.email.readonly = true;
-                        findIdButton.disabled = true; // 아이디 찾기 버튼 비활성화
+
                     } else { // 존재하지 않는 이메일인 경우
                         alert("존재하지 않는 이메일 이메일입니다.");
                         frmFindId.email.focus();
-                        findIdButton.disabled = true; // 아이디 찾기 버튼 비활성화
+
                     }
                 });
         });
@@ -46,7 +46,6 @@ window.addEventListener("DOMContentLoaded", function() {
                 const { sendEmailVerifyCheck } = commonLib;
                 sendEmailVerifyCheck(authNum);
 
-                findIdButton.disabled = false;
             });
         }
 
@@ -66,11 +65,11 @@ window.addEventListener("DOMContentLoaded", function() {
                     .then(data => {
                         if (data.success) { // 존재하는 이메일인 경우
                             sendEmailVerify(email); // 이메일 인증 코드 전송
-                            findIdButton.disabled = true; // 아이디 찾기 버튼 비활성화
+
                         } else { // 존재하지 않는 이메일인 경우
                             alert("존재하지 않는 이메일 이메일입니다.");
                             frmFindId.email.focus();
-                            findIdButton.disabled = true; // 아이디 찾기 버튼 비활성화
+
                         }
                     });
             });
@@ -124,7 +123,21 @@ function callbackEmailVerifyCheck(data) {
 
         // 4. 인증 성공시 인증코드 입력 영역 제거, 5. 인증 코드 입력 영역에 "확인된 이메일 입니다."라고 출력 처리
         const authBoxEl = document.querySelector(".auth_box");
-        authBoxEl.innerHTML = "<span class='confirmed'>확인된 이메일 입니다.</span>";
+        authBoxEl.innerHTML = "<span class='confirmed'>확인된 이메일 입니다.</span><br>";
+
+
+
+        const findIdButton = document.querySelector(".find_id_button");
+
+        // 버튼 생성 및 설정
+        const newButton = document.createElement("button");
+        newButton.type = "submit";
+        newButton.value = "아이디찾기";
+        newButton.textContent = "아이디 찾기"; // 버튼 텍스트 설정
+
+        // 기존 버튼 대신에 새로운 버튼으로 교체
+        findIdButton.innerHTML = ""; // 기존 버튼 내용 삭제
+        findIdButton.appendChild(newButton); // 새로운 버튼 추가
 
     } else { // 인증 실패
         alert("이메일 인증에 실패하였습니다.");

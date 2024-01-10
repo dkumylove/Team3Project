@@ -14,7 +14,7 @@
             <dt th:text="#{프로필_이미지}">
             </dt>
             <dd>
-                <div id="profile_image"></div>
+                <div class="circle" id="profile_image"></div>
                 <button type="button" class="upload_files"
                         th:text="#{이미지_업로드}" data-image-only="true" data-single-file="true"></button>
             </dd>
@@ -39,6 +39,14 @@
                 <!--th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified-->
                 <button id="userId_verify" th:text="#{중복확인}" type="button"></button>
                 <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt th:text="#{닉네임}"></dt>
+            <dd>
+                <input type="text" name="nickName" th:field="*{nickName}">
+                <div class="error" th:each ="err : ${#fields.errors('nickName')}" th:text="${err}"></div>
             </dd>
         </dl>
 
