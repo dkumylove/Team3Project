@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="menus">
+    <a th:href="@{/front/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
+        <i class="xi-cog"></i> 내 프로필
+    </a>
+    <a th:href="@{/front/mypage/board}" th:classappend="${menuCode} =='board' ? 'on'">
+        <i class="xi-users"></i> 내 활동
+    </a>
+    <a th:href="@{front/mypage/follow}" th:classappend="${menuCode} == 'follow' ? 'on'">
+        <i class="xi-pen"></i> 팔로우팔로잉
+    </a>
+</aside>
+</html>
