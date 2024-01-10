@@ -11,6 +11,7 @@ import org.team3.member.controllers.JoinValidator;
 import org.team3.member.controllers.RequestJoin;
 import org.team3.member.entities.Authorities;
 import org.team3.member.entities.Member;
+import org.team3.member.entities.Profile;
 import org.team3.member.repositories.AuthoritiesRepository;
 import org.team3.member.repositories.MemberRepository;
 
@@ -67,5 +68,13 @@ public class JoinService {
      */
     public void process(Member member) {
         memberRepository.saveAndFlush(member);
+    }
+
+    public void updateProfile(Member member, Profile profile) {
+        member.setName(profile.getName());
+        member.setUserId(profile.getUserId());
+        member.setPassword(profile.getPassword());
+        member.setNickName(profile.getNickName());
+        member.setEmail(profile.getEmail());
     }
 }
