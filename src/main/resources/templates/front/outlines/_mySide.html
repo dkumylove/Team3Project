@@ -1,36 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<aside th:fragment="menus">
-    <dl>
-        <div class="circle"></div>
-        <dt th:text="#{프로필_이미지}"></dt>
-        <dd>
-            <div id="profile_image">
-            <button type="button" class="upload_files"
+<aside th:fragment="myMenus">
+    <div class="circle"></div>
+    <dt th:text="#{프로필_이미지}"></dt>
+    <div id="profile_image">
+        <button type="button" class="upload_files"
                     th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>
-            </div>
-        </dd>
-        <dd>
-            <a th:href="@{/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
-                <i class="xi-profile-o"></i> 내 프로필
-            </a>
-        </dd>
-        <dd>
-            <a th:href="@{/mypage/myBoard}" th:classappend="${menuCode} =='myBoard' ? 'on'">
-                <i class="xi-document"></i> 내 활동
-            </a>
-        </dd>
-        <dd>
-            <a th:href="@{/mypage/follow}" th:classappend="${menuCode} == 'follow' ? 'on'">
-                <i class="xi-users-o"></i> 팔로우팔로잉
-            </a>
-        </dd>
-        <dd>
-            <a th:href="@{/mypage/deleteMember}" th:classappend="${menuCode} == 'delete' ? 'on'">
-                <i class="xi-emoticon-sad-o"></i> 회원탈퇴
-            </a>
-        </dd>
-    </dl>
+    </div>
 
+    <a th:href="@{/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
+        <i class="xi-profile-o"></i> 내 프로필
+    </a>
+
+    <a th:href="@{/mypage/myBoard}" th:classappend="${menuCode} =='myBoard' ? 'on'">
+        <i class="xi-document"></i> 내 활동
+    </a>
+
+    <a th:href="@{/mypage/follow}" th:classappend="${menuCode} == 'follow' ? 'on'">
+        <i class="xi-users-o"></i> 팔로우팔로잉
+    </a>
+
+    <a th:href="@{/mypage/deleteMember}" th:classappend="${menuCode} == 'delete' ? 'on'">
+        <i class="xi-emoticon-sad-o"></i> 회원탈퇴
+    </a>
 </aside>
 </html>
