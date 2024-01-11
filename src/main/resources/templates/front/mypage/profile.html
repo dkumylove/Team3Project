@@ -3,6 +3,55 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
-    <h1 th:text="#{프로필}"></h1>
+    <h1 th:text="#{내_프로필}"></h1>
+    <th:block>
+        <h2>내 정보</h2>
+        <table border="1">
+            <tr>
+                <td>
+                    <div class="circle"></div>
+                </td>
+                <th th:text="#{닉네임}"></th>
+                <td>
+                    회원닉네임
+                </td>
+                <td>
+                    <button type="button" class="nName_edit" th:text="#{닉네임 수정}" ></button>
+                </td>
+            </tr>
+        </table>
+        <form>
+            <table border="1">
+                <tr>
+                    <th th:text="#{비밀번호}"></th>
+                    <td>회원비밀번호(보이지않음)</td>
+                    <td>
+                        <th:block>
+                            <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
+                        </th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{이메일}"></th>
+                    <td>회원이메일</td>
+                    <td>
+                        <a th:href="@{/mypage/changeMail}" th:text="#{이메일_수정}"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{보조지표}"></th>
+                    <td>
+                        <dd>지표1</dd>
+                        <dd>지표2</dd>
+                        <dd>지표3</dd>
+                    </td>
+                    <td>
+                        <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}"></a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </th:block>
+
 </section>
 </html>
