@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1 th:text="#{내_프로필}"></h1>
@@ -11,11 +12,21 @@
                 <tr>
                     <td>
                         <div class="circle"></div>
+                        <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
+                            <div class="circle">
+                                <th:block  th:href="${session.member.profileImage != null}"
+                                           th:utext="${@utils.printThumb(session.member.profileImage.seq, 250, 250, 'profile_image')}">
+                                </th:block>
+                            </div>
+                        </th:block>
                     </td>
+
                     <th th:text="#{닉네임}"></th>
+                    <td>회원이름</td>
+                    <!--<td th:text="${session.member.nickName}"></td>
                     <td>
-                        회원닉네임
-                    </td>
+                        <span th:text="${#messages.msg('NICKNAME_MSG', session.member.nickName}"></span>
+                    </td>-->
                     <td>
                         <button type="button" class="nName_edit" th:text="#{닉네임 수정}" ></button>
                     </td>
