@@ -31,6 +31,9 @@ public class RequestJoin {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String nickName;
+
     @AssertTrue
     private boolean agree;
 }

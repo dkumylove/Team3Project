@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.Utils;
+import org.team3.member.entities.Member;
+import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.FindIdService;
 import org.team3.member.service.FindPwService;
 import org.team3.member.service.JoinService;
@@ -19,73 +21,83 @@ import org.team3.member.service.MemberInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@SessionAttributes("EmailAuthVerified")
 public class MemberController implements ExceptionProcessor {
 
     private final Utils utils;
     private final JoinService joinService;
     private final FindPwService findPwService;
     private final FindIdService findIdService;
+    private final MemberRepository memberRepository;
+
 
     @GetMapping("/join")
-    public String join(@ModelAttribute RequestJoin form, Model model) {
-
+    public String join(@ModelAttribute RequestJoin requestJoin, Model model){
         commonProcess("join", model);
-        model.addAttribute("EmailAuthVerified", false); // 이메일 인증여부 false로 초기화
+        // model.addAttribute("pageTitle", "회원가입");
 
+        model.addAttribute("EmailAuthVerified", false); // 이메일 인증여부 false로 초기화
         return utils.tpl("member/join");
     }
 
     @PostMapping("/join")
-    public String joinPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus) {
-
+    public String joinPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus){
         commonProcess("join", model);
-
         joinService.process(form, errors);
-
-        if(errors.hasErrors()) {
+        if(errors.hasErrors()){
             return utils.tpl("member/join");
         }
         /* EmailAuthVerified 세션값 비우기 */
         sessionStatus.setComplete();
         return "redirect:/member/login";
     }
-
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model){
         commonProcess("login", model);
+
         return utils.tpl("member/login");
     }
 
-    private void commonProcess(String mode, Model model) {
+    /**
+     * pageTitle 공통 처리 하기!!
+     * @param mode
+     * @param model
+     */
+
+    private void commonProcess(String mode, Model model){
         mode = StringUtils.hasText(mode) ? mode : "join";
         String pageTitle = Utils.getMessage("회원가입", "commons");
 
-        List<String> addCommonScript = new ArrayList<>();  // 공통 자바스크립트
-        List<String> addScript = new ArrayList<>();  // 프론트 자바 스크립트
+        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
+        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
         List<String> addCss = new ArrayList<>(); // cdd추가
 
-        if(mode.equals("login")) {
+        if(mode.equals("login")){
             pageTitle = Utils.getMessage("로그인", "commons");
-        } else if (mode.equals("join")) {
+        } else if(mode.equals("join")){
             addCommonScript.add("fileManager");
             addScript.add("member/form");
             addScript.add("member/join");
             addCss.add("member/join");
-        }else if(mode.equals("find_pw")) { // 비밀번호 찾기
+        } else if(mode.equals("find_pw")) { // 비밀번호 찾기
             pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
         } else if(mode.equals("find_id")){
             pageTitle = Utils.getMessage("아이디_찾기", "commons");
             addScript.add("member/findId");
         }
-
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("addCommonScript", addCommonScript);
         model.addAttribute("addScript", addScript);
+        // model.addAttribute("addCss", addCss);
+        // 프론트에만 필요하면 프론트로
+        // 파일기능은 공통이기 때문에 common에 넣음
     }
+
 
     /**
      * 비밀번호 찾기 양식
@@ -164,8 +176,12 @@ public class MemberController implements ExceptionProcessor {
         }
         /* EmailAuthVerified 세션값 비우기 */
         sessionStatus.setComplete();
+
+        Member member = memberRepository.findByEmail(form.email()).orElse(null);
+        model.addAttribute("member", member);
+        System.out.println(member);
         // 비밀번호 찾기에 이상 없다면 완료 페이지로 이동
-        return "redirect:/member/find_id_done";
+        return utils.tpl("member/find_id_done");
     }
 
     /**
