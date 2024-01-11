@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.team3.commons.ExceptionProcessor;
+import org.team3.commons.Utils;
 import org.team3.member.entities.Member;
 import org.team3.member.entities.Profile;
 import org.team3.member.service.JoinService;
@@ -23,10 +24,34 @@ import org.team3.member.validator.currentUser;
 public class MypageUpdateController implements ExceptionProcessor {
 
     private final JoinService joinService;
+    private final Utils utils;
 
     private MemberService memberService;
 
     private BCryptPasswordEncoder bcryptPasswordEncoder;
+
+    /**
+     * 타입리프 페이지전화확인은위해 url매핑처림
+     * 이지은 1월 11일
+     * @return
+     */
+
+    @GetMapping("changePw")
+    public String changePossword() {
+        /* 비밀번호수정페이지로 전환 */
+        return utils.tpl("mypage/changePw");
+    }
+    @GetMapping("changeMail")
+    public String changeEmail() {
+        /* 이메일수정페이지로 전환 */
+        return utils.tpl("mypage/changeMail");
+    }
+    @GetMapping("changeIndicator")
+    public String changeIndicator() {
+        /* 비밀번호수정페이지로 전환 */
+        return utils.tpl("mypage/changeIndicator");
+    }
+
 
 
     // 회원정보 가져오기
