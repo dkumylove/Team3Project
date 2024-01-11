@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{front/layouts/main}">
+      layout:decorate="~{mobile/layouts/main}">
 <main layout:fragment="content">
     아이디 : <div th:if="${member != null}" th:text="${member.userId}"></div>
     <a th:href="@{/member/login}" th:text="#{로그인}"></a>

@@ -27,9 +27,8 @@ public class MemberInfoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findByEmail(username)  // 이메일 조회
-                .orElseGet(() -> memberRepository.findByUserId(username)  // 아이디 조회
-                        .orElseThrow(() -> new UsernameNotFoundException(username)));  // 없는경우 예외처리
+        Member member =  memberRepository.findByUserId(username)  // 아이디 조회
+                        .orElseThrow(() -> new UsernameNotFoundException(username));  // 없는경우 예외처리
 
         List<SimpleGrantedAuthority> authorities = null;
         List<Authorities> tmp = member.getAuthorities();
