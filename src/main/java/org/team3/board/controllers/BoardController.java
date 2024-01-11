@@ -1,17 +1,12 @@
 package org.team3.board.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.team3.admin.menus.Menu;
-import org.team3.admin.menus.MenuDetail;
-import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.Utils;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("board")
