@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="menus">
+    <a th:href="@{/board}" th:classappend="${menuCode} =='config' ? 'on'">
+        <i class="xi-cog"></i> 자유게시판
+    </a>
+    <a th:href="@{/board/tips}" th:classappend="${menuCode} =='member' ? 'on'">
+        <i class="xi-users"></i> 팁과 노하우
+    </a>
+    <a th:href="@{/board/asks}" th:classappend="${menuCode} == 'board' ? 'on'">
+        <i class="xi-pen"></i> 질문 게시판
+    </a>
+</aside>
+</html>
