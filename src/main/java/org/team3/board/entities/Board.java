@@ -6,6 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.team3.commons.entities.BaseMember;
+import org.team3.file.entities.FileInfo;
+import org.team3.member.Authority;
+
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -20,6 +25,10 @@ public class Board extends BaseMember {
     @Id
     @GeneratedValue
     private Long bId; // 게시판 아이디
+
+    @Column(length = 65, nullable = false)
+    private String gid = UUID.randomUUID().toString();
+
     private String bName; // 게시판 이름
     private boolean active; // 사용 여부
     private int bRowsPerPage; // 한 페이지 게시글 수
@@ -29,32 +38,45 @@ public class Board extends BaseMember {
     private boolean useEditor; // 에디터
     private boolean useUploadImage;  // 이미지 첨부
     private boolean useUploadFile;  // 파일 첨부
-    private boolean locationAfterWriting; // 글작성 후 이동
 
-    @Enumerated(EnumType.STRING)
-    @Column(length=15)
-    private SkinType skin;  // 스킨여부
+    @Column(length = 10 , nullable = false)
+    private String locationAfterWriting = "LIST"; // 글 작성 후 이동 위치
+
+    @Column(length = 10, nullable = false)
+    private String skin = "default"; // 스킨
 
     @Lob  // Large Object : 데이터베이스에 큰 객체(대용량 데이터)를 포함
     private String category;  // 카테고리
 
-    @Enumerated(EnumType.STRING)  // 열거형(Enum) 타입을 String타입으로 매핑을 지정
-    @Column(length=10, nullable = false)
-    private BoardAuthority listAccessType = BoardAuthority.ALL;  // 글목록 권한
-
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    @Column(length=10, nullable = false)
-    private BoardAuthority viewAccessType = BoardAuthority.ALL;  // 글보기 권한
+    private Authority listAccessType = Authority.ALL; // 권한 설정 - 글목록
 
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    @Column(length=10, nullable = false)
-    private BoardAuthority writeAccessType = BoardAuthority.ALL;  // 글쓰기 권한
+    private Authority viewAccessType = Authority.ALL; // 권한 설정 - 글보기
 
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    @Column(length=10, nullable = false)
-    private BoardAuthority replyAccessType = BoardAuthority.ALL;  // 답글 권한
+    private Authority writeAccessType = Authority.ALL; // 권한 설정 - 글쓰기
 
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    @Column(length=10, nullable = false)
-    private BoardAuthority commentAccessType = BoardAuthority.ALL;  // 댓글 권한
+    private Authority replyAccessType = Authority.ALL; // 권한 설정 - 답글
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private Authority commentAccessType = Authority.ALL; // 권한 설정 - 댓글
+
+    @Lob
+    private String htmlTop; // 게시판 상단 HTML
+
+    @Lob
+    private String htmlBottom; // 게시판 하단 HTML
+
+    @Transient
+    private List<FileInfo> htmlTopImages; // 게시판 상단 Top 이미지
+
+    @Transient
+    private List<FileInfo> htmlBottomImages; // 게시판 하단 Bottom 이미지
 }
