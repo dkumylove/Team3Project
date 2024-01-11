@@ -17,7 +17,7 @@ import org.team3.member.service.JoinService;
 import org.team3.member.service.MemberService;
 import org.team3.member.validator.currentUser;
 
-@Controller
+@Controller("mypageUpdateController")
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageUpdateController implements ExceptionProcessor {
@@ -28,12 +28,6 @@ public class MypageUpdateController implements ExceptionProcessor {
 
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-    // 마이페이지 포워딩
-    @GetMapping("/main")
-    public String myPage() {
-
-        return "mypage/index";
-    }
 
     // 회원정보 가져오기
     @GetMapping("/update")

@@ -20,6 +20,13 @@ public class Menu {
                 new MenuDetail("add", "게시판등록", "/admin/board/add"),
                 new MenuDetail("posts", "게시글관리", "/admin/board/posts")
         ));
+
+        menus.put("mypage", Arrays.asList(
+                new MenuDetail("profile", "내프로필", "/front/mypage/profile"),
+                new MenuDetail("myBoard", "내활동", "/front/mypage/myBoard"),
+                new MenuDetail("follow", "팔로우팔로잉", "/front/mypage/follow"),
+                new MenuDetail("delete", "회원탈퇴", "/front/mypage/deleteMember")
+        ));
     }
 
     public static List<MenuDetail> getMenus(String code) {

@@ -59,7 +59,6 @@ public class JoinService {
         // 파일 업로드 완료처리
         uploadService.processDone(form.getGid());
 
-
     }
 
     /**
