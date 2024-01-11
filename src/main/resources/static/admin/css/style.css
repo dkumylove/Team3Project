@@ -13,6 +13,7 @@ img { border: 0; }
 
 header { display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
 header > section:first-of-type { width: 208px; text-align: center; }
+header > section { width: 208px; text-align: center; }
 header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; }
 header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: beige; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500;}
 header .btn_area a:last-of-type { background: steelblue ; color: beige}
