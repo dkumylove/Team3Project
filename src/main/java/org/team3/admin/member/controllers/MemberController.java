@@ -23,25 +23,36 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class MemberController implements ExceptionProcessor {
 
-    private MemberInfoService memberInfoService;
+    //    private final MemberRepository repository;
+    private final MemberInfoService memberInfoService;
+
+//
+//    @ModelAttribute("memberList")
+//    public List<Member> getMemberList(){
+//        return repository.findAll();
+//    }
+
+    // 메뉴는 공통으로 쓰는 부분임
+
+    /**
+     * subMenus 라는 속성값이 있으면 값이 모든 컨트롤러에서 공유가 됨
+     */
+    @ModelAttribute("subMenus")
+    public List<MenuDetail> getSubMenus() {
+        return Menu.getMenus("member");
+    }
+
     @ModelAttribute("menuCode")
     public String getMenuCode() {
         return "member";
     }
 
-    @ModelAttribute("subMenus")
-    public List<MenuDetail> getSubMenus() {
-
-        return Menu.getMenus("member");
-    }
-
-    @GetMapping
-    public String list(Model model) {
-
-        model.addAttribute("subMenuCode", "list");
-        return "admin/member/list";
-    }
-
+    //    @GetMapping
+//    public String list(Model model) {
+//        // 컨트롤러어드바이스를 이용하면 됨
+//        model.addAttribute("subMenuCode", "list");
+//        return "admin/member/list";
+//    }
     @GetMapping
     public String list(@ModelAttribute MemberSearch search, Model model) {
         commonProcess("list", model);
