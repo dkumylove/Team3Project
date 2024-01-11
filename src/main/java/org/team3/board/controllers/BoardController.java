@@ -10,35 +10,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.commons.ExceptionProcessor;
+import org.team3.commons.Utils;
 
 @Controller
 @RequestMapping("board")
 @RequiredArgsConstructor
 public class BoardController implements ExceptionProcessor {
+
+    private final Utils utils;
     private final BoardDataRepository boardDataRepository;
 
     @GetMapping //자유게시판 페이지로 이동
     public String community () {
 
-        return "board/community";
+        return utils.tpl("board/community");
     }
 
     @GetMapping("tips") //팁과 노하우 페이지로 이동
     public String tips () {
 
-        return "board/tips";
+        return utils.tpl("board/tips");
     }
 
     @GetMapping("asks") //팁과 노하우 페이지로 이동
     public String asks () {
 
-        return "board/asks";
+        return utils.tpl("board/asks");
     }
 
     @GetMapping("new") //새 게시글 작성
     public String write() {
 
-        return "board/new";
+        return utils.tpl("board/new");
     }
 
     @PostMapping("new") //새 게시글 작성 완료
@@ -47,25 +50,25 @@ public class BoardController implements ExceptionProcessor {
         //자유글 작성했으면 자유게시판 페이지로 이동
         if(true) {
 
-            return "board/community";
+            return utils.tpl("board/community");
 
             //팁과 노하우 글 작성했으면 팁과 노하우 페이지로 이동
         } else if (true) {
 
-            return "board/tips";
+            return utils.tpl("board/tips");
 
             //질문글 작성했으면 질문게시판 페이지로 이동
         } else if (true) {
 
-            return "board/asks";
+            return utils.tpl("board/asks");
         }
-        return null;
+        return utils.tpl("board/community");
     }
 
     @GetMapping("{post_No}") //게시글 한개 조회
     public String readPost() {
 
-        return "board/readPost";
+        return utils.tpl("board/readPost");
     }
 
 
