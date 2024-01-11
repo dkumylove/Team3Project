@@ -2,7 +2,128 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/layouts/main}">
+
 <section layout:fragment="content">
+    <div class="top_box">
+    <form name="frmSearch" method="get" th:action="@{/admin/member}" autocomplete="off"
+          th:object="${MemberSearchOptions}">
+    <table class="table-cols style2">
+        <tbody>
+        <tr>
+            <th>가입일</th>
+            <td colspan="5">
+                <!--
+                <input type="date" name="createSdate" th:value="*{createSdate}" class="wauto"> ~
+                <input type="date" name="createEdate" th:value="*{createEdate}" class="wauto">
+                -->
+            </td>
+        </tr>
+
+        <tr>
+            <th>가입구분</th>
+            <td width="250">
+                <input type="checkbox" name="authority" value="" id="managerType_admin">
+                <label for="managerType_admin">관리자</label>
+
+                <input type="checkbox" name="authority" value="" id="managerType_associate">
+                <label for="managerType_associate">회원</label>
+            </td>
+
+            <th>아이디</th>
+            <td width="250">
+                <input type="text" name="userId" >
+            <th>회원명</th>
+            <td>
+                <input type="text" name="name" >
+            </td>
+        </tr>
+        <tr>
+
+
+            <th>탈퇴/제한</th>
+            <td>
+                <input type="checkbox" name="active" value="false" id="isactivefalse">
+                <label for="isactivefalse">탈퇴회원</label>
+                <input type="checkbox" name="active" value="true" id="isactivetrue">
+                <label for="isactivetrue">활동회원</label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <button type="submit" th:text="#{검색}" ></button>
+
+    </form>
+    </div>
+
+
+    <h1>회원 목록</h1>
+    <form name="frmList" method="post" th:action="@{/admin/member}" target="ifrmProcess"
+          autocomplete="off">
+        <input type="hidden" name="_method" value="PATCH">
+        <table class="table_rows">
+            <thead>
+            <tr>
+                <th width="40">
+                    <input type="checkbox" class="checkall" data-target-name="chk"
+                           id="checkall">
+                    <label for="checkall"></label>
+                </th>
+                <th>seq</th>
+                <th>name</th>
+                <th>userId</th>
+                <th>gid</th>
+                <th>email</th>
+                <th>nickName</th>
+                <th>createdAt</th>
+                <th>modifiedAt</th>
+                <th>권한</th>
+                <th>탈퇴 여부</th>
+                <th>수정/삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${MemberList == null || MemberList.isEmpty()}">
+                <td colspan="11">조회된 회원이 없습니다.</td>
+            </tr>
+            <tr th:unless="${MemberList == null}"
+                th:each="MemberList, status : ${MemberList}" th:object="${MemberList}">
+                <td>
+                    <input type="hidden" name="${'seq_' + status.index}"
+                           th:value="*{seq}">
+                    <input type="checkbox" name="chk" th:value="${status.index}"
+                           th:id="${'chk_' + status.index}">
+                    <label th:for="${'chk_' + status.index}"></label>
+                </td>
+                <td th:text="*{seq}" align="center"></td>
+                <td th:text="*{name}" align="center"></td>
+                <td th:text="*{userId}" align="center"></td>
+                <td th:text="*{gid}" align="center"></td>
+                <td th:text="*{email}" align="center"></td>
+                <td th:text="*{nickName}" align="center"></td>
+                <td th:text="*{createdAt}" align="center"></td>
+                <td th:text="*{modifiedAt}" align="center"></td>
+                <td th:text="authority" align="center"></td>
+                <td th:text="false" align="center"></td>
+
+
+                <td>
+                    <a th:href="@{/admin/member/edit/{userId}/(userId=*{userId})}" class="sbtn">
+                        <i class="xi-pen"></i> 수정
+                    </a>
+                    <a th:href="@{/admin/member/edit/{userId}/(userId=*{userId})}" class="sbtn">
+                        <i class="xi-pen"></i> 삭제
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="table_actions">
+            <button type="button" class="sbtn form_action" data-mode="delete"
+                    data-form-name="frmList">선택 회원 삭제</button>
+        </div>
+    </form>
+
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </section>
 </html>

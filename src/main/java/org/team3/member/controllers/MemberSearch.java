@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class MemberSearch {
-    private int page = 1;
-    private int limit = 20;
+    protected int page = 1;
+    protected int limit = 20;
 }

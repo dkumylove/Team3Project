@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="ListAll" >
+    <table border="1" th:if="${MemberList != null}">
+        <thead>
+        <tr>
+            <th>seq</th>
+            <th>name</th>
+            <th>userId</th>
+            <th>gid</th>
+            <th>email</th>
+            <th>nickName</th>
+            <th>createdAt</th>
+            <th>modifiedAt</th>
+            <th>탈퇴 여부</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="member : ${MemberList}">
+            <td th:text="${member.seq}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.userId}"></td>
+            <td th:text="${member.gid}"></td>
+            <td th:text="${member.email}"></td>
+            <td th:text="${member.nickName}"></td>
+            <td th:text="${member.createdAt}"></td>
+            <td th:text="${member.modifiedAt}"></td>
+            <td th:text="false"></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+</html>
