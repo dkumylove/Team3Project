@@ -1,6 +1,7 @@
 package org.team3.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,12 @@ public class JoinService {
 
 //        Member member = new Member();
 //        member.setEmail(form.getEmail());
-        //Member member = new ModelMapper().map(form, Member.class);
+        Member member = new ModelMapper().map(form, Member.class);
+        String password = encoder.encode(form.getPassword());
+        member.setPassword(password);
+
+
+        /*
         Member member = new Member();
         member.setEmail(form.getEmail());
         member.setUserId(form.getUserId());
@@ -47,6 +53,7 @@ public class JoinService {
         member.setPassword(hash);
         member.setGid(form.getGid());
 
+        */
         process(member);
 
         // 회원가입시에는 일반 사용자 권한(USER) 부여

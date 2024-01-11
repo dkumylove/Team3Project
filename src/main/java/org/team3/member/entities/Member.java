@@ -44,6 +44,7 @@ public class Member extends Base {
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
 
+
     /* 팔로워 */
     @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
     private List<Follow> followers = new ArrayList<>();
