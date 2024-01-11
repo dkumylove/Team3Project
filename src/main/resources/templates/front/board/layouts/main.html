@@ -36,12 +36,12 @@
     <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
-<header th:replace="~{front/board/outlines/header::common}"></header>
+<header th:replace="~{front/outlines/header::common}"></header>
 
 <main>
-    <aside th:replace="~{front/board/outlines/_side::menus}"></aside>
+    <aside th:replace="~{front/outlines/_boardside::menus}"></aside>
 </main>
-
+<footer th:replace="~{front/outlines/footer::common}"></footer>
 <iframe name="ifrmProcess" class="dn"></iframe>
 
 </body>
