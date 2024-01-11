@@ -1,8 +1,7 @@
 package org.team3.member.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
@@ -12,6 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/* 테스트를 위해 추가 S - 이다은 1/11 */
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+/* 테스트를 위해 추가 E - 이다은 1/11 */
 @Data
 @Entity
 public class Member extends Base {

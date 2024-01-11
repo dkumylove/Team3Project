@@ -53,7 +53,6 @@ window.addEventListener("DOMContentLoaded", function() {
                           /* 인증번호 확인 처리 E */
                     }
                 });
-
             /* 이메일 확인 전 이미 가입된 이메일인지 여부 체크 E */
         });
     }
@@ -108,6 +107,20 @@ function callbackEmailVerifyCheck(data) {
         const authBoxEl = document.querySelector(".auth_box");
         authBoxEl.innerHTML = "<span class='confirmed'>확인된 이메일 입니다.</span>";
 
+        /** 회원가입 버튼 생성 S **/
+        const findIdButton = document.querySelector(".join_button");
+
+        // 버튼 생성 및 설정
+        const newButton = document.createElement("button");
+        newButton.type = "submit";
+        newButton.value = "회원가입";
+        newButton.textContent = "회원가입"; // 버튼 텍스트 설정
+
+        // 기존 버튼 대신에 새로운 버튼으로 교체
+        findIdButton.innerHTML = ""; // 기존 버튼 내용 삭제
+        findIdButton.appendChild(newButton); // 새로운 버튼 추가
+        /** 회원가입 버튼 생성 E **/
+
     } else { // 인증 실패
         alert("이메일 인증에 실패하였습니다.");
     }
@@ -115,14 +128,12 @@ function callbackEmailVerifyCheck(data) {
 
 /**
 * 유효시간 카운트
-*
 */
 const authCount = {
     intervalId : null,
     count : 60 * 3, // 유효시간 3분
     /**
     * 인증 코드 유효시간 시작
-    *
     */
     start() {
         const countEl = document.getElementById("auth_count");
@@ -154,7 +165,6 @@ const authCount = {
 
     /**
     * 인증 코드 유효시간 초기화
-    *
     */
     initialize() {
         const countEl = document.getElementById("auth_count");
@@ -169,3 +179,5 @@ const authCount = {
         countEl.innerHTML = "03:00";
     }
 };
+
+
