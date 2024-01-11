@@ -4,23 +4,23 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1 th:text="#{내_프로필}"></h1>
-    <th:block>
-        <h2>내 정보</h2>
-        <table border="1">
-            <tr>
-                <td>
-                    <div class="circle"></div>
-                </td>
-                <th th:text="#{닉네임}"></th>
-                <td>
-                    회원닉네임
-                </td>
-                <td>
-                    <button type="button" class="nName_edit" th:text="#{닉네임 수정}" ></button>
-                </td>
-            </tr>
-        </table>
-        <form>
+    <form>
+        <th:block>
+            <h2>내 정보</h2>
+            <table border="1">
+                <tr>
+                    <td>
+                        <div class="circle"></div>
+                    </td>
+                    <th th:text="#{닉네임}"></th>
+                    <td>
+                        회원닉네임
+                    </td>
+                    <td>
+                        <button type="button" class="nName_edit" th:text="#{닉네임 수정}" ></button>
+                    </td>
+                </tr>
+            </table>
             <table border="1">
                 <tr>
                     <th th:text="#{비밀번호}"></th>
@@ -50,8 +50,7 @@
                     </td>
                 </tr>
             </table>
-        </form>
-    </th:block>
-
+        </th:block>
+    </form>
 </section>
 </html>
