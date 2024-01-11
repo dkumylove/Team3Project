@@ -105,9 +105,9 @@ public class MemberController implements ExceptionProcessor {
      * @param model
      * @return
      */
-    @GetMapping("/find_pw")
+    @GetMapping("/findpw")
     public String findPw(@ModelAttribute RequestFindPw form, Model model) {
-        commonProcess("find_pw", model);
+        commonProcess("findpw", model);
 
         return utils.tpl("member/find_pw");
     }
@@ -118,9 +118,9 @@ public class MemberController implements ExceptionProcessor {
      * @param model
      * @return
      */
-    @PostMapping("/find_pw")
+    @PostMapping("/findpw")
     public String findPwPs(@Valid RequestFindPw form, Errors errors, Model model, SessionStatus sessionStatus) {
-        commonProcess("find_pw", model);
+        commonProcess("findpw", model);
 
         findPwService.process(form, errors); // 비밀번호 찾기 처리
 
@@ -133,18 +133,7 @@ public class MemberController implements ExceptionProcessor {
         return "redirect:/member/find_pw_done";
     }
 
-    /**
-     * 비밀번호 찾기 완료 페이지
-     *
-     * @param model
-     * @return
-     */
-    @GetMapping("/find_pw_done")
-    public String findPwDone(Model model) {
-        commonProcess("find_pw", model);
 
-        return utils.tpl("member/find_pw_done");
-    }
 
     /**
      * 아이디 찾기 양식
@@ -152,22 +141,21 @@ public class MemberController implements ExceptionProcessor {
      * @param model
      * @return
      */
-    @GetMapping("/find_id")
+    @GetMapping("/findid")
     public String findId(@ModelAttribute RequestFindId form, Model model) {
-        commonProcess("find_id", model);
+        commonProcess("findid", model);
         model.addAttribute("EmailAuthVerified", false); // 이메일 인증여부 false로 초기화
         return utils.tpl("member/find_id");
     }
 
     /**
      * 아이디 찾기 처리
-     *
      * @param model
      * @return
      */
-    @PostMapping("/find_id")
+    @PostMapping("/findid")
     public String findIdPs(@Valid RequestFindId form, Errors errors, Model model, SessionStatus sessionStatus) {
-        commonProcess("find_id", model);
+        commonProcess("findid", model);
 
         findIdService.process(form, errors); // 비밀번호 찾기 처리
 
@@ -190,11 +178,25 @@ public class MemberController implements ExceptionProcessor {
      * @param model
      * @return
      */
-    @GetMapping("/find_id_done")
+    @GetMapping("/findiddone")
     public String findIdDone(Model model) {
-        commonProcess("find_id", model);
+        commonProcess("findiddone", model);
 
         return utils.tpl("member/find_id_done");
     }
+
+    /**
+     * 비밀번호 찾기 완료 페이지
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/findpwdone")
+    public String findPwDone(Model model) {
+        commonProcess("findpwdone", model);
+
+        return utils.tpl("member/find_pw_done");
+    }
+
 
 }
