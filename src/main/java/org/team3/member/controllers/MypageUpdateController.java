@@ -36,11 +36,11 @@ public class MypageUpdateController implements ExceptionProcessor {
      * @return
      */
 
-    @GetMapping("changePw")
-    public String changePossword() {
-        /* 비밀번호수정페이지로 전환 */
-        return utils.tpl("mypage/changePw");
-    }
+//    @GetMapping("changePw")
+//    public String changePassword() {
+//        /* 비밀번호수정페이지로 전환 */
+//        return utils.tpl("mypage/changePw");
+//    }
     @GetMapping("changeMail")
     public String changeEmail() {
         /* 이메일수정페이지로 전환 */
@@ -48,47 +48,47 @@ public class MypageUpdateController implements ExceptionProcessor {
     }
     @GetMapping("changeIndicator")
     public String changeIndicator() {
-        /* 비밀번호수정페이지로 전환 */
+        /* 보조지표수정페이지로 전환 */
         return utils.tpl("mypage/changeIndicator");
     }
 
 
 
     // 회원정보 가져오기
-    @GetMapping("/update")
+    @GetMapping("/")
     public String mypageUpdateForm(@currentUser Member member, Model model) {
         model.addAttribute("member", member);
         model.addAttribute("profile", new Profile(member));
-        return "/mypage";
+        return utils.tpl("profile");
     }
 
     // 수정 확인 여부 후 포워딩
-    @PostMapping("/update")
+    @PostMapping("/")
     public String updateProfile(@ModelAttribute("currentUser") Member member,
                                 @Valid @ModelAttribute Profile profile, Errors errors,
                                 Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("member", member);
-            return "/mypage";
+            return utils.tpl("profile");
         }
 
         joinService.updateProfile(member, profile);
         attributes.addFlashAttribute("message", "프로필을 수정했습니다.");
-        return "redirect:/mypage";
+        return utils.tpl("redirect:/mypage/profile");
     }
 
     // 비밀번호 수정 시 현재 비밀번호 확인
-    @PostMapping("/changePwd")
+    @PostMapping("/changePw")
     public String passwordCheck(@RequestParam("oldPassword") String oldPassword,
                                 HttpSession session) {
 
         String newPassword = ((Member)session.getAttribute("profile")).getPassword();
 
-        return "";
+        return utils.tpl("changePw");
     }
 
     // 비밀번호 변경
-    @PostMapping("/updatePwd")
+    @PostMapping("/changePwEnd")
     public String updateMemberPassword(@ModelAttribute("currentUser") Member member,
                                        HttpSession session, @RequestParam("newPassword") String newPassword) {
         //새 비밀번호 암호화
@@ -101,13 +101,13 @@ public class MypageUpdateController implements ExceptionProcessor {
         if (result > 0) {
             ((Member)session.getAttribute("loginUser")).setPassword(newPassword);
         }
-        return "";
+        return utils.tpl("redirect:/mypage/profile");
     }
 
     // 회원탈퇴 포워딩
     @GetMapping("/delete")
     public String deleteView() {
-        return "";
+        return utils.tpl("deleteMember");
     }
 
     // 회원탈퇴
@@ -125,14 +125,14 @@ public class MypageUpdateController implements ExceptionProcessor {
 
                 if(result > 0) {
                     session.removeAttribute("loginUser");
-                    mv.setViewName("member/deleteMemberSuccess");
+                    mv.setViewName(utils.tpl("redirect:/mypage/profile"));
                 } else {
-                    mv.addObject("errorMsg", "회원탈퇴 실패").setViewName("common/errorPage");
+                    mv.addObject("errorMsg", "회원탈퇴 실패").setViewName(utils.tpl("mypage/deleteMember"));
                 }
 
             } else {
                 session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
-                mv.setViewName("redirect:");
+                mv.setViewName(utils.tpl("mypage/deleteMember"));
             }
 
         }
