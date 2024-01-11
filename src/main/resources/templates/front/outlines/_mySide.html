@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <aside th:fragment="menus">
-    <div class="circle"></div>
-    <dt th:text="#{프로필_이미지}"></dt>
-    <div id="profile_image">
-        <button type="button" class="upload_files"
-                    th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>
-    </div>
+    <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
+        <div class="circle"></div>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
+        <div class="circle">
+            <th:block  th:href="${session.member.profileImage != null}"
+                       th:utext="${@utils.printThumb(session.member.profileImage.seq, 250, 250, 'profile_image')}">
+            </th:block>
+        </div>
+    </th:block>
+    <button type="button" class="upload_files"
+            th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>
+
 
     <a th:href="@{/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
         <i class="xi-profile-o"></i> 내 프로필

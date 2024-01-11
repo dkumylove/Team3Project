@@ -51,20 +51,20 @@ public class SecurityConfig {
 //                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
 //                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
 //        });
-
-
-
-        http.exceptionHandling(c -> {
-
-            c.authenticationEntryPoint(( req,  res,  e) -> {
-                String URL = req.getRequestURI();
-                if(URL.indexOf("/admin") != -1) {  // 관리자 페이지
-                    res.sendError(HttpServletResponse.SC_UNAUTHORIZED);  //401
-                } else {  // 회원 전용 페이지
-                    res.sendRedirect(req.getContextPath()+"/member/login");
-                }
-            });
-        });
+//
+//
+//
+//        http.exceptionHandling(c -> {
+//
+//            c.authenticationEntryPoint(( req,  res,  e) -> {
+//                String URL = req.getRequestURI();
+//                if(URL.indexOf("/admin") != -1) {  // 관리자 페이지
+//                    res.sendError(HttpServletResponse.SC_UNAUTHORIZED);  //401
+//                } else {  // 회원 전용 페이지
+//                    res.sendRedirect(req.getContextPath()+"/member/login");
+//                }
+//            });
+//        });
         /* 인가설정 E - 접근 통제 */
 
         /**
