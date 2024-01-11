@@ -38,22 +38,22 @@ public class EmailSendService {
             tplData = Objects.requireNonNullElse(tplData, new HashMap<>());
             Context context = new Context();
 
-            tplData.put("to", message.to());
-            tplData.put("subject", message.subject());
-            tplData.put("message", message.message());
+            tplData.put("to", message.getTo());
+            tplData.put("subject", message.getSubject());
+            tplData.put("message", message.getMessage());
 
             context.setVariables(tplData);
 
             text = templateEngine.process("email/" + tpl, context);
         } else { // 템플릿 전송이 아닌 경우 메세지로 대체
-            text = message.message();
+            text = "메세지";
         }
 
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessageHelper.setTo(message.to()); // 메일 수신자
-            mimeMessageHelper.setSubject(message.subject());  // 메일 제목
+            mimeMessageHelper.setTo(message.getTo()); // 메일 수신자
+            mimeMessageHelper.setSubject(message.getSubject());  // 메일 제목
             mimeMessageHelper.setText(text, true); // 메일 내용
             javaMailSender.send(mimeMessage);
             return true;

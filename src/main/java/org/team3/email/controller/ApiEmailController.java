@@ -1,5 +1,6 @@
 package org.team3.email.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.team3.commons.rests.JSONData;
 import org.team3.email.service.EmailVerifyService;
@@ -22,10 +23,10 @@ public class ApiEmailController {
      * @return
      */
     @GetMapping("/verify")
-    public JSONData<Object> sendVerifyEmail(@RequestParam("email") String email) {
+    public JSONData<Object> sendVerifyEmail(@RequestParam("email") String email, HttpServletRequest request) {
         JSONData<Object> data = new JSONData<>();
 
-        boolean result = verifyService.sendCode(email);
+        boolean result = verifyService.sendCode(email, request);
         data.setSuccess(result);
 
         return data;

@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ListData;
 import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
@@ -85,7 +86,7 @@ public class MemberInfoService implements UserDetailsService {
      * @param search
      * @return
      */
-    public ListData<Member> getList(MemberSearch search){
+    public ListData<Member> getList(MemberSearchOptions search){
         int page = Utils.onlyPositiveNumber(search.getPage(), 1); // 페이지 구간
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 20); // 페이지당 레코드 갯수
         int offset = (page-1) * limit;
@@ -105,7 +106,8 @@ public class MemberInfoService implements UserDetailsService {
 
         /* 페이징 처리 R */
         int total = (int) memberRepository.count(andBuilder); // items.size() 얘랑 위의 크기랑 다른가..?
-        total = 12345;
+        System.out.println(total);
+        // total = 12345;
         Pagination pagination = new Pagination(page, total, 10, limit, request);
         /* 페이징 처리 E */
 

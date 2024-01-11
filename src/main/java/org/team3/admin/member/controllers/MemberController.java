@@ -1,20 +1,25 @@
 package org.team3.admin.member.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import org.team3.admin.board.controllers.RequestBoardConfig;
+import org.team3.admin.config.service.ConfigInfoService;
 import org.team3.admin.menus.Menu;
 import org.team3.admin.menus.MenuDetail;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.member.controllers.MemberSearch;
 import org.team3.member.entities.Member;
+import org.team3.member.service.MemberConfigInfoService;
 import org.team3.member.service.MemberInfoService;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +30,9 @@ public class MemberController implements ExceptionProcessor {
 
     //    private final MemberRepository repository;
     private final MemberInfoService memberInfoService;
+    private final MemberConfigInfoService configInfoService;
 
-//
+
 //    @ModelAttribute("memberList")
 //    public List<Member> getMemberList(){
 //        return repository.findAll();
@@ -54,16 +60,36 @@ public class MemberController implements ExceptionProcessor {
 //        return "admin/member/list";
 //    }
     @GetMapping
-    public String list(@ModelAttribute MemberSearch search, Model model) {
+    public String list(@ModelAttribute MemberSearchOptions search, Model model) {
         commonProcess("list", model);
 
         ListData<Member> data = memberInfoService.getList(search);
-
-        model.addAttribute("items", data.getItems()); // 목록
+        System.out.println(data.getItems());
+        model.addAttribute("MemberList", data.getItems()); // 목록
         model.addAttribute("pagination", data.getPagination()); // 페이징
 
         return "admin/member/list";
     }
+
+
+
+
+
+
+
+    @GetMapping("/edit/{userId}")
+    public String edit(@PathVariable("userId") String userId, Model model) {
+        commonProcess("edit", model);
+
+        MemberSearchOptions form = configInfoService.getForm(userId);
+        model.addAttribute("requestBoardConfig", form);
+
+        return "admin/board/edit";
+    }
+
+
+
+
 
     private void commonProcess(String mode, Model model) {
         mode = Objects.requireNonNullElse(mode, "list");
@@ -72,4 +98,7 @@ public class MemberController implements ExceptionProcessor {
         model.addAttribute("subMenuCode", mode);
         model.addAttribute("pageTitle", pageTitle);
     }
+
+
+
 }

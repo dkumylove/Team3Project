@@ -2,6 +2,7 @@ package org.team3.member.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import java.util.Optional;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @SessionAttributes("EmailAuthVerified")
+@Slf4j
 public class MemberController implements ExceptionProcessor {
 
     private final Utils utils;
@@ -65,7 +67,7 @@ public class MemberController implements ExceptionProcessor {
 
     /**
      * pageTitle 공통 처리 하기!!
-     * @param mode
+     * @param mode : 현재 모드
      * @param model
      */
 
@@ -84,10 +86,11 @@ public class MemberController implements ExceptionProcessor {
             addScript.add("member/form");
             addScript.add("member/join");
             addCss.add("member/join");
-        } else if(mode.equals("find_pw")) { // 비밀번호 찾기
+        } else if(mode.equals("findpw")) { // 비밀번호 찾기
             pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
-        } else if(mode.equals("find_id")){
+        } else if(mode.equals("findid")){
             pageTitle = Utils.getMessage("아이디_찾기", "commons");
+
             addScript.add("member/findId");
         }
         model.addAttribute("pageTitle", pageTitle);
@@ -127,10 +130,11 @@ public class MemberController implements ExceptionProcessor {
         if (errors.hasErrors()) {
             return utils.tpl("member/find_pw");
         }
+
         /* EmailAuthVerified 세션값 비우기 */
-        sessionStatus.setComplete();
+        // sessionStatus.setComplete();
         // 비밀번호 찾기에 이상 없다면 완료 페이지로 이동
-        return "redirect:/member/find_pw_done";
+        return utils.tpl("/member/find_pw_done");
     }
 
 
@@ -168,7 +172,7 @@ public class MemberController implements ExceptionProcessor {
         Member member = memberRepository.findByEmail(form.email()).orElse(null);
         model.addAttribute("member", member);
         System.out.println(member);
-        // 비밀번호 찾기에 이상 없다면 완료 페이지로 이동
+        // 아이디 찾기에 이상 없다면 완료 페이지로 이동
         return utils.tpl("member/find_id_done");
     }
 
