@@ -45,12 +45,12 @@ public class SecurityConfig {
          * 마이페이지 작업으로 잠시 주석처리함
          * 이지은 1월 10일
          */
-        /* 인가설정 S - 접근 통제 */
-        http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/mypage/**").authenticated() // 회원 전용
-                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
-                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
-        });
+//        /* 인가설정 S - 접근 통제 */
+//        http.authorizeHttpRequests(c -> {
+//            c.requestMatchers("/mypage/**").authenticated() // 회원 전용
+//                    //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
+//                    .anyRequest().permitAll(); // 그외 모든 페이지는 모두 접근 가능
+//        });
 
 
 
