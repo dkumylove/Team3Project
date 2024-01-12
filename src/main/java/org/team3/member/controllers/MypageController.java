@@ -1,15 +1,18 @@
 package org.team3.member.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
@@ -23,6 +26,8 @@ import org.team3.member.service.MemberService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static org.team3.member.entities.QMember.member;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,23 +57,7 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/profile");
     }
 
-//    /**
-//     * 회원정보 출력
-//     * @param search
-//     * @param model
-//     * @return
-//     */
-//    @GetMapping
-//    public String list(@ModelAttribute MemberSearchOptions search, Model model) {
-//        commonProcess("list", model);
-//
-//        ListData<Member> data = memberInfoService.getList(search);
-//        System.out.println(data.getItems());
-//        model.addAttribute("MemberList", data.getItems()); // 목록
-//
-//
-//        return "admin/member/list";
-//    }
+
     private void commonProcess(String mode, Model model) {
         mode = Objects.requireNonNullElse(mode, "list");
         String pageTitle = "회원 목록";
@@ -114,14 +103,24 @@ public class MypageController implements ExceptionProcessor {
 
     // 이메일 수정
     @GetMapping("/changeMail")
-    public String changeMailForm() {
+    public String changeMailForm(@ModelAttribute RequestJoin requestJoin, Model model) {
+
+
+        // 이메일 인증 여부 false로 초기화
+        model.addAttribute("EmailAuthVerified", false);
+
         return utils.tpl("mypage/changeMail");
     }
 
     @PostMapping("/changeMail")
-    public String changeMail(@ModelAttribute Member member) {
-        memberService.updateMemberMail(member.getEmail());
-        return utils.tpl("mypage/profile");
+    public String changeMailPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus) {
+
+        // EmailAuthVerified 세션값 비우기 */
+        sessionStatus.setComplete();
+
+        // 이메일 수정 후 리다이렉트
+        return "redirect:" + utils.tpl("/mypage/profile");
+
     }
 
 
@@ -190,7 +189,5 @@ public class MypageController implements ExceptionProcessor {
         }
         return mv;
     }
-
-
 
 }
