@@ -4,5 +4,29 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>비밀번호변경</h1>
+    <form>
+        <dl>
+            <dt th:text="#{현재_비밀번호}"></dt>
+            <dd>
+                <input type="text">
+            </dd>
+        </dl>
+        <dl>
+            <dt th:text="#{새_비밀번호}"></dt>
+            <dd>
+                <input type="text">
+            </dd>
+        </dl>
+        <dl>
+            <dt th:text="#{새_비밀번호_확인}"></dt>
+            <dd>
+                <input type="text">
+            </dd>
+        </dl>
+        <div class="submit_btns">
+            <button type="reset" class="btn">다시입력</button>
+            <button type="submit" class="btn">저장하기</button>
+        </div>
+    </form>
 </section>
 </html>
