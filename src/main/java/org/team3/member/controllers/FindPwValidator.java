@@ -35,9 +35,5 @@ public class FindPwValidator implements Validator {
             errors.reject("NotFound.member");
         }
 
-        boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
-        if(!isVerified){
-            errors.rejectValue("email", "Required.verified");
-        }
     }
 }
