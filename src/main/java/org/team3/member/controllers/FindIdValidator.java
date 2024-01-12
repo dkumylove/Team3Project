@@ -1,5 +1,6 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.team3.member.repositories.MemberRepository;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.springframework.validation.Validator;
 public class FindIdValidator implements Validator {
 
     private final MemberRepository memberRepository;
-
+    private final HttpSession httpSession;
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz.isAssignableFrom(RequestFindId.class);
@@ -26,9 +27,13 @@ public class FindIdValidator implements Validator {
         String email = form.email();
         String name = form.name();
 
-        if ((StringUtils.hasText(email) && !memberRepository.existsByEmail(email)) ||
-                (StringUtils.hasText(name) && !memberRepository.existsByName(name))) {
-            errors.reject("NotFound.member");
+        if ((StringUtils.hasText(email) && !memberRepository.existsByEmailAndName(email, name))) {
+            errors.rejectValue("member","NotFound.member");
+        }
+
+        boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
+        if(!isVerified){
+            errors.rejectValue("email", "Required.verified");
         }
     }
 }

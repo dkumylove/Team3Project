@@ -106,9 +106,12 @@ function callbackEmailVerifyCheck(data) {
         const authBoxEl = document.querySelector(".auth_box");
         authBoxEl.innerHTML = "<span class='confirmed'>인증완료</span><br>";
 
+        /* 에러 처리 완료
         // 5. 인증 성공 시 버튼 활성화
         const findbtn = document.getElementById("find_id_btn");
         findbtn.removeAttribute('disabled');
+        */
+
 
     } else { // 인증 실패
         alert("이메일 인증에 실패하였습니다.");
