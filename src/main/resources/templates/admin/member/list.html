@@ -4,10 +4,11 @@
       layout:decorate="~{admin/layouts/main}">
 
 <section layout:fragment="content">
-    <div class="top_box">
+
     <form name="frmSearch" method="get" th:action="@{/admin/member}" autocomplete="off"
           th:object="${MemberSearchOptions}">
-    <table class="table-cols style2">
+        <h2>검색 조건</h2>
+    <table class="table_cols mb30">
         <tbody>
         <tr>
             <th>가입일</th>
@@ -50,10 +51,12 @@
         </tr>
         </tbody>
     </table>
-        <button type="submit" th:text="#{검색}" ></button>
+        <div class="submit_btns">
+        <button type="submit" th:text="#{검색}" class="btn"></button>
+        </div>
 
     </form>
-    </div>
+
 
 
     <h1>회원 목록</h1>
@@ -100,9 +103,10 @@
                 <td th:text="*{gid}" align="center"></td>
                 <td th:text="*{email}" align="center"></td>
                 <td th:text="*{nickName}" align="center"></td>
-                <td th:text="*{createdAt}" align="center"></td>
-                <td th:text="*{modifiedAt}" align="center"></td>
-                <td th:text="authority" align="center"></td>
+                <td th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
+                <td th:text="*{#temporals.format(modifiedAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
+
+                <td th:text="*{authorities}" align="center"></td>
                 <td th:text="false" align="center"></td>
 
 
