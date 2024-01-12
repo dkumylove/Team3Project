@@ -96,7 +96,7 @@ public class MypageUpdateController implements ExceptionProcessor {
 
         member.setPassword(newPassword);
 
-        int result = Integer.parseInt(memberService.updateMemberPassword(member));
+        int result = Integer.parseInt(memberService.updateMemberPassword(member.getPassword()));
         //loginUser의 비밀번호 바꿔주기
         if (result > 0) {
             ((Member)session.getAttribute("loginUser")).setPassword(newPassword);
