@@ -64,4 +64,13 @@ public class Member extends Base {
     @OneToMany(mappedBy = "member")
     private Map<Boolean, BoardData> favoriteBoardDataList = new HashMap<>();
      */
+
+    /*
+    임시적으로 넣어둔 엔티티
+     */
+    private String updateMemberMail;
+    private String updateMemberNickname;
+    private String updateMemberPassword;
+    private String deleteMember;
+
 }

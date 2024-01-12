@@ -27,6 +27,8 @@ public class QMember extends EntityPathBase<Member> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final StringPath deleteMember = createString("deleteMember");
+
     public final StringPath email = createString("email");
 
     public final ListPath<Follow, QFollow> followers = this.<Follow, QFollow>createList("followers", Follow.class, QFollow.class, PathInits.DIRECT2);
@@ -45,6 +47,12 @@ public class QMember extends EntityPathBase<Member> {
     public final StringPath password = createString("password");
 
     public final NumberPath<Long> seq = createNumber("seq", Long.class);
+
+    public final StringPath updateMemberMail = createString("updateMemberMail");
+
+    public final StringPath updateMemberNickname = createString("updateMemberNickname");
+
+    public final StringPath updateMemberPassword = createString("updateMemberPassword");
 
     public final StringPath userId = createString("userId");
 
