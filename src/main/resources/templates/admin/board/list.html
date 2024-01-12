@@ -65,14 +65,14 @@
 
                     <input type="radio" th:name="${'!active_' + status.index}"
                            value="false" th:checked="*{active}" th:id="${'active_false_' + status.index}">
-                    <label th:for="${'active_false_' + status.index}">사용</label>
+                    <label th:for="${'active_false_' + status.index}">미사용</label>
                 </td>
 
                 <td>
-                    <a th:href="@{/admin/board/editor/{bid}/(bid=*{bid})}" class="sbtn">
-                        <i class="xi-pen"></i> 수정하기
+                    <a th:href="@{/admin/board/delete/{bid}(bid=*{bid})}" class="sbtn">
+                        <i class="xi-trash-o"></i> 삭제하기
                     </a>
-                    <a th:href="@{/admin/board/editor/{bid}/(bid=*{bid})}" class="sbtn on">
+                    <a th:href="@{/admin/board/edit/{bid}(bid=*{bid})}" class="sbtn on">
                         <i class="xi-pen"></i> 수정하기
                     </a>
                 </td>
@@ -90,4 +90,10 @@
 
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </section>
+
 </html>
+
+
+
+
+
