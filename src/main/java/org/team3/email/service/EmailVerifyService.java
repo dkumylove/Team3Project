@@ -76,6 +76,7 @@ public class EmailVerifyService {
 
             // 사용자 입력 코드와 발급 코드가 일치하는지 여부 체크
             boolean isVerified = code == authNum.intValue();
+            // EmailAuthVerified 이메일 인증 여부
             session.setAttribute("EmailAuthVerified", isVerified);
 
             return isVerified;
