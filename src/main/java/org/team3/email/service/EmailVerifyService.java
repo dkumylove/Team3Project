@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class EmailVerifyService {
+
     private final EmailSendService sendService;
     private final HttpSession session;
-
 
     /**
      * 이메일 인증 번호 발급 전송
@@ -22,7 +23,7 @@ public class EmailVerifyService {
      * @param email
      * @return
      */
-    public boolean sendCode(String email, HttpServletRequest request, String tpl) {
+    public boolean sendCode(String email, HttpServletRequest request, String tpl, Map<String, Object> tplData) {
         int authNum = (int)(Math.random() * 99999);
 
         session.setAttribute("EmailAuthNum", authNum);
@@ -32,26 +33,27 @@ public class EmailVerifyService {
 
         System.out.println(request.getRequestURI()); // api/verify/email
 
-        if(request.getRequestURI().indexOf("/findid")!=-1){
-            emailMessage.setTo(email);
-            emailMessage.setSubject(Utils.getMessage("Email.findid.subject", "commons"));
-            emailMessage.setMessage(Utils.getMessage("Email.findid.message", "commons"));
-
-        } else {
+//        if(request.getRequestURI().indexOf("/findid")!=-1){
+//            emailMessage.setTo(email);
+//            emailMessage.setSubject(Utils.getMessage("Email.findid.subject", "commons"));
+//            emailMessage.setMessage(Utils.getMessage("Email.findid.message", "commons"));
+//
+//        } else {
             emailMessage.setTo(email);
             emailMessage.setSubject(Utils.getMessage("Email.verification.subject", "commons"));
             emailMessage.setMessage(Utils.getMessage("Email.verification.message", "commons"));
-        }
+//        }
 
-        Map<String, Object> tplData = new HashMap<>();
-        tplData.put("authNum", authNum);
+        tplData = Objects.requireNonNullElse(tplData, new HashMap<>());
+
+        String tplCode = tpl.equals("find_id") ? "userId" : "authNum";
+
+        tplData.put(tplCode, authNum);
 
         return sendService.sendMail(emailMessage, tpl, tplData);
     }
 
-    public boolean sendCode(String email, HttpServletRequest request) {
-        return sendCode(email, request, "auth");
-    }
+
 
     /**
      * 발급 받은 인증번호와 사용자 입력 코드와 일치 여부 체크

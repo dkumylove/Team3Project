@@ -62,7 +62,6 @@ public class EmailSendService {
         }
 
         return false;
-
     }
 
     public boolean sendMail(EmailMessage message) {

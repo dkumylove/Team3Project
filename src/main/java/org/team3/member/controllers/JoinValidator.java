@@ -57,6 +57,7 @@ public class JoinValidator implements Validator, PasswordValidator {
             errors.rejectValue("confirmPassword", "Mismatch.password");
         }
 
+        // 4. 이메일 인증하기
         boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
         if(!isVerified){
             errors.rejectValue("email", "Required.verified");
