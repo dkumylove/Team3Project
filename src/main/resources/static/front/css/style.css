@@ -1,34 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
+:root {
+    --main-color: rgb(36,162,228); /*딥블루*/
+    --sub-coler : rgb(244,245,248); /*옅은 회색*/
+}
 * { font-family: 'Noto Sans KR', sans-serif; color: #000; box-sizing: border-box; outline: none; }
 html { font-size: 13px; }
 body { margin: 0; }
 a { text-decoration: none; }
+a:hover { font-weight : bolder; }
 ul, ol { list-style: none; margin: 0; padding: 0; }
 dl, dt, dd { margin: 0; padding: 0; }
 img { border: 0; }
 
 
 /* 헤더 영역 s */
-header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
-header > section:first-of-type { width: 208px; text-align: center; }
-header > section { width: 208px; text-align: center; }
+header { position: fixed; z-index: 1 ;top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
+header > section { width: 210px; text-align: center; font-size: 14px; }
 header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; }
-header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: beige; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500;}
+header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: black; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500;}
 header .btn_area a:last-of-type { background: steelblue ; color: beige}
 /* 헤더 영역 e */
 
 /* 푸터 영역 s */
-footer { padding: 20px; height: 150px; align-items: center; background: #fff; font-size: 14px; }
+footer { position: relative; z-index: 3; bottom: 0; left: 0; width: 100%; height: 150px; align-items: center; background: #fff; font-size: 14px; }
 footer { display: flex; justify-content: space-around; }
 footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
+#customer_center { color : rgb(36,162,228) }
 /* 푸터 영역 s */
 
 
 /* 내용역역 s */
 
 main { margin-top: 80px; background: lavender  ; min-height: 1000px; display: flex;}
-main > aside { position: fixed; top: 80; left: 0; height: 100%; width: 208px; background: dodgerblue  }
+main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: dodgerblue  }
 main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
 main > aside > a { display: block; height: 71px; color: lavender; font-size: 1.385rem;
