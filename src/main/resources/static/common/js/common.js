@@ -53,7 +53,7 @@ commonLib.ajaxLoad = function(method, url, params, responseType){
 };
 
 /**
-* 이메일 인증 메일 보내기
+* 이메일 인증 메일 보내기 : 회원가입
 *
 * @param email : 인증할 이메일
 */
@@ -61,6 +61,25 @@ commonLib.sendEmailVerify = function(email) {
     const { ajaxLoad } = commonLib;
 
     const url = `/api/email/verify?email=${email}`;
+
+    ajaxLoad("GET", url, null, "json")
+        .then(data => {
+            if (typeof callbackEmailVerify == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                callbackEmailVerify(data);
+            }
+        })
+        .catch(err => console.error(err));
+};
+
+/**
+* 아이디 찾기 : 인증 메일 보내기
+*
+* @param email : 인증할 이메일
+*/
+commonLib.sendEmailVerifyId = function(email) {
+    const { ajaxLoad } = commonLib;
+
+    const url = `/api/email/verify/findid?email=${email}`;
 
     ajaxLoad("GET", url, null, "json")
         .then(data => {

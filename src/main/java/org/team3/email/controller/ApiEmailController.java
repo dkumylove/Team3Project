@@ -20,20 +20,24 @@ public class ApiEmailController {
 
     private final EmailVerifyService verifyService;
 
+
+
     /**
      * 이메일 인증 코드 발급
      *
      * @param email
      * @return
      */
-    @GetMapping("/verify")
-    public JSONData<Object> sendVerifyEmail(EmailData params, HttpServletRequest request) {
+    @GetMapping("/verify/findid")
+    public JSONData<Object> sendVerifyEmailId(@RequestParam("email") String email, HttpServletRequest request) {
         JSONData<Object> data = new JSONData<>();
 
         /**
          * type : auth - 이메일 인증 번호 전송
          *      : find_id : 아이디 전송
          */
+
+        /*
         String type = params.type();
         String email = params.email();
         String userId = params.userId();
@@ -41,8 +45,43 @@ public class ApiEmailController {
 
         Map<String, Object> tplData = new HashMap<>();
         tplData.put("userId", userId);
+         */
 
-        boolean result = verifyService.sendCode(email, request, type, tplData);
+        boolean result = verifyService.sendCode(email, request);
+        data.setSuccess(result);
+
+        return data;
+    }
+
+
+
+
+    /**
+     * 이메일 인증 코드 발급
+     *
+     * @param email
+     * @return
+     */
+    @GetMapping("/verify")
+    public JSONData<Object> sendVerifyEmail(@RequestParam("email") String email, HttpServletRequest request) {
+        JSONData<Object> data = new JSONData<>();
+
+        /**
+         * type : auth - 이메일 인증 번호 전송
+         *      : find_id : 아이디 전송
+         */
+
+        /*
+        String type = params.type();
+        String email = params.email();
+        String userId = params.userId();
+        type = StringUtils.hasText(type) ? type : "auth";
+
+        Map<String, Object> tplData = new HashMap<>();
+        tplData.put("userId", userId);
+         */
+
+        boolean result = verifyService.sendCode(email, request);
         data.setSuccess(result);
 
         return data;

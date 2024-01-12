@@ -12,7 +12,7 @@
     <form>
         <th:block>
             <h2>내 정보</h2>
-            <!--  <th:block sec:authorize="isAnonymous()">미 로그인 상태
+            <th:block sec:authorize="isAnonymous()">  <!--미 로그인 상태 -->
                 <table border="1">
                     <tr>
                         <th rowspan="3">
@@ -39,14 +39,48 @@
                         </td>
                     </tr>
                 </table>
-            </th:block> -->
+                <table border="1">
+                    <tr>
+                        <th th:text="#{비밀번호}"></th>
+                        <td>
+                            비밀번호
+                        </td>
+                        <td>
+                            <th:block>
+                                <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
+                            </th:block>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th th:text="#{이메일}"></th>
+                        <td>
+                            이메일
+                        </td>
+                        <td>
+                            <a th:href="@{/mypage/changeMail}" th:text="#{이메일_수정}" ></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th th:text="#{보조지표}"></th>
+                        <td>
+                            <dd>지표1</dd>
+                            <dd>지표2</dd>
+                            <dd>지표3</dd>
+                        </td>
+                        <td>
+                            <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}"></a>
+                        </td>
+                    </tr>
+                </table>
+            </th:block>  <!--미 로그인 상태 -->
+
 
             <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                 <table border="1">
                     <tr>
                         <th rowspan="3">
                             <div class="circle">
-                                <th:block  th:href="${session.member.profileImage != null}"
+                                <th:block  th:if="${session.member.profileImage != null}"
                                            th:utext="${@utils.printThumb(session.member.profileImage.seq, 250, 250, 'profile_image')}">
                                 </th:block>
                             </div>
@@ -72,9 +106,6 @@
                         </td>
                     </tr>
                 </table>
-            </th:block>
-
-            <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                 <table border="1">
                     <tr>
                         <th th:text="#{비밀번호}"></th>
@@ -108,8 +139,7 @@
                         </td>
                     </tr>
                 </table>
-            </th:block>
-
+            </th:block> <!-- 로그인 상태 -->
 
         </th:block>
     </form>
