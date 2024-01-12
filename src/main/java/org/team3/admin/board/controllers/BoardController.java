@@ -27,15 +27,7 @@ public class BoardController implements ExceptionProcessor {
     private final BoardConfigSaveService boardConfigSaveService;
     private final BoardConfigInfoService configInfoService;
     private final BoardConfigValidator configValidator;
-
-    @PostMapping("/editSelectedItems")
-    public String editSelectedItems(@RequestParam List<Long> selectedItems) {
-        // 선택된 게시판 수정 로직 수행
-        // 여기서는 수정 페이지로의 이동이므로 그냥 경로를 반환하거나 필요한 로직을 추가
-        return "redirect:/edit-page";
-    }
-
-
+    
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
 
@@ -79,6 +71,14 @@ public class BoardController implements ExceptionProcessor {
         return "admin/board/add";
     }
 
+    /**
+     * 1월 12일 - 이기흥
+     * 관리자 게시판 목록 수정
+     * 
+     * @param bid
+     * @param model
+     * @return
+     */
     @GetMapping("/edit/{bid}")
     public String edit(@PathVariable("bid") String bid, Model model) {
         commonProcess("edit", model);
@@ -87,6 +87,16 @@ public class BoardController implements ExceptionProcessor {
         model.addAttribute("requestBoardConfig", form);
 
         return "admin/board/edit";
+    }
+
+    @GetMapping("/delete/{bid}")
+    public String delete(@PathVariable("bid") String bid, Model model) {
+        commonProcess("delete", model);
+
+        RequestBoardConfig form = configInfoService.getForm(bid);
+        model.addAttribute("requestBoardConfig", form);
+
+        return "admin/board/delete";
     }
 
     /**
