@@ -58,12 +58,12 @@ public class MypageController implements ExceptionProcessor {
     }
 
 
-//    private void commonProcess(String mode, Model model) {
-//        mode = Objects.requireNonNullElse(mode, "list");
-//        String pageTitle = "회원 목록";
-//
-//        model.addAttribute("subMenuCode", mode);
-//    }
+    private void commonProcess(String mode, Model model) {
+        mode = Objects.requireNonNullElse(mode, "list");
+        String pageTitle = "회원 목록";
+
+        model.addAttribute("subMenuCode", mode);
+    }
 
     @PostMapping("/profile")
     public String profile(@ModelAttribute Member member) {
@@ -104,11 +104,10 @@ public class MypageController implements ExceptionProcessor {
     // 이메일 수정
     @GetMapping("/changeMail")
     public String changeMailForm(@ModelAttribute RequestJoin requestJoin, Model model) {
-        commonProcess("join", model);
+
 
         // 이메일 인증 여부 false로 초기화
         model.addAttribute("EmailAuthVerified", false);
-
 
         return utils.tpl("mypage/changeMail");
     }
@@ -122,39 +121,6 @@ public class MypageController implements ExceptionProcessor {
         // 이메일 수정 후 리다이렉트
         return "redirect:" + utils.tpl("/mypage/profile");
 
-    }
-
-    private void commonProcess(String mode, Model model) {
-        mode = Objects.requireNonNullElse(mode, "list");
-        mode = StringUtils.hasText(mode) ? mode : "join";
-
-        String pageTitle = Utils.getMessage("회원가입", "commons");
-
-        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
-        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
-        List<String> addCss = new ArrayList<>(); // cdd추가
-
-        if(mode.equals("login")){
-            pageTitle = Utils.getMessage("로그인", "commons");
-        } else if(mode.equals("join")){
-            addCommonScript.add("fileManager");
-            addScript.add("member/form");
-            addScript.add("member/join");
-            addCss.add("member/join");
-        } else if(mode.equals("find_pw")) { // 비밀번호 찾기
-            pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
-        } else if(mode.equals("find_id")){
-            pageTitle = Utils.getMessage("아이디_찾기", "commons");
-            addScript.add("member/findId");
-        }
-
-        model.addAttribute("subMenuCode", mode);
-        model.addAttribute("pageTitle", pageTitle);
-        model.addAttribute("addCommonScript", addCommonScript);
-        model.addAttribute("addScript", addScript);
-        // model.addAttribute("addCss", addCss);
-        // 프론트에만 필요하면 프론트로
-        // 파일기능은 공통이기 때문에 common에 넣음
     }
 
 
@@ -223,7 +189,5 @@ public class MypageController implements ExceptionProcessor {
         }
         return mv;
     }
-
-
 
 }
