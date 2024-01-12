@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     if (emailVerifyEl) {
         emailVerifyEl.addEventListener("click", function() {
-            const { ajaxLoad, sendEmailVerify } = commonLib;
+            const { ajaxLoad, sendEmailVerifyId } = commonLib;
             const email = frmFindId.email.value.trim();
 
             if (!email) {
@@ -20,13 +20,20 @@ window.addEventListener("DOMContentLoaded", function() {
             ajaxLoad("GET", `/api/member/email_dup_check?email=${email}`, null, "json")
                 .then(data => {
                     if (data.success) { // 존재하는 이메일인 경우
-                        sendEmailVerify(email); // 이메일 인증 코드 전송
+                        sendEmailVerifyId(email); // 이메일 인증 코드 전송
                         this.disabled = frmFindId.email.readonly = true;
+
+                        /* 인증코드 재전송 처리 S */
+               if (emailReVerifyEl) {
+                        emailReVerifyEl.addEventListener("click", function() {
+                            sendEmailVerifyId(email);
+                        });
+                    }
+                        /* 인증코드 재전송 처리 E */
 
                     } else { // 존재하지 않는 이메일인 경우
                         alert("존재하지 않는 이메일 이메일입니다.");
                         frmFindId.email.focus();
-
                     }
                 });
         });
@@ -45,36 +52,10 @@ window.addEventListener("DOMContentLoaded", function() {
                 // 인증코드 확인 요청
                 const { sendEmailVerifyCheck } = commonLib;
                 sendEmailVerifyCheck(authNum);
-
-            });
-        }
-
-        // 인증코드 재전송 처리
-        if (emailReVerifyEl) {
-            emailReVerifyEl.addEventListener("click", function() {
-                const email = frmFindId.email.value.trim();
-
-                if (!email) {
-                    alert('이메일을 입력하세요.');
-                    document.getElementById('email').focus();
-                    return;
-                }
-
-                // 이메일 확인 전 이미 가입된 이메일인지 여부 체크
-                ajaxLoad("GET", `/api/member/email_dup_check?email=${email}`, null, "json")
-                    .then(data => {
-                        if (data.success) { // 존재하는 이메일인 경우
-                            sendEmailVerify(email); // 이메일 인증 코드 전송
-
-                        } else { // 존재하지 않는 이메일인 경우
-                            alert("존재하지 않는 이메일 이메일입니다.");
-                            frmFindId.email.focus();
-
-                        }
-                    });
             });
         }
     }
+
 });
 
 
@@ -123,13 +104,13 @@ function callbackEmailVerifyCheck(data) {
 
         // 4. 인증 성공시 인증코드 입력 영역 제거, 5. 인증 코드 입력 영역에 "확인된 이메일 입니다."라고 출력 처리
         const authBoxEl = document.querySelector(".auth_box");
-        authBoxEl.innerHTML = "<span class='confirmed'>확인된 이메일 입니다.</span><br>";
+        authBoxEl.innerHTML = "<span class='confirmed'>인증완료</span><br>";
 
-
-
+        /* 에러 처리 완료
         // 5. 인증 성공 시 버튼 활성화
         const findbtn = document.getElementById("find_id_btn");
         findbtn.removeAttribute('disabled');
+        */
 
 
     } else { // 인증 실패
