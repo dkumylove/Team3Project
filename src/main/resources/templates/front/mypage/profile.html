@@ -11,7 +11,9 @@
             <table border="1">
                 <tr>
                     <td>
-                        <div class="circle"></div>
+                        <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
+                            <div class="circle"></div>
+                        </th:block>
                         <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                             <div class="circle">
                                 <th:block  th:href="${session.member.profileImage != null}"
