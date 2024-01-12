@@ -46,7 +46,7 @@ public class EmailSendService {
 
             text = templateEngine.process("email/" + tpl, context);
         } else { // 템플릿 전송이 아닌 경우 메세지로 대체
-            text = "메세지";
+            text = message.getMessage();
         }
 
         try {
@@ -62,7 +62,6 @@ public class EmailSendService {
         }
 
         return false;
-
     }
 
     public boolean sendMail(EmailMessage message) {

@@ -47,6 +47,13 @@ public class MemberController implements ExceptionProcessor {
         return utils.tpl("member/join");
     }
 
+    /* 로그인 테스트 중 */
+    @GetMapping("/test")
+    public String test(){
+        // commonProcess("login", model);
+        return "front/member/loginTest";
+    }
+
     @PostMapping("/join")
     public String joinPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus){
         commonProcess("join", model);
