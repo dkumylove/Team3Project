@@ -10,22 +10,26 @@ img { border: 0; }
 
 
 /* 헤더 영역 s */
-
-header { display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
+header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
 header > section:first-of-type { width: 208px; text-align: center; }
 header > section { width: 208px; text-align: center; }
 header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; }
 header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: beige; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500;}
 header .btn_area a:last-of-type { background: steelblue ; color: beige}
-
 /* 헤더 영역 e */
+
+/* 푸터 영역 s */
+footer { padding: 20px; height: 150px; align-items: center; background: #fff; font-size: 14px; }
+footer { display: flex; justify-content: space-around; }
+footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
+/* 푸터 영역 s */
 
 
 /* 내용역역 s */
 
-main { background: lavender  ; min-height: 1000px; display: flex;}
-main > aside { width: 208px; background: dodgerblue  }
-main > section { flex-grow: 1; padding: 50px;}
+main { margin-top: 80px; background: lavender  ; min-height: 1000px; display: flex;}
+main > aside { position: fixed; top: 80; left: 0; height: 100%; width: 208px; background: dodgerblue  }
+main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
 main > aside > a { display: block; height: 71px; color: lavender; font-size: 1.385rem;
     text-align: center; line-height: 70px; position: relative;}
@@ -69,3 +73,6 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 
 /* 메시지 공통 */
 .message_box {box-shadow: 1px 1px 5px lightslategray ; padding: 15px; border-radius: 5px; font-size: 1.384rem; font-weight: 500; text-align: center; background: #ffffff; margin-bottom: 30px; color: steelblue }
+
+/* 마이페이지 사진*/
+.circle {border-radius: 50%; overflow: hidden;}

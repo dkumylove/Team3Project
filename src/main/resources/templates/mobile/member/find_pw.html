@@ -5,7 +5,7 @@
 <main layout:fragment="content">
     <h1 th:text="#{비밀번호_찾기}"></h1>
 
-    <form name="frmFindPw" method="post" th:action="@{/member/find_pw}" autocomplete="off" th:object="${requestFindPw}">
+    <form name="frmFindPw" method="post" th:action="@{/member/findpw}" autocomplete="off" th:object="${requestFindPw}">
 
         <input type="text" name="userId" th:field="*{userId}" th:placeholder="#{아이디}">
         <div class="error" th:each="err : ${#fields.errors('userId')}" th:text="${err}"></div>

@@ -1,5 +1,6 @@
 package org.team3.email.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.team3.commons.Utils;
@@ -21,20 +22,35 @@ public class EmailVerifyService {
      * @param email
      * @return
      */
-    public boolean sendCode(String email) {
+    public boolean sendCode(String email, HttpServletRequest request, String tpl) {
         int authNum = (int)(Math.random() * 99999);
 
         session.setAttribute("EmailAuthNum", authNum);
         session.setAttribute("EmailAuthStart", System.currentTimeMillis());
 
-        EmailMessage emailMessage = new EmailMessage(
-                email,
-                Utils.getMessage("Email.verification.subject", "commons"),
-                Utils.getMessage("Email.verification.message", "commons"));
+        EmailMessage emailMessage = new EmailMessage();
+
+        System.out.println(request.getRequestURI()); // api/verify/email
+
+        if(request.getRequestURI().indexOf("/findid")!=-1){
+            emailMessage.setTo(email);
+            emailMessage.setSubject(Utils.getMessage("Email.findid.subject", "commons"));
+            emailMessage.setMessage(Utils.getMessage("Email.findid.message", "commons"));
+
+        } else {
+            emailMessage.setTo(email);
+            emailMessage.setSubject(Utils.getMessage("Email.verification.subject", "commons"));
+            emailMessage.setMessage(Utils.getMessage("Email.verification.message", "commons"));
+        }
+
         Map<String, Object> tplData = new HashMap<>();
         tplData.put("authNum", authNum);
 
-        return sendService.sendMail(emailMessage, "auth", tplData);
+        return sendService.sendMail(emailMessage, tpl, tplData);
+    }
+
+    public boolean sendCode(String email, HttpServletRequest request) {
+        return sendCode(email, request, "auth");
     }
 
     /**

@@ -1,5 +1,6 @@
 package org.team3.email;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.team3.email.service.EmailMessage;
 import org.team3.email.service.EmailSendService;
 import org.team3.email.service.EmailVerifyService;
@@ -21,6 +22,8 @@ public class EmailSendTest {
     private EmailSendService emailSendService;
     @Autowired
     private EmailVerifyService emailVerifyService;
+    @Autowired
+    private HttpServletRequest request;
 
     @Test
     public void emailSendTest1(){
@@ -40,7 +43,8 @@ public class EmailSendTest {
     @Test
     @DisplayName("이메일 인증 번호 전송 테스트")
     void emailVerifyTest() {
-        boolean result = emailVerifyService.sendCode("bin0696@naver.com");
+
+        boolean result = emailVerifyService.sendCode("bin0696@naver.com", request);
         assertTrue(result);
     }
 }

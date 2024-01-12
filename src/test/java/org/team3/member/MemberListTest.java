@@ -23,12 +23,12 @@ public class MemberListTest {
      * 참고하세용!@!@!@
      * 이다은 - 1월 11일
      */
-    @Test @Disabled
+    @Test //@Disabled
     @WithMockUser
     void 회원추가(){
-        for(int i=1; i<50; i++){
+        for(int i=100; i<200; i++){
             Member member = Member.builder().name("사용자"+i).gid(UUID.randomUUID().toString())
-                    .email(i+"@gmail.com").nickName(i+"닉네임").userId(i+"아이디").password("123456").build();
+                    .email(i+"@gmail.com").nickName(i+"닉네임").userId(i+"아이디").password("123456").nickName("nick"+i).build();
             memberRepository.saveAndFlush(member);
         }
     }
