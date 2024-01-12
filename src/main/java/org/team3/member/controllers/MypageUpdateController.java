@@ -7,7 +7,6 @@ import org.modelmapper.internal.Errors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,9 +17,6 @@ import org.team3.member.entities.Profile;
 import org.team3.member.service.JoinService;
 import org.team3.member.service.MemberService;
 import org.team3.member.validator.currentUser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller("mypageUpdateController")
 @RequiredArgsConstructor
@@ -45,48 +41,11 @@ public class MypageUpdateController implements ExceptionProcessor {
 //        /* 비밀번호수정페이지로 전환 */
 //        return utils.tpl("mypage/changePw");
 //    }
-
-    /* 이메일 인증페이지 때문에 필요 */
     @GetMapping("changeMail")
-    public String changeEmail(@ModelAttribute RequestJoin requestJoin, Model model) {
-        commonProcess("join", model);
-        // model.addAttribute("pageTitle", "회원가입");
-
-        model.addAttribute("EmailAuthVerified", false); // 이메일 인증여부 false로 초기화
+    public String changeEmail() {
         /* 이메일수정페이지로 전환 */
         return utils.tpl("mypage/changeMail");
     }
-
-    private void commonProcess(String mode, Model model){
-        mode = StringUtils.hasText(mode) ? mode : "join";
-        String pageTitle = Utils.getMessage("회원가입", "commons");
-
-        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
-        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
-        List<String> addCss = new ArrayList<>(); // cdd추가
-
-        if(mode.equals("login")){
-            pageTitle = Utils.getMessage("로그인", "commons");
-        } else if(mode.equals("join")){
-            addCommonScript.add("fileManager");
-            addScript.add("member/form");
-            addScript.add("member/join");
-            addCss.add("member/join");
-        } else if(mode.equals("find_pw")) { // 비밀번호 찾기
-            pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
-        } else if(mode.equals("find_id")){
-            pageTitle = Utils.getMessage("아이디_찾기", "commons");
-            addScript.add("member/findId");
-        }
-        model.addAttribute("pageTitle", pageTitle);
-        model.addAttribute("addCommonScript", addCommonScript);
-        model.addAttribute("addScript", addScript);
-        // model.addAttribute("addCss", addCss);
-        // 프론트에만 필요하면 프론트로
-        // 파일기능은 공통이기 때문에 common에 넣음
-    }
-    /* 이메일 인증 페이지 떄문에 필요 */
-
     @GetMapping("changeIndicator")
     public String changeIndicator() {
         /* 보조지표수정페이지로 전환 */
@@ -137,7 +96,7 @@ public class MypageUpdateController implements ExceptionProcessor {
 
         member.setPassword(newPassword);
 
-        int result = Integer.parseInt(memberService.updateMemberPassword(member));
+        int result = Integer.parseInt(memberService.updateMemberPassword(member.getPassword()));
         //loginUser의 비밀번호 바꿔주기
         if (result > 0) {
             ((Member)session.getAttribute("loginUser")).setPassword(newPassword);
