@@ -176,7 +176,7 @@ public class MemberController implements ExceptionProcessor {
         /* EmailAuthVerified 세션값 비우기 */
         sessionStatus.setComplete();
 
-        Member member = memberRepository.findByEmail(form.email()).orElse(null);
+        Member member = memberRepository.findByEmail(form.getEmail()).orElse(null);
         model.addAttribute("member", member);
         System.out.println(member);
         // 아이디 찾기에 이상 없다면 완료 페이지로 이동

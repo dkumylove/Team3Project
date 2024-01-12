@@ -37,8 +37,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     default boolean existsByEmailAndName(String email, String name) {
         QMember member = QMember.member;
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(member.email.eq(email))
-                .and(member.name.eq(name));
+        builder.and(member.email.eq(email));
+        builder.and(member.name.eq(name));
 
         return exists(builder);
     }

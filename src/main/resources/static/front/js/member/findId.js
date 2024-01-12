@@ -24,11 +24,11 @@ window.addEventListener("DOMContentLoaded", function() {
                         this.disabled = frmFindId.email.readonly = true;
 
                         /* 인증코드 재전송 처리 S */
-               if (emailReVerifyEl) {
-                        emailReVerifyEl.addEventListener("click", function() {
-                            sendEmailVerifyId(email);
-                        });
-                    }
+                        if (emailReVerifyEl) {
+                            emailReVerifyEl.addEventListener("click", function() {
+                                sendEmailVerifyId(email);
+                            });
+                        }
                         /* 인증코드 재전송 처리 E */
 
                     } else { // 존재하지 않는 이메일인 경우

@@ -4,5 +4,22 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>비밀번호변경</h1>
+    <h1 th:text="#{비밀번호_변경}"></h1>
+
+    <form name="frmChangePw" method="post" th:action="@{/mypage/changePw}" autocomplete="off" th:object="${requestChangePw}">
+
+        <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+        <input type="password" name="cntpwd" th:field="*{cntpwd}" th:placeholder="#{현재_비밀번호}">
+        <div class="error" th:each="err : ${#fields.errors('cntpwd')}" th:text="${err}"></div>
+
+
+        <input type="password" name="newpwd" th:field="*{newpwd}" th:placeholder="#{새_비밀번호}">
+        <div class="error" th:each="err : ${#fields.errors('newpwd')}" th:text="${err}"></div>
+
+        <input type="password" name="checkpwd" th:field="*{checkpwd}" th:placeholder="#{새_비밀번호_확인}">
+        <div class="error" th:each="err : ${#fields.errors('checkpwd')}" th:text="${err}"></div>
+
+        <button type="submit" th:text="#{비밀번호_변경}"></button>
+    </form>
 </section>
 </html>

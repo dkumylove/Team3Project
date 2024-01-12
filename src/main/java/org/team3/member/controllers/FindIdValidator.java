@@ -24,11 +24,11 @@ public class FindIdValidator implements Validator {
 
         // 이메일 + 회원명 조합으로 조회 되는지 체크
         RequestFindId form = (RequestFindId) target;
-        String email = form.email();
-        String name = form.name();
+        String email = form.getEmail();
+        String name = form.getName();
 
         if ((StringUtils.hasText(email) && !memberRepository.existsByEmailAndName(email, name))) {
-            errors.rejectValue("member","NotFound.member");
+            errors.rejectValue("email","NotFound.member");
         }
 
         boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
