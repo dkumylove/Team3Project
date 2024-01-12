@@ -28,6 +28,14 @@ public class BoardController implements ExceptionProcessor {
     private final BoardConfigInfoService configInfoService;
     private final BoardConfigValidator configValidator;
 
+    @PostMapping("/editSelectedItems")
+    public String editSelectedItems(@RequestParam List<Long> selectedItems) {
+        // 선택된 게시판 수정 로직 수행
+        // 여기서는 수정 페이지로의 이동이므로 그냥 경로를 반환하거나 필요한 로직을 추가
+        return "redirect:/edit-page";
+    }
+
+
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
 
