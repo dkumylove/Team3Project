@@ -22,16 +22,15 @@ public class EmailVerifyService {
      * @param email
      * @return
      */
-    public boolean sendCode(String email, HttpServletRequest request) {
+    public boolean sendCode(String email, HttpServletRequest request, String tpl) {
         int authNum = (int)(Math.random() * 99999);
 
         session.setAttribute("EmailAuthNum", authNum);
         session.setAttribute("EmailAuthStart", System.currentTimeMillis());
 
-            EmailMessage emailMessage = new EmailMessage();
+        EmailMessage emailMessage = new EmailMessage();
 
         System.out.println(request.getRequestURI()); // api/verify/email
-
 
         if(request.getRequestURI().indexOf("/findid")!=-1){
             emailMessage.setTo(email);
@@ -47,7 +46,11 @@ public class EmailVerifyService {
         Map<String, Object> tplData = new HashMap<>();
         tplData.put("authNum", authNum);
 
-        return sendService.sendMail(emailMessage, "auth", tplData);
+        return sendService.sendMail(emailMessage, tpl, tplData);
+    }
+
+    public boolean sendCode(String email, HttpServletRequest request) {
+        return sendCode(email, request, "auth");
     }
 
     /**

@@ -20,9 +20,9 @@ public class MemberConfigInfoService {
     private final MemberRepository memberRepository;
 
     /**
-     * 게시판 설정 조회
+     * 회원 설정 조회
      *
-     * @param bid
+     * @param
      * @return
      */
     public Member get(String userId) {

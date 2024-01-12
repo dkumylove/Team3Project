@@ -23,7 +23,6 @@ public class Board extends BaseMember {
      * 이지은 - 1월 9일
      */
     @Id
-    @GeneratedValue
     private String bid; // 게시판 아이디
 
     @Column(length = 65, nullable = false)
