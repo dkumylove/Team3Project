@@ -9,24 +9,32 @@ window.addEventListener("DOMContentLoaded", function() {
         emailVerifyEl.addEventListener("click", function() {
             const { ajaxLoad, sendEmailVerifyId } = commonLib;
             const email = frmFindId.email.value.trim();
+            //const name = document.getElementById("name").value.trim();
+            const name = frmFindId.name.value.trim();
 
+            if (!email || !name) { // 이메일 또는 이름이 비어있을 경우
+                alert('이메일과 회원명을 모두 입력하세요.');
+                return;
+            }
+            /*
             if (!email) {
                 alert('이메일을 입력하세요.');
                 document.getElementById('email').focus();
                 return;
             }
+            */
 
             // 이메일 확인 전 이미 가입된 이메일인지 여부 체크
-            ajaxLoad("GET", `/api/member/email_dup_check?email=${email}`, null, "json")
+            ajaxLoad("GET", `/api/member/email_dup_check?email=${email}&name=${name}`, null, "json")
                 .then(data => {
                     if (data.success) { // 존재하는 이메일인 경우
-                        sendEmailVerifyId(email); // 이메일 인증 코드 전송
+                        sendEmailVerifyId(email, name); // 이메일 인증 코드 전송
                         this.disabled = frmFindId.email.readonly = true;
 
                         /* 인증코드 재전송 처리 S */
                         if (emailReVerifyEl) {
                             emailReVerifyEl.addEventListener("click", function() {
-                                sendEmailVerifyId(email);
+                                sendEmailVerifyId(email, name);
                             });
                         }
                         /* 인증코드 재전송 처리 E */
@@ -42,7 +50,8 @@ window.addEventListener("DOMContentLoaded", function() {
         if (emailConfirmEl && authNumEl) {
             emailConfirmEl.addEventListener("click", function() {
                 const authNum = authNumEl.value.trim();
-
+                const email = frmFindId.email.value.trim(); // 추가된 부분
+                const name = frmFindId.name.value.trim();
                 if (!authNum) {
                     alert("인증코드를 입력하세요.");
                     authNumEl.focus();
@@ -51,7 +60,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
                 // 인증코드 확인 요청
                 const { sendEmailVerifyCheck } = commonLib;
-                sendEmailVerifyCheck(authNum);
+                sendEmailVerifyCheck(authNum, email, name);
             });
         }
     }
@@ -67,12 +76,11 @@ window.addEventListener("DOMContentLoaded", function() {
 function callbackEmailVerify(data) {
     if (data && data.success) { // 전송 성공
         alert("인증코드가 이메일로 전송되었습니다. 확인후 인증코드를 입력하세요.");
-
         /** 3분 유효시간 카운트 */
         authCount.start();
-
     } else { // 전송 실패
-        alert("인증코드 전송에 실패하였습니다.");
+        alert("이메일과 회원명이 일치하지 않습니다.");
+        location.reload();
     }
 }
 
