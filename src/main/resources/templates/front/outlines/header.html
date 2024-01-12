@@ -11,6 +11,7 @@
     <section>
         <a th:href="@{/rank}">보조지표랭킹</a>
     </section>
+
     <section class="btn_area">
         <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
             <a th:href="@{/member/join}" th:text="#{회원가입}"></a>
@@ -20,7 +21,7 @@
             <th:block th:href="${session.member.profileImage != null}" th:utext="${@utils.printThumb(session.member.profileImage.seq, 80, 80, 'profile_image')}">
             </th:block>
             <span th:text="${#messages.msg('LOGIN_MSG', session.member.name, session.member.userId)}"></span>
-            <a th:href="@{/mypage}" th:text="#{마이페이지}"></a>
+            <a th:href="@{/mypage/profile}" th:text="#{마이페이지}"></a>
             <a th:href="@{/member/logout}" th:text="#{로그아웃}"></a>
 
             <a sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" th:href="@{/admin}" th:text="#{사이트_관리}"></a>

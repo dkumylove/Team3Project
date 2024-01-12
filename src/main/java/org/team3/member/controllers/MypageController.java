@@ -4,17 +4,25 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.Utils;
 import org.team3.member.entities.Member;
+import org.team3.member.service.JoinService;
 import org.team3.member.service.MemberService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/mypage")
 public class MypageController implements ExceptionProcessor {
 
     private final Utils utils;
@@ -22,34 +30,35 @@ public class MypageController implements ExceptionProcessor {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     // 마이페이지
-    @GetMapping("/mypage/profile")
+    @GetMapping("/profile")
     public String profileForm() {
         return utils.tpl("mypage/profile");
     }
 
-    @PostMapping("/mypage/profile")
+    @PostMapping("/profile")
     public String profile(@ModelAttribute Member member) {
         memberService.save(member);
         return utils.tpl("mypage/profile");
     }
-// 닉네임 수정
-    @GetMapping("/mypage/changeNickname")
+
+    // 닉네임 수정
+    @GetMapping("/changeNickname")
     public String changeNicknameForm() {
         return utils.tpl("mypage/changeNickname");
     }
 
-    @PostMapping("/mypage/changeNickname")
+    @PostMapping("/changeNickname")
     public String changeNickname(@ModelAttribute Member member) {
         memberService.updateMemberNickname(member.getNickName());
         return utils.tpl("mypage/profile");
     }
-// 비밀번호 수정
-    @GetMapping("/mypage/changePw")
+    // 비밀번호 수정
+    @GetMapping("/changePw")
     public String changePwForm() {
         return utils.tpl("mypage/changePw");
     }
 
-    @PostMapping("/mypage/changePw")
+    @PostMapping("changePw")
     public String changePw(@ModelAttribute Member member, HttpSession httpSession) {
         String newPw = memberService.updateMemberPassword(member.getPassword());
         int result = Integer.parseInt(memberService.updateMemberPassword(member.getPassword()));
@@ -60,27 +69,56 @@ public class MypageController implements ExceptionProcessor {
 
         return utils.tpl("mypage/profile");
     }
-// 이메일 수정
-    @GetMapping("/mypage/changeMail")
+    // 이메일 수정
+    @GetMapping("/changeMail")
     public String changeMailForm() {
         return utils.tpl("mypage/changeMail");
     }
 
-    @PostMapping("/mypage/changeMail")
+    @PostMapping("/changeMail")
     public String changeMail(@ModelAttribute Member member) {
         memberService.updateMemberMail(member.getEmail());
         return utils.tpl("mypage/profile");
     }
 
-// 지표수정
 
-// 회원 탈퇴
-    @GetMapping("/mypage/deleteMember")
+    /* 타입리프 페이지전화확인은위해 url매핑처림 s */
+    /* 이지은 1월 12일 */
+    // 지표수정
+    @GetMapping("changeIndicator")
+    public String changeIndicator() {
+        /* 보조지표수정페이지로 전환 */
+        return utils.tpl("mypage/changeIndicator");
+    }
+
+    /**
+     * 내 활동
+     * @return
+     */
+    @GetMapping("/myBoard")
+    public String myBoard() {
+
+        return utils.tpl("mypage/myBoard");
+    }
+
+    /**
+     * 팔로우
+     * @return
+     */
+    @GetMapping("/follow")
+    public String follow() {
+
+        return utils.tpl("mypage/follow");
+    }
+    /* 타입리프 페이지전화확인은위해 url매핑처림 e */
+
+    // 회원 탈퇴
+    @GetMapping("/deleteMember")
     public String deleteMemberForm() {
         return utils.tpl("mypage/deleteMember");
     }
 
-    @PostMapping("/mypage/deleteMember")
+    @PostMapping("/deleteMember")
     public ModelAndView deleteMember(@ModelAttribute("currentUser") Member member,
                                      HttpSession session, ModelAndView mv) {
 

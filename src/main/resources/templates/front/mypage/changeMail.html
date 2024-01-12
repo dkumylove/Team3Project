@@ -4,7 +4,7 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>이메일변경</h1>
-
+<!--
     <form name="findEmail" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestJoin}">
         <dl>
             <dt th:text="#{이메일}"></dt>
@@ -31,7 +31,7 @@
                 <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
             </dd>
         </dl>
-    </form>
+    </form>-->
 
 </section>
 </html>
