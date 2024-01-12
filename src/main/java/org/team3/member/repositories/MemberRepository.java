@@ -42,5 +42,10 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
 
         return exists(builder);
     }
+
+    default boolean existsByName(String name){
+        QMember member = QMember.member;
+        return exists(member.name.eq(name));
+    };
 }
 

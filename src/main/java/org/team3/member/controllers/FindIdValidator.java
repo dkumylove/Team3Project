@@ -26,7 +26,8 @@ public class FindIdValidator implements Validator {
         String email = form.email();
         String name = form.name();
 
-        if (StringUtils.hasText(email) && StringUtils.hasText(name) && !memberRepository.existsByEmailAndName(email, name)) {
+        if ((StringUtils.hasText(email) && !memberRepository.existsByEmail(email)) ||
+                (StringUtils.hasText(name) && !memberRepository.existsByName(name))) {
             errors.reject("NotFound.member");
         }
     }

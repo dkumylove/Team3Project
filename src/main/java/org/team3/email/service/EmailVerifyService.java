@@ -23,36 +23,42 @@ public class EmailVerifyService {
      * @param email
      * @return
      */
-    public boolean sendCode(String email, HttpServletRequest request, String tpl, Map<String, Object> tplData) {
+    public boolean sendCode(String email, HttpServletRequest request) {
+
         int authNum = (int)(Math.random() * 99999);
 
-        session.setAttribute("EmailAuthNum", authNum);
-        session.setAttribute("EmailAuthStart", System.currentTimeMillis());
+        session.setAttribute("EmailAuthNum", authNum); // 난수
+        session.setAttribute("EmailAuthStart", System.currentTimeMillis()); // 제한시간
 
         EmailMessage emailMessage = new EmailMessage();
 
         System.out.println(request.getRequestURI()); // api/verify/email
 
-//        if(request.getRequestURI().indexOf("/findid")!=-1){
-//            emailMessage.setTo(email);
-//            emailMessage.setSubject(Utils.getMessage("Email.findid.subject", "commons"));
-//            emailMessage.setMessage(Utils.getMessage("Email.findid.message", "commons"));
-//
-//        } else {
+        Map<String, Object> tplData = new HashMap<>();
+        if(request.getRequestURI().indexOf("/findid")!=-1){
+            emailMessage.setTo(email);
+            emailMessage.setSubject(Utils.getMessage("Email.findid.subject", "commons"));
+            emailMessage.setMessage(Utils.getMessage("Email.findid.message", "commons"));
+            tplData.put("authNum", authNum);
+            return sendService.sendMail(emailMessage, "findid", tplData);
+        } else {
             emailMessage.setTo(email);
             emailMessage.setSubject(Utils.getMessage("Email.verification.subject", "commons"));
             emailMessage.setMessage(Utils.getMessage("Email.verification.message", "commons"));
-//        }
+            tplData.put("authNum", authNum);
+            return sendService.sendMail(emailMessage, "auth", tplData);
+        }
 
+
+        /*
         tplData = Objects.requireNonNullElse(tplData, new HashMap<>());
 
         String tplCode = tpl.equals("find_id") ? "userId" : "authNum";
 
         tplData.put(tplCode, authNum);
+*/
 
-        return sendService.sendMail(emailMessage, tpl, tplData);
     }
-
 
 
     /**
@@ -83,8 +89,8 @@ public class EmailVerifyService {
 
             return isVerified;
         }
-
         return false;
     }
+
 
 }
