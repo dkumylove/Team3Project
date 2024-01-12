@@ -72,11 +72,6 @@ public class MemberController implements ExceptionProcessor {
     }
 
 
-
-
-
-
-
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") String userId, Model model) {
         commonProcess("edit", model);
@@ -86,9 +81,6 @@ public class MemberController implements ExceptionProcessor {
 
         return "admin/board/edit";
     }
-
-
-
 
 
     private void commonProcess(String mode, Model model) {
