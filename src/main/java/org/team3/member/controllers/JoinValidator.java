@@ -1,5 +1,6 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -13,6 +14,7 @@ import org.team3.member.repositories.MemberRepository;
 public class JoinValidator implements Validator, PasswordValidator {
 
     private final MemberRepository memberRepository;
+    private final HttpSession httpSession; // 이메일 인증을 위해 세션에 저장된 EmailAuthVerified을 사용해야함
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz.isAssignableFrom(RequestJoin.class);
@@ -24,6 +26,7 @@ public class JoinValidator implements Validator, PasswordValidator {
          * 1. 아이디, 이메일 중복여부 체크
          * 2. 비밀번호 복잡성 체크 : 대소문자 각각 1개이상, 숫자 1개이상, 특문 1개이상 포함
          * 3. 비밀번호, 비밀번호 확인 일치여부 체크
+         * 4. 이메일 인증 체크
          */
 
         RequestJoin form = (RequestJoin)target;
@@ -52,6 +55,12 @@ public class JoinValidator implements Validator, PasswordValidator {
         // 3. 비밀번호, 비밀번호 확인 일치여부 체크
         if(StringUtils.hasText(password) && StringUtils.hasText(confimPassword) && !password.equals(confimPassword)) {
             errors.rejectValue("confirmPassword", "Mismatch.password");
+        }
+
+        // 4. 이메일 인증하기
+        boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
+        if(!isVerified){
+            errors.rejectValue("email", "Required.verified");
         }
     }
 }

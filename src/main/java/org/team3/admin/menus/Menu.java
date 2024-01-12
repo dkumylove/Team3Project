@@ -21,7 +21,7 @@ public class Menu {
                 new MenuDetail("posts", "게시글관리", "/admin/board/posts")
         ));
 
-        menus.put("mypage", Arrays.asList(
+        menus.put("profile", Arrays.asList(
                 new MenuDetail("profile", "내프로필", "/front/mypage/profile"),
                 new MenuDetail("myBoard", "내활동", "/front/mypage/myBoard"),
                 new MenuDetail("follow", "팔로우팔로잉", "/front/mypage/follow"),
