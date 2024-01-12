@@ -5,15 +5,16 @@
 <section layout:fragment="content">
     <h1>이메일변경</h1>
 
-<!--
-    <form name="findEmail" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestJoin}">
+    <form name="frmJoin" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestJoin}">
         <dl>
             <dt th:text="#{이메일}"></dt>
             <dd>
                 <div>
+                    <!--
                     <input name="email" th:field="*{email}" th:placeholder="#{현재_이메일을_입력해주세요}"
                            th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}"
                            type="text">
+                           -->
                     <button id="email_verify" th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
                             th:text="#{인증코드전송}" type="button"></button>
                 </div>
@@ -29,10 +30,13 @@
                         <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
                     </th:block>
                 </div>
+                <!--
                 <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+                -->
+                <button type="submit" th:text="#{변경하기}" id="change_email_btn"></button>
             </dd>
         </dl>
-    </form>-->
+    </form>
 
 </section>
 </html>

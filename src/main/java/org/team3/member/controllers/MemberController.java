@@ -139,7 +139,7 @@ public class MemberController implements ExceptionProcessor {
         }
 
         /* EmailAuthVerified 세션값 비우기 */
-        // sessionStatus.setComplete();
+//         sessionStatus.setComplete();
         // 비밀번호 찾기에 이상 없다면 완료 페이지로 이동
         return utils.tpl("/member/find_pw_done");
     }
