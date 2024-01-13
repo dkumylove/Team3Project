@@ -76,10 +76,10 @@ commonLib.sendEmailVerify = function(email) {
 *
 * @param email : 인증할 이메일
 */
-commonLib.sendEmailVerifyId = function(email) {
+commonLib.sendEmailVerifyId = function(email, name) {
     const { ajaxLoad } = commonLib;
 
-    const url = `/api/email/verify/findid?email=${email}`;
+    const url = `/api/email/verify/findid?email=${email}&name=${name}`;
 
     ajaxLoad("GET", url, null, "json")
         .then(data => {

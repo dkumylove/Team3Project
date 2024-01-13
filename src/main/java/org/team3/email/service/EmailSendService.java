@@ -20,6 +20,7 @@ public class EmailSendService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
+
     /**
      * 메일 전송
      *
@@ -60,7 +61,6 @@ public class EmailSendService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 

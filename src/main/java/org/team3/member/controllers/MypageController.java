@@ -1,8 +1,13 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +27,7 @@ import org.team3.member.entities.Member;
 import org.team3.member.service.JoinService;
 import org.team3.member.service.MemberInfoService;
 import org.team3.member.service.MemberService;
+import org.team3.member.service.MypageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +43,7 @@ public class MypageController implements ExceptionProcessor {
     private final Utils utils;
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
-    private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+    private final MypageService mypageService;
 
     // 마이페이지
     @GetMapping
@@ -85,10 +90,12 @@ public class MypageController implements ExceptionProcessor {
 
     // 비밀번호 수정
     @GetMapping("/changePw")
-    public String changePwForm() {
+    public String changePwForm(@ModelAttribute RequestChangePw requestChangePw) {
+
         return utils.tpl("mypage/changePw");
     }
 
+    /* 잠시 주석 걸어둘게요 - 이다은 1월 13일
     @PostMapping("changePw")
     public String changePw(@ModelAttribute Member member, HttpSession httpSession) {
         String newPw = memberService.updateMemberPassword(member.getPassword());
@@ -97,9 +104,30 @@ public class MypageController implements ExceptionProcessor {
         if (result > 0) {
             ((Member) httpSession.getAttribute("memberPw")).setPassword(newPw);
         }
-
         return utils.tpl("mypage/profile");
     }
+
+     */
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("changePw")
+    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(errors.hasErrors()){
+            return utils.tpl("mypage/changePw");
+        }
+        System.out.println(authentication);
+        if(authentication!=null && authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            System.out.println(userDetails.getUsername());
+            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
+        } else {
+            return utils.tpl("mypage/changePw");
+        }
+        return "/front/home";
+    }
+
+
 
     // 이메일 수정
     @GetMapping("/changeMail")
@@ -162,6 +190,7 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/deleteMember");
     }
 
+    /* 잠시 닫아 둘게요 - 이다은 1월 13일
     @PostMapping("/deleteMember")
     public ModelAndView deleteMember(@ModelAttribute("currentUser") Member member,
                                      HttpSession session, ModelAndView mv) {
@@ -189,5 +218,5 @@ public class MypageController implements ExceptionProcessor {
         }
         return mv;
     }
-
+    */
 }
