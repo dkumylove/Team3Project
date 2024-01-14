@@ -17,6 +17,7 @@
                            th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}"
                            type="text">
                            -->
+                    <input name="email">
                     <button id="email_verify" th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
                             th:text="#{인증코드전송}" type="button"></button>
                 </div>
