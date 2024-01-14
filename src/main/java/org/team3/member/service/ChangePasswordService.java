@@ -12,8 +12,8 @@ public class ChangePasswordService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    public boolean checkPassword(String userId, String cntpwd) {
-        Member member = memberRepository.findByUserId(userId).orElseThrow(MemberNotFoundException::new);
+    public boolean checkPassword(String email, String cntpwd) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
 
         // 여기서 PasswordEncoder.matches 메서드를 사용하여 비밀번호 일치 여부 확인
         return bCryptPasswordEncoder.matches(cntpwd, member.getPassword());

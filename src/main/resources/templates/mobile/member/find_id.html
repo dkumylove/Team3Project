@@ -1,12 +1,11 @@
     <!DOCTYPE html>
     <html xmlns:th="http://www.thymeleaf.org"
           xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          layout:decorate="~{mobile/layouts/main}">
+          layout:decorate="~{mobile/layouts/findmain}">
     <main layout:fragment="content">
         <h1 th:text="#{아이디_찾기}"></h1>
 
         <form name="frmFindId" method="post" th:action="@{/member/findid}" autocomplete="off" th:object="${requestFindId}">
-
             <input type="text" name="name" th:field="*{name}" th:placeholder="#{회원명}">
             <div class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></div>
 
@@ -37,13 +36,10 @@
                             <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
                         </th:block>
                     </div>
-                    <button type="submit" th:text="#{아이디_찾기}" id="find_id_btn" disabled></button>
+                    <button type="submit" th:text="#{아이디_찾기}" id="find_id_btn"></button>
                     <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
                 </dd>
             </dl>
-
-
-
 
         </form>
     </main>

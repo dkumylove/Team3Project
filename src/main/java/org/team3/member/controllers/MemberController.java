@@ -209,11 +209,5 @@ public class MemberController implements ExceptionProcessor {
         return utils.tpl("member/find_pw_done");
     }
 
-    @GetMapping("/findall")
-    public String findall() {
-
-        return utils.tpl("member/findmain");
-    }
-
 
 }
