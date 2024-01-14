@@ -36,7 +36,7 @@ public class SecurityConfig {
         });
 
         http.logout(c -> {
-            c.logoutRequestMatcher(new AntPathRequestMatcher(".member/logout"))
+            c.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                     .logoutSuccessUrl("/"); // 로그아웃 시 메인 경로로 이동하도록 수정 - 이다은 1/11
         });
         /* 인증설정 E - 로그인, 로그아웃 E */

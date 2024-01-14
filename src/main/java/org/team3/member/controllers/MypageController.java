@@ -1,39 +1,29 @@
 package org.team3.member.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
 import org.team3.member.entities.Member;
-import org.team3.member.service.JoinService;
 import org.team3.member.service.MemberInfoService;
 import org.team3.member.service.MemberService;
-import org.team3.member.service.MypageService;
+import org.team3.member.service.ChangePasswordService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import static org.team3.member.entities.QMember.member;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +33,7 @@ public class MypageController implements ExceptionProcessor {
     private final Utils utils;
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
-    private final MypageService mypageService;
+    private final ChangePasswordService mypageService;
 
     // 마이페이지
     @GetMapping
@@ -110,16 +100,19 @@ public class MypageController implements ExceptionProcessor {
      */
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("changePw")
+    @PostMapping("/changePw")
     public String changePw(@Valid RequestChangePw requestChangePw, Errors errors) {
+        // 현재 사용자 정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(errors.hasErrors()){
             return utils.tpl("mypage/changePw");
         }
-        System.out.println(authentication);
+
+        System.out.println(authentication); // 현재 사용자정보
+
         if(authentication!=null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            System.out.println(userDetails.getUsername());
+            System.out.println(userDetails.getUsername()); // 현재 사용자 정보
             mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
         } else {
             return utils.tpl("mypage/changePw");
