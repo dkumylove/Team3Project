@@ -4,5 +4,19 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>팔로우팔로잉</h1>
+    <div class="widget_tab">
+        <ul class="tabs">
+            <li>
+                <input type="radio" name="tab" class="tab" value="/mypage/content/follower" id="widget_tab1" checked>
+                <label for="widget_tab1" th>Follower</label>
+            </li>
+            <li>
+                <input type="radio" name="tab" class="tab" value="/mypage/content/following" id="widget_tab2">
+                <label for="widget_tab2">Following</label>
+            </li>
+
+        </ul>
+        <div class="tab_content"></div>
+    </div>
 </section>
 </html>
