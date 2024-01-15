@@ -12,6 +12,13 @@ public class ChangePasswordService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /**
+     * 현재 비밀번호가 일치하는 지 여부
+     * @param email : 현재 로그인한 사용자 email
+     * @param cntpwd : 현재 입력한 비밀번호
+     * @return
+     */
     public boolean checkPassword(String email, String cntpwd) {
         Member member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
 
@@ -19,13 +26,17 @@ public class ChangePasswordService {
         return bCryptPasswordEncoder.matches(cntpwd, member.getPassword());
     }
 
+    /**
+     * 새 비밀번호 저장...
+     * @param email : 현재 로그인 한 사용자
+     * @param newpwd : 새 비밀번호
+     */
     // 이메일을 통해서 멤버값을 가져오고 새로운 비밀번호로 등록...
     public void changePassword(String email, String newpwd) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(MemberNotFoundException::new);
 
         member.setPassword(bCryptPasswordEncoder.encode(newpwd));
-
         memberRepository.saveAndFlush(member);
     }
 }

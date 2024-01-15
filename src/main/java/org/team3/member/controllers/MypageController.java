@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,11 +19,15 @@ import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
+import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
+import org.team3.member.service.ChangeEmailService;
 import org.team3.member.service.MemberInfoService;
 import org.team3.member.service.MemberService;
 import org.team3.member.service.ChangePasswordService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -34,6 +39,9 @@ public class MypageController implements ExceptionProcessor {
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
     private final ChangePasswordService mypageService;
+    private final MemberUtil memberUtil;
+    private final ChangeEmailService changeEmail;
+    private final ChangePwValidator changePwValidator;
 
     // 마이페이지
     @GetMapping
@@ -52,13 +60,30 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/profile");
     }
 
+    // 새로 만들게요 - 이다은 1월 15일
 
-    private void commonProcess(String mode, Model model) {
-        mode = Objects.requireNonNullElse(mode, "list");
-        String pageTitle = "회원 목록";
+//    private void commonProcess(String mode, Model model) {
+//        mode = Objects.requireNonNullElse(mode, "list");
+//        String pageTitle = "회원 목록";
+//
+//
+//        model.addAttribute("subMenuCode", mode);
+//    }
 
-        model.addAttribute("subMenuCode", mode);
+    private void commonProcess(String mode, Model model){
+        mode = StringUtils.hasText(mode) ? mode : "profile";
+        String pageTitle = Utils.getMessage("회원가입", "commons");
+
+        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
+        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
+        List<String> addCss = new ArrayList<>(); // css추가
+
+        if(mode.equals("changeEmail")){
+            addScript.add("mypage/changeEmail");
+        }
+        model.addAttribute("addScript", addScript);
     }
+
 
     @PostMapping("/profile")
     public String profile(@ModelAttribute Member member) {
@@ -102,8 +127,12 @@ public class MypageController implements ExceptionProcessor {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/changePw")
     public String changePw(@Valid RequestChangePw requestChangePw, Errors errors) {
+
         // 현재 사용자 정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        changePwValidator.validate(requestChangePw, errors);
+
         if(errors.hasErrors()){
             return utils.tpl("mypage/changePw");
         }
@@ -113,7 +142,12 @@ public class MypageController implements ExceptionProcessor {
         if(authentication!=null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             System.out.println(userDetails.getUsername()); // 현재 사용자 정보
-            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
+
+            if(mypageService.checkPassword(userDetails.getUsername(), requestChangePw.getCntpwd())) {
+                mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
+            } else{
+                return utils.tpl("mypage/changPw");
+            }
         } else {
             return utils.tpl("mypage/changePw");
         }
@@ -123,25 +157,32 @@ public class MypageController implements ExceptionProcessor {
 
 
     // 이메일 수정
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/changeMail")
-    public String changeMailForm(@ModelAttribute RequestJoin requestJoin, Model model) {
+    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model) {
 
+        commonProcess("changeEmail", model);
+        Member member = memberUtil.getMember();
+        model.addAttribute("email", member.getEmail());
 
         // 이메일 인증 여부 false로 초기화
         model.addAttribute("EmailAuthVerified", false);
-
         return utils.tpl("mypage/changeMail");
     }
 
     @PostMapping("/changeMail")
-    public String changeMailPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus) {
+    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model) {
 
+        if(errors.hasErrors()){
+            return utils.tpl("mypage/changeMail");
+        }
         // EmailAuthVerified 세션값 비우기 */
-        sessionStatus.setComplete();
+        // sessionStatus.setComplete();
+        Member member = memberUtil.getMember();
+        changeEmail.changeEmail(member, requestChangeEmail.getNewEmail());
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:" + utils.tpl("/mypage/profile");
-
+        return "redirect:/"+utils.tpl("mypage/profile");
     }
 
 
@@ -212,4 +253,7 @@ public class MypageController implements ExceptionProcessor {
         return mv;
     }
     */
+
+
+
 }

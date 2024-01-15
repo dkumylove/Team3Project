@@ -5,19 +5,16 @@
 <section layout:fragment="content">
     <h1>이메일변경</h1>
 
-<<<<<<<<< Temporary merge branch 1
-=========
-    <form name="frmJoin" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestJoin}">
+    <dt th:text="#{현재_이메일}"></dt>[[${email}]]
+
+    <form name="frmEmail" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestChangeEmail}">
         <dl>
             <dt th:text="#{이메일}"></dt>
             <dd>
                 <div>
-                    <!--
-                    <input name="email" th:field="*{email}" th:placeholder="#{현재_이메일을_입력해주세요}"
+                    <input name="newEmail" th:field="*{newEmail}" th:placeholder="#{새_이메일을_입력해주세요}"
                            th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}"
                            type="text">
-                           -->
-                    <input name="email">
                     <button id="email_verify" th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
                             th:text="#{인증코드전송}" type="button"></button>
                 </div>
