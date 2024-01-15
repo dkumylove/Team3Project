@@ -107,6 +107,26 @@ commonLib.sendEmailVerifyCheck = function(authNum) {
         .catch(err => console.error(err));
 };
 
+///**
+//* 비밀번호 수정 : 현재 비밀번호 확인하기
+//*
+//* @param email : 인증할 이메일
+//*/
+//commonLib.cntpwCheck = function(cntpwd) {
+//    const { ajaxLoad } = commonLib;
+//
+//    const url = `/api/mypage/changePw?cntpwd=${cntpwd}`;
+//
+//    ajaxLoad("GET", url, null, "json")
+//        .then(data => {
+//            if (typeof callbackEmailVerify == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+//                callbackEmailVerify(data);
+//            }
+//        })
+//        .catch(err => console.error(err));
+//};
+
+
 /**
 * 위지윅 에디터 로드
 * @param id = id값

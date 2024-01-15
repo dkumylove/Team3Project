@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate = "~{front/layouts/main}">
+      layout:decorate = "~{front/layouts/loginmain}">
 <main layout:fragment="content">
     <h1 th:text="#{로그인}"></h1>
     <form th:action="@{/member/login}" method="post" name="frmLogin" autocomplete="off">

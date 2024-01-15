@@ -1,12 +1,11 @@
     <!DOCTYPE html>
     <html xmlns:th="http://www.thymeleaf.org"
           xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          layout:decorate="~{front/layouts/main}">
+          layout:decorate="~{front/layouts/findmain}">
     <main layout:fragment="content">
         <h1 th:text="#{아이디_찾기}"></h1>
 
         <form name="frmFindId" method="post" th:action="@{/member/findid}" autocomplete="off" th:object="${requestFindId}">
-
             <input type="text" name="name" th:field="*{name}" th:placeholder="#{회원명}">
             <div class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></div>
 
