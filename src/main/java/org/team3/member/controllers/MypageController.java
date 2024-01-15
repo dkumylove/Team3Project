@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
@@ -212,10 +209,19 @@ public class MypageController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/follow")
-    public String follow() {
+    public String follow(Model model) {
+
+        model.addAttribute("addCommonScript", new String[] {"tab"});
+        model.addAttribute("addCommonCss", new String[] { "tab"});
 
         return utils.tpl("mypage/follow");
     }
+
+    @GetMapping("/content/{num}")
+    public String content(@PathVariable("num") Long num) {
+        return utils.tpl("mypage/follow" + num);
+    }
+
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
 
     // 회원 탈퇴
