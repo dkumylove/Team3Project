@@ -5,10 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 import org.team3.commons.entities.BaseMember;
 import org.team3.file.entities.FileInfo;
 import org.team3.member.Authority;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,4 +84,29 @@ public class Board extends BaseMember {
 
     @Transient
     private List<FileInfo> htmlBottomImages; // 게시판 하단 Bottom 이미지
+
+    @Transient
+    private FileInfo logo1; // 로고 이미지 1
+
+    @Transient
+    private FileInfo logo2; // 로고 이미지 2
+
+    @Transient
+    private FileInfo logo3; // 로고 이미지 3
+
+    /**
+     * 분류 List 형태로 변환
+     * @return
+     */
+    public List<String> getCategories() {
+        List<String> categories = new ArrayList<>();
+
+        if(StringUtils.hasText(category)) {
+            categories = Arrays.stream(category.trim().split("\\n"))
+                    .map(s -> s.trim().replaceAll("\\r", ""))
+                    .toList();
+        }
+
+        return categories;
+    }
 }

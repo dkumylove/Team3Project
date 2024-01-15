@@ -4,13 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.team3.admin.board.controllers.BoardSearch;
 import org.team3.admin.board.controllers.RequestBoardConfig;
 import org.team3.board.entities.Board;
@@ -21,6 +14,13 @@ import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
 import org.team3.file.entities.FileInfo;
 import org.team3.file.service.FileInfoService;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -78,6 +78,22 @@ public class BoardConfigInfoService {
 
         board.setHtmlTopImages(htmlTopImages);
         board.setHtmlBottomImages(htmlBottomImages);
+
+        List<FileInfo> logo1 = fileInfoService.getListDone(gid, "logo1");
+        List<FileInfo> logo2 = fileInfoService.getListDone(gid, "logo2");
+        List<FileInfo> logo3 = fileInfoService.getListDone(gid, "logo3");
+
+        if(logo1 != null && !logo1.isEmpty()) {
+            board.setLogo1(logo1.get(0));
+        }
+
+        if(logo2 != null && !logo2.isEmpty()) {
+            board.setLogo2(logo2.get(0));
+        }
+
+        if(logo3 != null && !logo3.isEmpty()) {
+            board.setLogo3(logo3.get(0));
+        }
     }
 
     /**
