@@ -9,7 +9,7 @@ public class BasicConfig {
     private String siteDescription = "";
     private String siteKeywords = "";
     private int cssJsVersion = 1;
-    private String joinTerms = "";
+    private String joinTerms = "약관 내용";
     private String thumbSize = "";
 
 }
