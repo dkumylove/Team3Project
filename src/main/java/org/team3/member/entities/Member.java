@@ -6,10 +6,7 @@ import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /* 테스트를 위해 추가 S - 이다은 1/11 */
 @Builder
@@ -48,6 +45,15 @@ public class Member extends Base {
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
 
+    // 다대다 관계로 팔로우 관계 설정
+    @ManyToMany
+    @JoinTable(name = "follow",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_id"))
+    private Set<Member> followers = new HashSet<>();
+
+    @ManyToMany(mappedBy = "followers")
+    private Set<Member> followings = new HashSet<>();
 
 //
 //    /* 팔로워 */

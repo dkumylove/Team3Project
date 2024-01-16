@@ -67,6 +67,21 @@ public class MypageController implements ExceptionProcessor {
 //        model.addAttribute("subMenuCode", mode);
 //    }
 
+    // 하단으로 내릴꼐요 - 이지은 1월 16일
+//    private void commonProcess(String mode, Model model){
+//        mode = StringUtils.hasText(mode) ? mode : "profile";
+//        String pageTitle = Utils.getMessage("회원가입", "commons");
+//
+//        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
+//        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
+//        List<String> addCss = new ArrayList<>(); // css추가
+//
+//        if(mode.equals("changeEmail")){
+//            addScript.add("mypage/changeEmail");
+//        }
+//        model.addAttribute("addScript", addScript);
+//    }
+
 
     @PostMapping("/profile")
     public String profile(@ModelAttribute Member member) {
