@@ -68,19 +68,20 @@ public class MypageController implements ExceptionProcessor {
 //        model.addAttribute("subMenuCode", mode);
 //    }
 
-    private void commonProcess(String mode, Model model){
-        mode = StringUtils.hasText(mode) ? mode : "profile";
-        String pageTitle = Utils.getMessage("회원가입", "commons");
-
-        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
-        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
-        List<String> addCss = new ArrayList<>(); // css추가
-
-        if(mode.equals("changeEmail")){
-            addScript.add("mypage/changeEmail");
-        }
-        model.addAttribute("addScript", addScript);
-    }
+    // 하단으로 내릴꼐요 - 이지은 1월 16일
+//    private void commonProcess(String mode, Model model){
+//        mode = StringUtils.hasText(mode) ? mode : "profile";
+//        String pageTitle = Utils.getMessage("회원가입", "commons");
+//
+//        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
+//        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
+//        List<String> addCss = new ArrayList<>(); // css추가
+//
+//        if(mode.equals("changeEmail")){
+//            addScript.add("mypage/changeEmail");
+//        }
+//        model.addAttribute("addScript", addScript);
+//    }
 
 
     @PostMapping("/profile")
@@ -207,23 +208,23 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/myBoard");
     }
 
-    /**
+     /**
      * 팔로우
-     *
+     * 1월 16일 이지은
      * @return
      */
     @GetMapping("/follow")
     public String follow(Model model) {
-
+       // commonProcess("follow", mpdel);
         model.addAttribute("addCommonScript", new String[] {"tab"});
         model.addAttribute("addCommonCss", new String[] { "tab"});
 
         return utils.tpl("mypage/follow");
     }
 
-    @GetMapping("/content/{num}")
-    public String content(@PathVariable("num") Long num) {
-        return utils.tpl("mypage/follow" + num);
+    @GetMapping("/content/{tab}")
+    public String content(@PathVariable("tab") String tab) {
+        return utils.tpl("mypage/content/" + tab);
     }
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
@@ -264,6 +265,37 @@ public class MypageController implements ExceptionProcessor {
     }
     */
 
+    /**
+     * 공통기능
+     * @param mode
+     * @param model
+     */
+    private void commonProcess(String mode, Model model) {
+
+        String pageTitle = "profile";  // 마이페이지 기본 파이틀
+        mode = StringUtils.hasText(mode) ? mode : "profile"; // 없으면 기본값 profile
+
+
+        List<String> addCommonScript = new ArrayList<>();    // 공통 자바스크립트
+        List<String> addCommonCss = new ArrayList<>();    // 공통 CSS
+        List<String> addCss = new ArrayList<>();       // 프론트 CSS
+        List<String> addScript = new ArrayList<>();    // 프론트 자바스크립트
+
+
+        if (mode.equals("changeMail")) {  // 이메일 수정
+            addScript.add("mypage/changeMail");
+            pageTitle = Utils.getMessage("changeMail", "commons");
+        } else if (mode.equals("follow")) { // 팔로우
+            pageTitle = Utils.getMessage("follow", "commons");
+
+        }
+
+        model.addAttribute("pageTitle", pageTitle);
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addScript", addScript);
+        model.addAttribute("addCommonScript", addCommonScript);
+        model.addAttribute("addCommonCss", addCommonCss);
+    }
 
 
 }
