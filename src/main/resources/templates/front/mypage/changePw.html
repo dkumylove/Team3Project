@@ -6,6 +6,7 @@
     <h1 th:text="#{비밀번호_변경}"></h1>
 
     <form name="frmChangePw" method="post" th:action="@{/mypage/changePw}" autocomplete="off" th:object="${requestChangePw}">
+        <input type="hidden" name="mode" value="changePw">
         <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
 
         <input type="password" name="cntpwd" th:field="*{cntpwd}" th:text="#{현재_비밀번호}">
