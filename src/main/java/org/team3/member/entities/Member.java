@@ -45,6 +45,7 @@ public class Member extends Base {
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
 
+    /* 팔로우때문에 추가한 엔티티 1월16일 이지은 */
     // 다대다 관계로 팔로우 관계 설정
     @ManyToMany
     @JoinTable(name = "follow",
@@ -54,6 +55,7 @@ public class Member extends Base {
 
     @ManyToMany(mappedBy = "followers")
     private Set<Member> followings = new HashSet<>();
+    /* 팔로우때문에 추가한 엔티티 */
 
 //
 //    /* 팔로워 */
