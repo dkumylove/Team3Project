@@ -39,6 +39,7 @@ public class MypageController implements ExceptionProcessor {
     private final MemberUtil memberUtil;
     private final ChangeEmailService changeEmail;
     private final ChangePwValidator changePwValidator;
+    private final ChangeEmailValidator changeEmailValidator;
 
     // 마이페이지
     @GetMapping
@@ -169,18 +170,21 @@ public class MypageController implements ExceptionProcessor {
     }
 
     @PostMapping("/changeMail")
-    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model) {
+    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model, SessionStatus sessionStatus) {
+
+        changeEmailValidator.validate(requestChangeEmail, errors);
 
         if(errors.hasErrors()){
             return utils.tpl("mypage/changeMail");
         }
-        // EmailAuthVerified 세션값 비우기 */
-        // sessionStatus.setComplete();
+
+        sessionStatus.setComplete();
+
         Member member = memberUtil.getMember();
         changeEmail.changeEmail(member, requestChangeEmail.getNewEmail());
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:/"+utils.tpl("mypage/profile");
+        return "redirect:"+utils.tpl("mypage/profile");
     }
 
 
@@ -204,9 +208,9 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/myBoard");
     }
 
-    /**
+     /**
      * 팔로우
-     *
+     * 1월 16일 이지은
      * @return
      */
     @GetMapping("/follow")

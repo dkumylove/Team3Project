@@ -92,7 +92,7 @@ public class MemberController implements ExceptionProcessor {
             addCommonScript.add("fileManager");
             addScript.add("member/form");
             addScript.add("member/join");
-            addCss.add("member/join");
+            addCss.add("member/style");
         } else if(mode.equals("findpw")) { // 비밀번호 찾기
             pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
         } else if(mode.equals("findid")){
