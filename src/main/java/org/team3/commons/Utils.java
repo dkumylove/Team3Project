@@ -230,4 +230,11 @@ public class Utils {
     public String[] getParams(String name) {
         return request.getParameterValues(name);
     }
+
+    public int guestUid() {
+        String ip = request.getRemoteAddr();
+        String ua = request.getHeader("User-Agent");
+
+        return Objects.hash(ip, ua);
+    }
 }

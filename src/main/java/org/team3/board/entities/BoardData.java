@@ -19,7 +19,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Table(indexes = {
-        @Index(name="idx_boardData_basic", columnList = "notice DESC createdAt DESC")
+        @Index(name="idx_boardData_basic", columnList = "notice DESC, createdAt DESC")
 })
 public class BoardData extends Base {
     /**
@@ -35,7 +35,7 @@ public class BoardData extends Base {
     private String gid = UUID.randomUUID().toString(); // 그룹 아이디
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="boardSeq")
+    @JoinColumn(name="bid")
     private Board board;
 
     @Column(length=50)
@@ -99,7 +99,7 @@ public class BoardData extends Base {
     private List<CommentData> comments; // 댓글 목록 -> 댓글
 
     @Transient
-    private List<FileInfo> editorImages;  // 첨부이미지
+    private List<FileInfo> editorFiles;  // 에디터 첨부 파일
 
     @Transient
     private List<FileInfo> attachFiles;  // 첨부파일
