@@ -26,10 +26,10 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 
 /* 내용역역 s */
-main { background: lavender  ; min-height: 1000px; display: flex; flex-direction: column;}
+main { background: lavender  ; min-height: 1000px; display: flex; flex-direction: column; }
 main { position:relative; }
 #join_logo { position:absolute; top: 80px; left:30%; width:300px; height:200px; z-index: 4; }
-#join_form { position:absolute; top: 200px; left:30% ; right: 30%; width: 800px; height: 700px}
+#join_form { position:absolute; top: 180px; left:30% ; right: 30%; height: 700px}
 /* 내용영역 e */
 
 
