@@ -7,7 +7,7 @@
 
     <dt th:text="#{현재_이메일}"></dt>[[${email}]]
 
-    <form name="frmEmail" method="post" th:action="@{/mypage/changeMail}" autocomplete="off" th:object="${requestChangeEmail}">
+    <form name="frmEmail" method="post" th:action="@{/mypage/changeEmail}" autocomplete="off" th:object="${requestChangeEmail}">
         <input type="hidden" name="mode" value="changeMail">
         <dl>
             <dt th:text="#{이메일}"></dt>
