@@ -13,10 +13,10 @@ public class MainController implements ExceptionProcessor {
 
     private final Utils utils;
 
-    @ModelAttribute("addCss")
-    public String[] addCss() {
-        return new String[]{"main/style"};
-    }
+//    @ModelAttribute("addCss")
+//    public String[] addCss() {
+//        return new String[]{"main/style"};
+//    }
 
     @GetMapping("/")
     public String index() {
