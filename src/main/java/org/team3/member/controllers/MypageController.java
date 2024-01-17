@@ -150,7 +150,7 @@ public class MypageController implements ExceptionProcessor {
         } else {
             return utils.tpl("mypage/changePw");
         }
-        return "/front/home";
+        return "/front/main/index";
     }
 
 
