@@ -157,7 +157,7 @@ public class MypageController implements ExceptionProcessor {
 
     // 이메일 수정
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/changeMail")
+    @GetMapping("/changeEmail")
     public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model) {
 
         commonProcess("changeEmail", model);
@@ -166,16 +166,16 @@ public class MypageController implements ExceptionProcessor {
 
         // 이메일 인증 여부 false로 초기화
         model.addAttribute("EmailAuthVerified", false);
-        return utils.tpl("mypage/changeMail");
+        return utils.tpl("mypage/changeEmail");
     }
 
-    @PostMapping("/changeMail")
+    @PostMapping("/changeEmail")
     public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model, SessionStatus sessionStatus) {
 
         changeEmailValidator.validate(requestChangeEmail, errors);
 
         if(errors.hasErrors()){
-            return utils.tpl("mypage/changeMail");
+            return utils.tpl("mypage/changeEmail");
         }
 
         sessionStatus.setComplete();
@@ -282,9 +282,9 @@ public class MypageController implements ExceptionProcessor {
         List<String> addScript = new ArrayList<>();    // 프론트 자바스크립트
 
 
-        if (mode.equals("changeMail")) {  // 이메일 수정
-            addScript.add("mypage/changeMail");
-            pageTitle = Utils.getMessage("changeMail", "commons");
+        if (mode.equals("changeEmail")) {  // 이메일 수정
+            addScript.add("mypage/changeEmail");
+            pageTitle = Utils.getMessage("changeEmail", "commons");
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
 
