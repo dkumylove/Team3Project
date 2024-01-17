@@ -91,9 +91,6 @@
             <option value="3">지표3</option>
         </select>
 
-
-
-
         <div th:text="#{회원가입_약관}">
         </div>
         <div class="overflow-auto terms" th:if="${siteConfig.joinTerms != null}" th:utext="${@utils.nl2br(siteConfig.joinTerms)}">약관...</div>
@@ -104,8 +101,9 @@
             <div class="error" th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
         </div>
 
-        <button type="submit" th:text="#{가입하기}" id="join_btn"></button>
-
+        <div class="d-grid" style="padding-top: 10px">
+            <button class="btn btn-outline-secondary" type="submit" th:text="#{가입하기}" id="join_btn"></button>
+        </div>
     </form>
 </main>
 </html>
