@@ -19,7 +19,8 @@
           th:each="cssFile : ${addCommonCss}"
           th:href="@{/common/css/{file}.css?v={v}(file=${cssFile}, v=${siteConfig.cssJsVersion})}">
 
-    <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css?v={v}(v=${siteConfig.cssJsVersion})}">
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css?v={v}(v=${siteConfig.cssJsVersion})}"> -->
+    <link rel="stylesheet" type="text/css" th:href="@{/front/css/join_style.css?v={v}(v=${siteConfig.cssJsVersion})}">
     <link rel="stylesheet" type="text/css"
           th:each="cssFile : ${addCss}"
           th:href="@{/front/css/{file}.css?v={v}(file=${cssFile}, v=${siteConfig.cssJsVersion})}">
@@ -37,10 +38,17 @@
     <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
-<header th:replace="~{admin/outlines/header::common}"></header>
 <main>
+    <div id="join_logo">
+        <a th:href="@{/home}">
+            <img src="../common/soc_logo.png"
+                 alt="Savvy Our Choice 로고"
+                 width="40%" height="40%"
+                 class="logo"/>
+        </a>
+    </div>
     <section>
-        <section layout:fragment="content"></section>
+        <section layout:fragment="content" id="join_form"></section>
     </section>
 </main>
 <footer th:replace="~{front/outlines/footer::common}"></footer>
