@@ -16,6 +16,8 @@ import org.team3.member.MemberUtil;
 @Service
 @RequiredArgsConstructor
 public class BoardSaveService {
+
+    private final BoardAuthService boardAuthService;
     private final BoardRepository boardRepository;
     private final BoardDataRepository boardDataRepository;
     private final FileUploadService fileUploadService;
