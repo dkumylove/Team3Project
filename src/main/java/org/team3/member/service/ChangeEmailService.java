@@ -35,10 +35,11 @@ public class ChangeEmailService {
     private final MemberRepository memberRepository;
     private final ChangeEmailValidator validator;
 
-    public void changeEmail(Member member, String email) {
+    @Transactional
+    public void changeEmail(String email, String newemail) {
 
-        Member member1 = memberRepository.findById(member.getSeq()).orElse(null);
-        member1.setEmail(email);
+        Member member1 = memberRepository.findByEmail(email).orElse(null);
+        member1.setEmail(newemail);
         memberRepository.saveAndFlush(member1);
     }
 

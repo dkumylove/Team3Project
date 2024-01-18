@@ -4,10 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.MemberUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,14 +24,13 @@ import org.team3.commons.ListData;
 import org.team3.commons.Utils;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
-import org.team3.member.service.ChangeEmailService;
-import org.team3.member.service.MemberInfoService;
-import org.team3.member.service.MemberService;
-import org.team3.member.service.ChangePasswordService;
+import org.team3.member.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static org.team3.member.entities.QMember.member;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,6 +45,9 @@ public class MypageController implements ExceptionProcessor {
     private final ChangeEmailService changeEmail;
     private final ChangePwValidator changePwValidator;
     private final ChangeEmailValidator changeEmailValidator;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final HttpServletRequest request;
 
     // 마이페이지
     @GetMapping
@@ -50,7 +56,17 @@ public class MypageController implements ExceptionProcessor {
         ListData<Member> data = memberInfoService.getList(search);
         System.out.println(data.getItems());
 
+
+
         model.addAttribute("memberList", data.getItems()); // 목록
+
+        // 이메일때매 추가
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+        HttpSession session = request.getSession();
+        session.setAttribute("email", memberInfo.getEmail());
+
+
 
         return utils.tpl("mypage/profile");
     }
@@ -162,9 +178,9 @@ public class MypageController implements ExceptionProcessor {
         commonProcess("changeEmail", model);
         HttpSession session = request.getSession();
         session.removeAttribute("EmailAuthVerified");
-
-        Member member = memberUtil.getMember();
-        model.addAttribute("email", member.getEmail());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+        model.addAttribute("email", memberInfo.getEmail());
 
         // sessionStatus.
         // 이메일 인증 여부 false로 초기화
@@ -186,12 +202,35 @@ public class MypageController implements ExceptionProcessor {
 
         // sessionStatus.setComplete();
 
-        Member member = memberUtil.getMember();
-        changeEmail.changeEmail(member, requestChangeEmail.getNewEmail());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+
+        changeEmail.changeEmail(((MemberInfo) authentication.getPrincipal()).getEmail(), requestChangeEmail.getNewEmail());
+        System.out.println(((MemberInfo) authentication.getPrincipal()).getEmail() +" " + ((MemberInfo) authentication.getPrincipal()).getPassword());
+        // authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials()));
+        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,authentication.getName()));
+
+        // System.out.println("**********"+authentication.getPrincipal());
+
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:/mypage/profile";
+        return utils.tpl("mypage/profile");
     }
+    /**
+     * @description 새로운 인증 생성
+     * @param currentAuth 현재 auth 정보
+     * @param username	현재 사용자 Id
+     * @return Authentication
+     * @author Armton
+     */
+    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+        UserDetails newPrincipal = memberInfoService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());
+        return newAuth;
+    }
+
 
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 s */
@@ -214,14 +253,14 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/myBoard");
     }
 
-     /**
+    /**
      * 팔로우
      * 1월 16일 이지은
      * @return
      */
     @GetMapping("/follow")
     public String follow(Model model) {
-       // commonProcess("follow", mpdel);
+        // commonProcess("follow", mpdel);
         model.addAttribute("addCommonScript", new String[] {"tab"});
         model.addAttribute("addCommonCss", new String[] { "tab"});
 

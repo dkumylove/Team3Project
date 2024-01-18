@@ -13,6 +13,8 @@ import org.team3.admin.menus.Menu;
 import org.team3.admin.menus.MenuDetail;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
+import org.team3.member.config.MemberConfigDeleteService;
+import org.team3.member.config.MemberConfigSaveService;
 import org.team3.member.controllers.MemberSearch;
 import org.team3.member.entities.Member;
 import org.team3.member.service.MemberConfigInfoService;
@@ -31,6 +33,8 @@ public class MemberController implements ExceptionProcessor {
     //    private final MemberRepository repository;
     private final MemberInfoService memberInfoService;
     private final MemberConfigInfoService configInfoService;
+    private final MemberConfigSaveService configSaveService;
+    private final MemberConfigDeleteService configDeleteService;
 
 
 //    @ModelAttribute("memberList")
@@ -39,6 +43,35 @@ public class MemberController implements ExceptionProcessor {
 //    }
 
     // 메뉴는 공통으로 쓰는 부분임
+
+    /**
+     * 게시판 목록 - 수정
+     *
+     * @param chks
+     * @return
+     */
+//    @PatchMapping
+//    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
+//        commonProcess("list", model);
+//
+//        configSaveService.saveList(chks);
+//
+//        model.addAttribute("script", "parent.location.reload()");
+//
+//        return "common/_execute_script";
+//    }
+//
+//    @DeleteMapping
+//    public String deleteList(@RequestParam("chk") List<Integer> chks, Model model) {
+//        commonProcess("list", model);
+//
+//        configDeleteService.deleteList(chks);
+//
+//        model.addAttribute("script", "parent.location.reload();");
+//
+//        return "common/_execute_script";
+//    }
+//
 
     /**
      * subMenus 라는 속성값이 있으면 값이 모든 컨트롤러에서 공유가 됨
@@ -71,7 +104,6 @@ public class MemberController implements ExceptionProcessor {
         return "admin/member/list";
     }
 
-
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") String userId, Model model) {
         commonProcess("edit", model);
@@ -82,7 +114,6 @@ public class MemberController implements ExceptionProcessor {
         return "admin/board/edit";
     }
 
-
     private void commonProcess(String mode, Model model) {
         mode = Objects.requireNonNullElse(mode, "list");
         String pageTitle = "회원 목록";
@@ -90,7 +121,5 @@ public class MemberController implements ExceptionProcessor {
         model.addAttribute("subMenuCode", mode);
         model.addAttribute("pageTitle", pageTitle);
     }
-
-
 
 }

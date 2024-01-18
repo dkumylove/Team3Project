@@ -8,49 +8,51 @@
     <form name="frmSearch" method="get" th:action="@{/admin/member}" autocomplete="off"
           th:object="${MemberSearchOptions}">
         <h2>검색 조건</h2>
-    <table class="table_cols mb30">
-        <tbody>
-        <tr>
-            <th>가입일</th>
-            <td colspan="5">
-                <!--
-                <input type="date" name="createSdate" th:value="*{createSdate}" class="wauto"> ~
-                <input type="date" name="createEdate" th:value="*{createEdate}" class="wauto">
-                -->
-            </td>
-        </tr>
+        <table class="table_cols mb30">
+            <tbody>
+            <tr>
+                <th>가입일</th>
+                <td colspan="5">
+                    <!--
+                    <input type="date" name="createSdate" th:value="*{createSdate}" class="wauto"> ~
+                    <input type="date" name="createEdate" th:value="*{createEdate}" class="wauto">
+                    -->
+                </td>
+            </tr>
 
-        <tr>
-            <th>가입구분</th>
-            <td width="250">
-                <input type="checkbox" name="authority" value="" id="managerType_admin">
-                <label for="managerType_admin">관리자</label>
+            <tr>
+                <th>가입구분</th>
+                <td width="250">
+                    <input type="checkbox" name="authority" value="" id="managerType_admin">
+                    <label for="managerType_admin">관리자</label>
 
-                <input type="checkbox" name="authority" value="" id="managerType_associate">
-                <label for="managerType_associate">회원</label>
-            </td>
-
-            <th>아이디</th>
-            <td width="250">
-                <input type="text" name="userId" >
-            <th>회원명</th>
-            <td>
-                <input type="text" name="name" >
-            </td>
-        </tr>
-        <tr>
-
-
-            <th>탈퇴/제한</th>
-            <td>
-                <input type="checkbox" name="active" value="false" id="isactivefalse">
-                <label for="isactivefalse">탈퇴회원</label>
-                <input type="checkbox" name="active" value="true" id="isactivetrue">
-                <label for="isactivetrue">활동회원</label>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    <input type="checkbox" name="authority" value="" id="managerType_associate">
+                    <label for="managerType_associate">회원</label>
+                </td>
+                <th>탈퇴/제한</th>
+                <td>
+                    <input type="checkbox" name="active" value="false" id="isactivefalse">
+                    <label for="isactivefalse">탈퇴회원</label>
+                    <input type="checkbox" name="active" value="true" id="isactivetrue">
+                    <label for="isactivetrue">활동회원</label>
+                </td>
+            </tr>
+            <tr>
+                <th>검색어</th>
+                <td>
+                <div class="input_grp">
+                        <select name="sopt">
+                            <option value="All">통합검색</option>
+                            <option value="userId">회원 ID</option>
+                            <option value="username">회원명</option>
+                            <option value="nickname">닉네임명</option>
+                        </select>
+                        <input type="text" name="skey">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
         <div class="submit_btns">
         <button type="submit" th:text="#{검색}" class="btn"></button>
         </div>
@@ -105,7 +107,10 @@
                 <td th:text="*{nickName}" align="center"></td>
                 <td th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
                 <td th:text="*{#temporals.format(modifiedAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
-                <td th:text="*{authorities}" align="center"></td>
+                <td>
+                    <span th:each="aut : ${MemberList.authorities}" th:text="${aut.authority}" th:if="${not #lists.isEmpty(MemberList.authorities)}"></span>
+                    <span th:if="${#lists.isEmpty(MemberList.authorities)}">No Authorities</span>
+                </td>
                 <td th:text="false" align="center"></td>
 
 
@@ -124,6 +129,8 @@
         <div class="table_actions">
             <button type="button" class="sbtn form_action" data-mode="delete"
                     data-form-name="frmList">선택 회원 삭제</button>
+            <button type="button" class="sbtn on form_action" data-mode="edit"
+                    data-form-name="frmList">선택 회원 수정</button>
         </div>
     </form>
 
