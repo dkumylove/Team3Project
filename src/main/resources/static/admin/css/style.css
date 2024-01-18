@@ -10,7 +10,7 @@ img { border:0; }
 
 /* 헤더 영역 S */
 header { display: flex; justify-content: space-between; height: 80px; align-items:center;
-background: #ffffff;}
+background: #fff;}
 header > section:first-of-type { width: 208px; text-align: center; }
 header > section:last-of-type { flex-grow:1; padding-right:20px; text-align:right;}
 header .btn_area a {display: inline-block; width: 90px; height: 28px;
