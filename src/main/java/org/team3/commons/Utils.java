@@ -202,7 +202,7 @@ public class Utils {
         Stream<String> nums = IntStream.range(0, 10).mapToObj(String::valueOf);
 
         // 특수문자 생성
-        Stream<String> specials = Stream.of("~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "-", "=", "[", "{", "}", "]", ";", ":");
+        Stream<String> specials = Stream.of("~", "!", "@", "#", "$", "%", "^", "*", "(", ")", "_", "+", "-", "[", "{", "}", "]");
 
         List<String> chars = Stream.concat(Stream.concat(alphas, nums), specials).collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(chars);

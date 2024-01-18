@@ -103,10 +103,10 @@
                     <tr>
                         <th th:text="#{닉네임}"></th>
                         <td>
-                            <span th:text="${#messages.msg('NICENAME_MSG', session.member.nickName)}"></span>
+                            <span th:text="${nickName}"></span>
                         </td>
                         <td>
-                            <button type="button" class="nName_edit" th:text="#{닉네임_수정}"></button>
+                            <a th:href="@{/mypage/changeNickname}" th:text="#{닉네임_수정}"></a>
                         </td>
                     </tr>
                 </table>
@@ -125,8 +125,10 @@
                     <tr>
                         <th th:text="#{이메일}"></th>
                         <td>
-<!--                            <span th:text="${#httpServletRequest.getSession().getAttribute('email')}"></span>-->
+                            <span th:text="${email}"></span>
+                            <!-- 이메일 수정 : 이다은 1월 18일
                             <span th:text="${#messages.msg('EMAIL_MSG', session.member.email)}"></span>
+                            -->
                         </td>
                         <td>
                             <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a>

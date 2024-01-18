@@ -24,11 +24,13 @@ import org.team3.commons.ListData;
 import org.team3.commons.Utils;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
+import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.team3.member.entities.QMember.member;
 
@@ -48,6 +50,7 @@ public class MypageController implements ExceptionProcessor {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final HttpServletRequest request;
+    private final MemberRepository memberRepository;
 
     // 마이페이지
     @GetMapping
@@ -56,16 +59,7 @@ public class MypageController implements ExceptionProcessor {
         ListData<Member> data = memberInfoService.getList(search);
         System.out.println(data.getItems());
 
-
-
         model.addAttribute("memberList", data.getItems()); // 목록
-
-        // 이메일때매 추가
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-        HttpSession session = request.getSession();
-        session.setAttribute("email", memberInfo.getEmail());
-
 
 
         return utils.tpl("mypage/profile");
@@ -112,15 +106,20 @@ public class MypageController implements ExceptionProcessor {
 
     // 닉네임 수정
     @GetMapping("/changeNickname")
-    public String changeNicknameForm() {
+    public String changeNicknameForm(Model model) {
+        commonProcess("changeNickname", model);
+
         return utils.tpl("mypage/changeNickname");
     }
 
-    @PostMapping("/changeNickname")
-    public String changeNickname(@ModelAttribute Member member) {
-        memberService.updateMemberNickname(member.getNickName());
-        return utils.tpl("mypage/profile");
-    }
+    // 자바 스크립트로 처리 - 이다은 : 1월 18일
+//    @PostMapping("/changeNickname.js")
+//    public String changeNickname.js(@ModelAttribute Member member) {
+//
+//
+//        memberService.updateMemberNickname(member.getNickName());
+//        return utils.tpl("mypage/profile");
+//    }
 
     // 비밀번호 수정
     @GetMapping("/changePw")
@@ -142,47 +141,58 @@ public class MypageController implements ExceptionProcessor {
     }
      */
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/changePw")
-    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors, Model model) {
+    // 자바스크립트로 처리
+//    @PreAuthorize("isAuthenticated()")
+//    @PostMapping("/changePw")
+//    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors, Model model) {
+//
+//        commonProcess("changePw", model);
+//
+//        // 현재 사용자 정보
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        changePwValidator.validate(requestChangePw, errors);
+//        System.out.println(authentication);
+//
+//        if(errors.hasErrors()){
+//            System.out.println(authentication);
+//            return utils.tpl("mypage/changePw");
+//        }
+//
+//        // System.out.println(authentication); // 현재 사용자정보
+//
+//        if(authentication!=null && authentication.isAuthenticated()) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            System.out.println(userDetails.getUsername()); // 현재 사용자 정보
+//            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
+//            return "redirect:/mypage/profile";
+//        } else {
+//            return utils.tpl("mypage/changePw");
+//        }
+//    }
 
-        commonProcess("changePw", model);
-
-        // 현재 사용자 정보
+    @ModelAttribute
+    public void modeladd(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        changePwValidator.validate(requestChangePw, errors);
-        System.out.println(authentication);
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+        model.addAttribute("email", memberInfo.getEmail());
 
-        if(errors.hasErrors()){
-            System.out.println(authentication);
-            return utils.tpl("mypage/changePw");
-        }
+        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null);
+        model.addAttribute("nickName", member.getNickName());
 
-        // System.out.println(authentication); // 현재 사용자정보
-
-        if(authentication!=null && authentication.isAuthenticated()) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            System.out.println(userDetails.getUsername()); // 현재 사용자 정보
-            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
-        } else {
-            return utils.tpl("mypage/changePw");
-        }
-        return utils.tpl("mypage/profile");
     }
-
 
 
     // 이메일 수정
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/changeEmail")
-    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model, HttpServletRequest request) {
+    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model) {
 
         commonProcess("changeEmail", model);
         HttpSession session = request.getSession();
         session.removeAttribute("EmailAuthVerified");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-        model.addAttribute("email", memberInfo.getEmail());
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+//        model.addAttribute("email", memberInfo.getEmail());
 
         // sessionStatus.
         // 이메일 인증 여부 false로 초기화
@@ -193,7 +203,7 @@ public class MypageController implements ExceptionProcessor {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/changeEmail")
-    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model, HttpServletRequest request) {
+    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model) {
 
         changeEmailValidator.validate(requestChangeEmail, errors);
 
@@ -214,10 +224,11 @@ public class MypageController implements ExceptionProcessor {
         SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,authentication.getName()));
 
         // System.out.println("**********"+authentication.getPrincipal());
-
+        HttpSession session = request.getSession();
+        session.removeAttribute("EmailAuthVerified");
 
         // 이메일 수정 후 리다이렉트
-        return utils.tpl("mypage/profile");
+        return "redirect:/mypage/changeEmail";
     }
     /**
      * @description 새로운 인증 생성
@@ -344,6 +355,9 @@ public class MypageController implements ExceptionProcessor {
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
             addScript.add("mypage/changePw");
+        } else if(mode.equals("changeNickname")){
+            pageTitle = Utils.getMessage("changeNickname", "commons");
+            addScript.add("mypage/changeNickname");
         }
 
         if (mode.equals("follow") || mode.equals("myBoard")) {

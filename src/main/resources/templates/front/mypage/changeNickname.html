@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-닉네임 변경 폼
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/myMain}">
+<section layout:fragment="content">
+
+    <form name="frmChangeNickname" method="post" th:action="@{/mypage/changePw}" autocomplete="off"
+          target="ifrmProcess">
+        <h1 th:text="#{닉네임_변경}"></h1>
+        <input type="hidden" name="mode" value="changeNickname">
+        <dt th:text="#{현재_닉네임}"></dt>
+        <dd th:text="${nickName}"></dd>
+
+        <dl>
+            <dt th:text="#{새 닉네임}"></dt>
+            <dd>
+                    <input type="text" name="newNickname">
+            </dd>
+        </dl>
+        <button type="submit" id="changeNickname" th:text="#{닉네임_변경}" ></button>
+    </form>
+</section>
 </html>
