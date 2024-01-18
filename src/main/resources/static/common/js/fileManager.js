@@ -11,8 +11,9 @@ commonLib.fileManager = {
     * @param location : 파일 그룹(gid) 안에서 위치 구분 값(예 - 메인이미지, 목록이미지, 상세페이지 이미지)
     * @param imageOnly : true - 이미지만 업로드 가능하게 통제
     * @param singleFile : true - 단일 파일 업로드
+    * @param done : false - 기존이미지 유지/ true - 바로 적용
     */
-    upload(files, location, imageOnly, singleFile) {
+    upload(files, location, imageOnly, singleFile, done) {
         try {
             if (!files || files.length == 0) {
                 throw new Error("업로드할 파일을 선택하세요.");
@@ -43,7 +44,7 @@ commonLib.fileManager = {
             const formData = new FormData(); // 기본 Content-Type: multipart/form-data ...
 
             formData.append("gid", gid);
-
+            formData.append("done", done || false);  // false : 기존 이미지 유지
             if (location) {
                 formData.append("location", location);
             }
@@ -115,13 +116,17 @@ window.addEventListener("DOMContentLoaded", function() {
             fileEl.singleFile = singleFile;
             if (singleFile) fileEl.multiple = false;
 
+            const done = this.dataset.done == 'true';  // true : 바뀐이미지 바로 적용
+            fileEl.done = done;
+
             // 파일 선택시 이벤트 처리
             fileEl.addEventListener("change", function(e) {
               const imageOnly = fileEl.imageOnly || false;
               const location = fileEl.location;
               const singleFile = fileEl.singleFile;
+              const done = fileEl.done;
 
-              commonLib.fileManager.upload(e.target.files, location, imageOnly, singleFile);
+              commonLib.fileManager.upload(e.target.files, location, imageOnly, singleFile, done);
             });
 
             fileEl.click();

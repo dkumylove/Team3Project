@@ -38,6 +38,8 @@ public class Member extends Base {
     @Column(length = 20, nullable = false)
     private String nickName; // 닉네임
 
+    private boolean act; // 활동 여부
+
     @ToString.Exclude  // 순환참조 방지
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Authorities> authorities = new ArrayList<>();

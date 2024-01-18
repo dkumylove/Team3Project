@@ -22,6 +22,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final org.team3.commons.entities.QBase _super = new org.team3.commons.entities.QBase(this);
 
+    public final BooleanPath act = createBoolean("act");
+
     public final ListPath<Authorities, QAuthorities> authorities = this.<Authorities, QAuthorities>createList("authorities", Authorities.class, QAuthorities.class, PathInits.DIRECT2);
 
     //inherited

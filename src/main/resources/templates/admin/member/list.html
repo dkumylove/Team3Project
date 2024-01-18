@@ -13,10 +13,8 @@
             <tr>
                 <th>가입일</th>
                 <td colspan="5">
-                    <!--
-                    <input type="date" name="createSdate" th:value="*{createSdate}" class="wauto"> ~
-                    <input type="date" name="createEdate" th:value="*{createEdate}" class="wauto">
-                    -->
+                    <input type="date" name="createSdate" > ~
+                    <input type="date" name="createEdate" >
                 </td>
             </tr>
 
@@ -56,9 +54,7 @@
         <div class="submit_btns">
         <button type="submit" th:text="#{검색}" class="btn"></button>
         </div>
-
     </form>
-
 
 
     <h1>회원 목록</h1>
@@ -73,7 +69,7 @@
                            id="checkall">
                     <label for="checkall"></label>
                 </th>
-                <th>seq</th>
+                <th>활동여부</th>
                 <th>name</th>
                 <th>userId</th>
                 <th>gid</th>
@@ -99,7 +95,15 @@
                            th:id="${'chk_' + status.index}">
                     <label th:for="${'chk_' + status.index}"></label>
                 </td>
-                <td th:text="*{seq}" align="center"></td>
+                <td>
+                    <input type="radio" th:name="${'act_' + status.index}"
+                           value="true" th:checked="*{act}" th:id="${'act_true_' + status.index}">
+                    <label th:for="${'act_true' + status.index}">활동</label>
+
+                    <input type="radio" th:name="${'act_' + status.index}"
+                           value="false" th:checked="*{!act}" th:id="${'act_false_' + status.index}">
+                    <label th:for="${'act_false_' + status.index}">정지</label>
+                </td>
                 <td th:text="*{name}" align="center"></td>
                 <td th:text="*{userId}" align="center"></td>
                 <td th:text="*{gid}" align="center"></td>
