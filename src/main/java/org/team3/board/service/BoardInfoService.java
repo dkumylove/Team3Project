@@ -180,7 +180,7 @@ public class BoardInfoService {
      * 최신 게시글
      *
      * @param bid : 게시판 아이디
-     * @param limit : 조회할 개수
+     * @param limit : 조회할 갯수
      * @return
      */
     public List<BoardData> getLatest(String bid, int limit) {
