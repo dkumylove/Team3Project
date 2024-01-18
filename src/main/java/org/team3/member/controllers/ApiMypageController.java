@@ -2,6 +2,7 @@ package org.team3.member.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.MemberUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.team3.commons.rests.JSONData;
+import org.team3.member.MemberUtil;
 import org.team3.member.service.ChangePasswordService;
 
 import java.util.Map;
@@ -19,7 +21,8 @@ import java.util.Map;
 @RequestMapping("/api/mypage")
 @RequiredArgsConstructor
 public class ApiMypageController {
-    private ChangePasswordService changePasswordService;
+    private final ChangePasswordService changePasswordService;
+    private final MemberUtil memberUtil;
 
 
     /**
@@ -27,20 +30,23 @@ public class ApiMypageController {
      * @param cntpwd 현재비밀번호
      * @return
      */
-//    @GetMapping("/changPw")
-//    public JSONData<Object> changepwd(@RequestParam("cntpwd") String cntpwd){
-//        JSONData<Object> data = new JSONData<>();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails user = (UserDetails) authentication.getPrincipal();
-//        String username = user.getUsername(); // 이메일
-//        boolean result = changePasswordService.checkPassword(username, cntpwd);
-//        if(result){
-//            data.setSuccess(result);
-//        } else {
-//            data.setSuccess(false);
-//        }
-//        return data;
-//    }
+    @GetMapping("/changePwCheck")
+    public JSONData<Object> changepwd(@RequestParam("cntpwd") String cntpwd){
+        JSONData<Object> data = new JSONData<>();
+        // 현재 사용자 정보
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // System.out.println(authentication);
+
+        boolean result = changePasswordService.checkPassword(authentication.getName(), cntpwd);
+        System.out.println("result" + result);
+
+        if(result){
+            data.setSuccess(result);
+        } else {
+            data.setSuccess(false);
+        }
+        return data;
+    }
 
     /**
      *

@@ -22,10 +22,8 @@ public class ChangeEmailValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         RequestChangeEmail requestChangeEmail = (RequestChangeEmail) target;
-        boolean isVerified = (boolean) httpSession.getAttribute("EmailAuthVerified");
 
-        if(!isVerified){
-            errors.rejectValue("email", "Required.verified");
-        }
+
+
     }
 }

@@ -22,6 +22,7 @@ public class JoinValidator implements Validator, PasswordValidator {
 
     @Override
     public void validate(Object target, Errors errors) {
+
         /**
          * 1. 아이디, 이메일 중복여부 체크
          * 2. 비밀번호 복잡성 체크 : 대소문자 각각 1개이상, 숫자 1개이상, 특문 1개이상 포함
