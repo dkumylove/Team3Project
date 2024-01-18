@@ -18,6 +18,19 @@ commonLib.fileManager = {
                 throw new Error("업로드할 파일을 선택하세요.");
             }
 
+            if(singleFile) { // 단일 파일 업로드 -> 첫번째 업로드 파일로 한정
+                files = [files[0]];
+            }
+
+            // 이미지만 업로드 가능일 때 처리
+            if (imageOnly) {
+                for (const file of files) {
+                    // 이미지 형식이 아닌 파일이 포함되어 있는 경우
+                    if (file.type.indexOf("image/") == -1) {
+                        throw new Error("이미지 형식의 파일만 업로드 가능합니다.")
+                    }
+                }
+            }
 
             // gid
             const gidEl = document.querySelector("[name='gid']");
@@ -39,28 +52,14 @@ commonLib.fileManager = {
                 formData.append("singleFile", singleFile);
             }
 
-            // 이미지만 업로드 가능일때 처리 S
-            if (imageOnly) {
-                for (const file of files) {
-                    // 이미지 형식이 아닌 파일이 포함되어 있는 경우
-                    if (file.type.indexOf("image/") == -1) {
-                        throw new Error("이미지 형식의 파일만 업로드 가능합니다.");
-                    }
-                }
-
-                formData.append("imageOnly", imageOnly);
-            }
-            // 이미지만 업로드 가능일때 처리 E
-
             for (const file of files) {
-                formData.append("file", file);
+               formData.append("file", file);
             }
 
             const { ajaxLoad } = commonLib;
             ajaxLoad("POST", "/api/file", formData, "json")
                 .then(res => { // 요청 성공시
                     if (res && res.success) { // 파일 업로드 성공시
-
                         if (typeof parent.callbackFileUpload == 'function') {
                             parent.callbackFileUpload(res.data);
                         }
@@ -75,9 +74,26 @@ commonLib.fileManager = {
             alert(err.message);
             console.error(err);
         }
+    },
+    /**
+    * 파일 삭제
+    *
+    * @param seq : 파일 등록 번호
+    */
+    delete(seq) {
+    const { ajaxLoad } = commonLib;
+
+    ajaxLoad('DELETE', `/api/file/${seq}`, null, "json")
+        .then(res => {
+            if(res.success) {
+                if(typeof parent.callbackFileUpload == 'function') {
+                    parent.callbackFileDelete(res.data);
+                }
+            }
+        })
+        .catch(err => console.error(err));
     }
 };
-
 
 // 이벤트 처리
 window.addEventListener("DOMContentLoaded", function() {
@@ -111,4 +127,24 @@ window.addEventListener("DOMContentLoaded", function() {
             fileEl.click();
         });
     }
+
+    /* 드래그 앤 드롭 파일 업로드 처리 */
+    const dragndropUploads = document.getElementsByClassName("dragndrop_uploads");
+    for(const el of dragndropUploads) {
+        el.addEventListener("dragover", function(e) {
+            e.preventDefault(); // 기본 동작 차단
+        });
+
+        el.addEventListener("drop", function(e) {
+            e.preventDefault(); // 기본 동작 차단
+
+            const dataset = this.dataset;
+            const files = e.dataTransfer.files;
+
+            commonLib.fileManager.upload(files, dataset.location, dataset.imageOnly,
+             dataset.singleFile);
+
+        });
+    }
+    /* 드래그 앤 드롭 파일 업로드 처리 */
 });
