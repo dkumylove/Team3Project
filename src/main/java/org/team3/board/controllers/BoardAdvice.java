@@ -8,7 +8,7 @@ import org.team3.board.service.config.BoardConfigInfoService;
 
 import java.util.List;
 
-@ControllerAdvice("org.choongang")
+@ControllerAdvice("org.team3")
 @RequiredArgsConstructor
 public class BoardAdvice {
     private final BoardConfigInfoService configInfoService;

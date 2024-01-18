@@ -64,6 +64,22 @@ h2 { margin: 0 0 10px 0; font-size: 1.385rem; line-height: 1; }
 .table_cols th { background: #38A5EE   ; font-weight: normal;}
 /* 테이블 공통 e */
 
+/* 헤더 공통 S 잠깐 주석처리
+header .site_top { background: #f8f8f8l border-bottom: 1px solid #d5d5d5; }
+header .site_top > div { text-align: right; height: 30px; line-height: 30px; }
+header .site_top a { margin-left: 15px; }
+header .site_top a:hover { text-decoration: underline; }
+
+header .logo_search > div { display: flex; align-items: center;
+justify-content: space-between; height: 100px; }
+header .logo_search .search { display: flex; }
+
+header nav { background: #596b99; }
+header nav > .inner a { display: inline-block; height: 45px; line-height: 45px;
+ padding: 0 25px; min-width: 120px; text-align: center; color:#fff; font-size: 1.35rem; }
+header nav > .inner a:hover { background: #222; }
+ 헤더 공통 E */
+
 /* 입력 공통 s */
 input[type='text'],
 input[type='number'],
