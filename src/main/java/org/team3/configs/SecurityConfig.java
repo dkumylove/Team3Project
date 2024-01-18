@@ -1,8 +1,13 @@
 package org.team3.configs;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.team3.member.service.LoginFailurdHandler;
 import org.team3.member.service.LoginSuccessHandler;
@@ -17,9 +22,15 @@ import org.team3.member.service.MemberInfoService;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig  {
 
     private final MemberInfoService memberInfoService;
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     /**
      * 설정 무력화
      */
@@ -92,4 +103,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

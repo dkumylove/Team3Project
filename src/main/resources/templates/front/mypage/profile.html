@@ -125,6 +125,7 @@
                     <tr>
                         <th th:text="#{이메일}"></th>
                         <td>
+<!--                            <span th:text="${#httpServletRequest.getSession().getAttribute('email')}"></span>-->
                             <span th:text="${#messages.msg('EMAIL_MSG', session.member.email)}"></span>
                         </td>
                         <td>

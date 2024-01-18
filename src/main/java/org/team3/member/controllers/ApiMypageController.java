@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.MemberUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ApiMypageController {
     private final ChangePasswordService changePasswordService;
+
     private final MemberUtil memberUtil;
 
 
