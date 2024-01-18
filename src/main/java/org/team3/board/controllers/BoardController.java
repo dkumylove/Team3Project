@@ -1,5 +1,7 @@
 package org.team3.board.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
-import org.team3.board.service.BoardInfoService;
-import org.team3.board.service.BoardSaveService;
+import org.team3.board.service.*;
 import org.team3.board.service.config.BoardConfigInfoService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
@@ -36,6 +37,8 @@ public class BoardController implements ExceptionProcessor {
     private final BoardFormValidator boardFormValidator;
     private final BoardSaveService boardSaveService;
     private final BoardInfoService boardInfoService;
+    private final BoardDeleteService boardDeleteService;
+    private final BoardAuthService boardAuthService;
 
     private final MemberUtil memberUtil;
     private final Utils utils;
@@ -122,10 +125,20 @@ public class BoardController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/view/{seq}")
-    public String view(@PathVariable("seq") Long seq, Model model) {
+    public String view(@PathVariable("seq") Long seq,
+                       @ModelAttribute BoardDataSearch search, Model model) {
         boardInfoService.updateViewCount(seq); // 조회수 업데이트
 
         commonProcess(seq, "view", model);
+
+        // 게시글 보기 하단 목록 노출 S
+        if(board.isShowListBelowView()) {
+            ListData<BoardData> data = boardInfoService.getList(board.getBid(), search);
+
+            model.addAttribute("items", data.getItems());
+            model.addAttribute("pagination", data.getPagination());
+        }
+        // 게시글 보기 하단 목록 노출 E
 
         return utils.tpl("board/view");
     }
@@ -164,6 +177,7 @@ public class BoardController implements ExceptionProcessor {
 
         RequestBoard form = boardInfoService.getForm(boardData);
         model.addAttribute("requestBoard", form);
+
         return utils.tpl("board/update");
     }
 
@@ -197,6 +211,33 @@ public class BoardController implements ExceptionProcessor {
         return redirectURL;
     }
 
+    @GetMapping("/delete/{seq}")
+    public String delete(@PathVariable("seq") Long seq, Model model) {
+        commonProcess(seq, "delete", model);
+
+        boardDeleteService.delete(seq);
+
+        return "redirect:/board/list/" + board.getBid();
+    }
+
+    /**
+     * 비회원 글수정, 글삭제 비밀번호 확인
+     *
+     * @param password
+     * @param model
+     * @return
+     */
+    @PostMapping("/password")
+    public String passwordCheck(@RequestParam(name="password", required = false) String password,
+                                Model model) {
+
+        boardAuthService.validate(password);
+
+        model.addAttribute("script", "parent.location.reload();");
+
+        return "common/_execute_script";
+    }
+
     /**
      * 게시판 공통 처리 - 글목록, 글쓰기 등 게시판 ID가 있는 경우
      *
@@ -216,6 +257,9 @@ public class BoardController implements ExceptionProcessor {
 
         /* 게시판 설정 처리 S */
         board = configInfoService.get(bid);
+
+        // 접근 권한 체크
+        boardAuthService.accessCheck(mode, board);
 
         // 스킨별 css, js 추가
         String skin = board.getSkin();
@@ -258,17 +302,32 @@ public class BoardController implements ExceptionProcessor {
      * 게시판 공통 처리 : 게시글 보기, 게시글 수정 - 게시글 번호가 있는 경우
      *      - 게시글 조회 -> 게시판 설정
      *
-     * @param seq
+     * @param seq : 게시글 번호
      * @param mode
      * @param model
      */
     private void commonProcess(Long seq, String mode, Model model) {
+        // 글 수정, 글 삭제 권한 체크
+        boardAuthService.check(mode, seq);
+
         boardData = boardInfoService.get(seq);
 
         String bid = boardData.getBoard().getBid();
         commonProcess(bid, mode, model);
 
         model.addAttribute("boardData", boardData);
+    }
 
+    @Override
+    @ExceptionHandler(Exception.class)
+    public String errorHandler(Exception e, HttpServletResponse response,
+                               HttpServletRequest request, Model model) {
+
+        if(e instanceof GuestPasswordCheckException) {
+
+            return utils.tpl("board/password");
+        }
+
+        return ExceptionProcessor.super.errorHandler(e, response, request, model);
     }
 }

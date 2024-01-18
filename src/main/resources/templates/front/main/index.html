@@ -3,7 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" class="layout_width">
-    <h1 th:text="#{최신_게시글}"></h1>
+
+    <div id="index_h1">
+        <h1 th:text="#{최신_게시글}"></h1>
+    </div>
 
     <ul class="board_latest">
         <li th:each="b : ${boardMenus}">

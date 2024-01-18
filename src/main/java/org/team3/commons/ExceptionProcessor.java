@@ -14,7 +14,6 @@ import org.team3.commons.exceptions.CommonException;
  */
 public interface ExceptionProcessor {
 
-
     @ExceptionHandler(Exception.class)
     default String errorHandler(Exception e, HttpServletResponse response, HttpServletRequest request, Model model) {
 

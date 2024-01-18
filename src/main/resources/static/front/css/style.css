@@ -34,8 +34,10 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 
 /* 내용역역 s */
+main { width: 100%; margin-top: 80px; margin-left: 0; background: lavender  ; min-height: 1000px; display: flex;}
+.layout_width { max-width: 100%; min-width: 1000px; margin: 0; position:relative; flex-direction: column; }
+#index_h1 { width: 100%; padding: 100px 20px 0 20px;  position:absolute; }
 
-main { margin-top: 80px; background: lavender  ; min-height: 1000px; display: flex;}
 main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color)  }
 main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
@@ -46,7 +48,6 @@ main > aside > a + a { border-top: 1px solid steelblue }
 main > aside > a i { color: lavender; font-size: 1.385rem; }
 main > aside > a.on, main > aside > a:hover { background: #38A5EE; font-weight: 500; }
 main > aside > a.on:after, main > aside > a:hover:after { content:''; display:block; width: 8px; height: 100%; right: 0; top: 0; background: var(--sub-color) ; position: absolute;}
-
 nav.submenus { box-shadow: 1px 1px 5px #cdced5; height: 60px; background: #fff; border-radius: 5px; margin-bottom: 50px; display: flex; align-items: center; }
 nav.submenus a { height: 60px; line-height: 60px; padding: 0 40px; font-size: 1.385rem; color: #222; }
 nav.submenus a.on { background: var(--sub-color) ; color: #fff; font-weight: 500; }
@@ -85,8 +86,6 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 /* 마이페이지 사진*/
 .circle {border-radius: 50%; overflow: hidden;}
 
-.layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
-
 /* 페이징 공통 S */
 .pagination { text-align: center; margin: 30px 0; }
 .pagination .page { border: 1px solid #596b99; color: #596b99; display: inline-block;
@@ -95,3 +94,13 @@ padding: 5px 10px; border-radius: 3px; background: #fff; }
 .pagination .page + .page { margin-left: 3px; }
 /* 페이징 공통 E */
 
+/* 헤더 공통 S */
+header .header_search > div { display: flex; align-items: center; justify-content: space-between; height: 100px; }
+header .header_search .search { display: flex; }
+/* 헤더 공통 S */
+
+/* 마이페이지 내활동 s */
+section nav { background: var(--sub-color); z-index: 5}
+section nav > .inner a { display: inline-block; height: 45px; line-height: 45px; padding: 0 25px; min-width: 120px; text-align: center; color: #fff; font-size: 1.35rem; }
+section nav > .inner a:hover { background:var(--main-color); }
+/* 마이페이지 내활동 e */

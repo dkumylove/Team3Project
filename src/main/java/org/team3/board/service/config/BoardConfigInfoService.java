@@ -4,16 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.team3.admin.board.controllers.BoardSearch;
-import org.team3.admin.board.controllers.RequestBoardConfig;
-import org.team3.board.entities.Board;
-import org.team3.board.entities.QBoard;
-import org.team3.board.repositories.BoardRepository;
-import org.team3.commons.ListData;
-import org.team3.commons.Pagination;
-import org.team3.commons.Utils;
-import org.team3.file.entities.FileInfo;
-import org.team3.file.service.FileInfoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +11,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.team3.admin.board.controllers.BoardSearch;
+import org.team3.admin.board.controllers.RequestBoardConfig;
+import org.team3.board.entities.Board;
+import org.team3.board.entities.QBoard;
+import org.team3.board.repositories.BoardDataRepository;
+import org.team3.board.repositories.BoardRepository;
+import org.team3.commons.ListData;
+import org.team3.commons.Pagination;
+import org.team3.commons.Utils;
+import org.team3.file.entities.FileInfo;
+import org.team3.file.service.FileInfoService;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ import static org.springframework.data.domain.Sort.Order.desc;
 @RequiredArgsConstructor
 public class BoardConfigInfoService {
     private final BoardRepository boardRepository;
+    private final BoardDataRepository boardDataRepository;
     private final FileInfoService fileInfoService;
     private final HttpServletRequest request;
 
@@ -79,21 +81,6 @@ public class BoardConfigInfoService {
         board.setHtmlTopImages(htmlTopImages);
         board.setHtmlBottomImages(htmlBottomImages);
 
-        List<FileInfo> logo1 = fileInfoService.getListDone(gid, "logo1");
-        List<FileInfo> logo2 = fileInfoService.getListDone(gid, "logo2");
-        List<FileInfo> logo3 = fileInfoService.getListDone(gid, "logo3");
-
-        if(logo1 != null && !logo1.isEmpty()) {
-            board.setLogo1(logo1.get(0));
-        }
-
-        if(logo2 != null && !logo2.isEmpty()) {
-            board.setLogo2(logo2.get(0));
-        }
-
-        if(logo3 != null && !logo3.isEmpty()) {
-            board.setLogo3(logo3.get(0));
-        }
     }
 
     /**
@@ -102,7 +89,7 @@ public class BoardConfigInfoService {
      * @param search
      * @return
      */
-    public ListData<Board> getList(BoardSearch search) {
+    public ListData<Board> getList(BoardSearch search, boolean isAll) {
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 20);
 
@@ -111,6 +98,7 @@ public class BoardConfigInfoService {
 
         /* 검색 조건 처리 S */
         String bid = search.getBid();
+        List<String> bids = search.getBids();
         String bName = search.getBName();
 
         String sopt = search.getSopt();
@@ -119,6 +107,15 @@ public class BoardConfigInfoService {
 
         if(StringUtils.hasText(bid)) { // 게시판 ID
             andBuilder.and(board.bid.contains(bid.trim()));
+        }
+
+        // 게시판 ID 여러개 조회
+        if(bids != null && !bids.isEmpty()) {
+            andBuilder.and(board.bid.in(bids));
+        }
+
+        if(!isAll) { // 노출 상태인 게시판만 조회
+            andBuilder.and(board.active.eq(true));
         }
 
         if(StringUtils.hasText(bName)) { // 게시판명
@@ -154,4 +151,43 @@ public class BoardConfigInfoService {
         return new ListData<>(data.getContent(), pagination);
     }
 
+    /**
+     * 노출 상태인 게시판 목록
+     *
+     * @param search
+     * @return
+     */
+    public ListData<Board> getList(BoardSearch search) {
+        return getList(search, false);
+    }
+
+    /**
+     * 노출 가능한 모든 게시판 목록
+     *
+     * @return
+     */
+    public List<Board> getList() {
+        QBoard board =QBoard.board;
+
+        List<Board> items = (List<Board>)boardRepository.findAll(board.active.eq(true),
+                Sort.by(desc("listOrder"), desc("createdAt")));
+
+        return items;
+    }
+
+    /**
+     * 사용자가 이용하는 게시판 정보
+     *
+     * @param userId
+     * @return
+     */
+    public List<Board> getUserBoardsInfo(String userId) {
+        List<String> bids = boardDataRepository.getUserBoards(userId);
+
+        QBoard board = QBoard.board;
+        List<Board> items = (List<Board>)boardRepository.findAll(board.bid.in(bids),
+                Sort.by(desc("createdAt")));
+
+        return items;
+    }
 }

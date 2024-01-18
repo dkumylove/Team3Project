@@ -19,6 +19,8 @@ import java.util.UUID;
 @Data
 @Builder
 @NoArgsConstructor @AllArgsConstructor
+@Table(indexes = @Index(name="idx_board_basic",
+    columnList = "listOrder DESC, createdAt DESC"))
 public class Board extends BaseMember {
     /**
      * Board entity 작업
@@ -34,6 +36,8 @@ public class Board extends BaseMember {
     @Column(length = 60, nullable = false)
     private String bName; // 게시판 이름
 
+    private int listOrder; // 진열 가중치
+
     private boolean active; // 사용 여부
     private int rowsPerPage; // 한 페이지 게시글 수
     private int pageCountPc = 10; // 페이지 구간 개수
@@ -46,6 +50,8 @@ public class Board extends BaseMember {
 
     @Column(length = 10 , nullable = false)
     private String locationAfterWriting = "LIST"; // 글 작성 후 이동 위치
+
+    private boolean showListBelowView; // 글 보기 하단 게시글 목록 노출 여부
 
     @Column(length = 10, nullable = false)
     private String skin = "default"; // 스킨
@@ -84,15 +90,6 @@ public class Board extends BaseMember {
 
     @Transient
     private List<FileInfo> htmlBottomImages; // 게시판 하단 Bottom 이미지
-
-    @Transient
-    private FileInfo logo1; // 로고 이미지 1
-
-    @Transient
-    private FileInfo logo2; // 로고 이미지 2
-
-    @Transient
-    private FileInfo logo3; // 로고 이미지 3
 
     /**
      * 분류 List 형태로 변환
