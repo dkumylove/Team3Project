@@ -11,16 +11,17 @@ window.addEventListener("DOMContentLoaded", function() {
             }
 
             const formEl = document[formName];
-           formEl._method.value = mode == 'delete' ? 'DELETE' : 'PATCH';
+            formEl._method.value = mode == 'delete' ? 'DELETE' : 'PATCH';
 
-           const modeTitle = mode == 'delete' ? '삭제' : '수정';
+            const modeTitle = mode == 'delete' ? '삭제' : '수정';
 
-           const chks = formEl.querySelectorAll("input[name='chk']:checked");
+            const chks = formEl.querySelectorAll("input[name='chk']:checked");
 
-           if (chks.length == 0) { // 체크가 안된 경우
+            if (chks.length == 0) { // 체크가 안된 경우
                 alert(`${modeTitle}할 항목을 선택하세요.`);
                 return;
            }
+
 
             if (confirm(`정말 ${modeTitle} 하겠습니까?`)) {
                 formEl.submit();
@@ -42,4 +43,6 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
     /* 전체 선택 토글 기능 E */
+
 });
+
