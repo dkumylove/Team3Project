@@ -146,18 +146,42 @@ public class Utils {
      * @return
      */
     public String printThumb(long seq, int width, int height, String className){
-        String[] data = fileInfoService.getThumb(seq, width, height);
-        if(data != null){
-            // 클래스 네임이 있을땐 클래스 네임 넣어줌
-            String cls = StringUtils.hasText(className) ? " class='"+className+"'" : "";
-            String image = String.format("<img src='%s'%s>", data[1], cls);
-            return image;
-        }
+        try {
+            String[] data = fileInfoService.getThumb(seq, width, height);
+            if (data != null) {
+                // 클래스 네임이 있을땐 클래스 네임 넣어줌
+                String cls = StringUtils.hasText(className) ? " class='" + className + "'" : "";
+                String image = String.format("<img src='%s'%s>", data[1], cls);
+                return image;
+            }
+        } catch (Exception e) {}
         return "";
     }
 
     public String printThumb(long seq, int width, int height){
         return printThumb(seq, width, height, null);
+    }
+
+    /**
+     * 이미지를 지정된곳에 배경으로 넣음
+     * @param file
+     * @return
+     */
+    public String backgroundStyle(FileInfo file) {
+        try {
+            String imageUrl = file.getFileUrl();
+            List<String> thumbsUrl = file.getThumbsUrl();
+            if (thumbsUrl != null && !thumbsUrl.isEmpty()) {
+                imageUrl = thumbsUrl.get(thumbsUrl.size() - 1);
+            }
+
+            String style = String.format("background:url('%s') no-repeat center center;" +
+                    " background-size:cover;", imageUrl);
+
+            return style;
+        } catch(Exception e) {}
+
+        return "";
     }
 
 
@@ -195,20 +219,6 @@ public class Utils {
      */
     public static int onlyPositiveNumber(int num, int replace){
         return num < 1 ? replace : num;
-    }
-
-    public String backgroundStyle(FileInfo file) {
-
-        String imageUrl = file.getFileUrl();
-        List<String> thumbsUrl = file.getThumbsUrl();
-        if (thumbsUrl != null && !thumbsUrl.isEmpty()) {
-            imageUrl = thumbsUrl.get(thumbsUrl.size() - 1);
-        }
-
-        String style = String.format("background:url('%s') no-repeat center center;" +
-                " background-size:cover;", imageUrl);
-
-        return style;
     }
 
     /**

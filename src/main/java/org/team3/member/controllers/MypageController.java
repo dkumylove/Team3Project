@@ -67,11 +67,7 @@ public class MypageController implements ExceptionProcessor {
 
     @GetMapping("/profile")
     public String profileForm(Model model) {
-
-        // 이메일때매 추가
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-//        model.addAttribute("email", memberInfo.getEmail());
+        commonProcess("profile", model);
 
         return utils.tpl("mypage/profile");
     }
@@ -254,18 +250,21 @@ public class MypageController implements ExceptionProcessor {
     /* 이지은 1월 12일 */
     // 지표수정
     @GetMapping("changeIndicator")
-    public String changeIndicator() {
+    public String changeIndicator(Model model) {
+        commonProcess("changeIndicator", model);
         /* 보조지표수정페이지로 전환 */
         return utils.tpl("mypage/changeIndicator");
     }
 
     /**
      * 내 활동
+     * 1월 18일 이지은
      *
      * @return
      */
     @GetMapping("/myBoard")
-    public String myBoard() {
+    public String myBoard(Model model) {
+        commonProcess("myBoard", model);
 
         return utils.tpl("mypage/myBoard");
     }
@@ -277,9 +276,8 @@ public class MypageController implements ExceptionProcessor {
      */
     @GetMapping("/follow")
     public String follow(Model model) {
-        // commonProcess("follow", mpdel);
-        model.addAttribute("addCommonScript", new String[] {"tab"});
-        model.addAttribute("addCommonCss", new String[] { "tab"});
+        commonProcess("follow", model);
+
 
         return utils.tpl("mypage/follow");
     }
@@ -289,11 +287,13 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/content/" + tab);
     }
 
+
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
 
     // 회원 탈퇴
     @GetMapping("/deleteMember")
-    public String deleteMemberForm() {
+    public String deleteMemberForm(Model model) {
+        commonProcess("delete",  model);
         return utils.tpl("mypage/deleteMember");
     }
 
@@ -343,10 +343,12 @@ public class MypageController implements ExceptionProcessor {
         List<String> addCss = new ArrayList<>();       // 프론트 CSS
         List<String> addScript = new ArrayList<>();    // 프론트 자바스크립트
 
+         addCommonScript.add("fileManager");
 
         if (mode.equals("changeEmail")) {  // 이메일 수정
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
+
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
 
@@ -358,12 +360,17 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/changeNickname");
         }
 
+        if (mode.equals("follow") || mode.equals("myBoard")) {
+            addCommonCss.add("tab");
+            addCommonScript.add("tab");
+        } else if (mode.equals("profile")) {
+            addScript.add("mypage/profile");
+        }
+
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("addCss", addCss);
         model.addAttribute("addScript", addScript);
         model.addAttribute("addCommonScript", addCommonScript);
         model.addAttribute("addCommonCss", addCommonCss);
     }
-
-
 }

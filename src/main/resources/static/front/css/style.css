@@ -90,6 +90,7 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 .submit_btns {text-align: center; margin: 30px 0;}
 .submit_btns .btn { display: inline-block; min-width: 200px; height: 45px; padding: 0 15px; border: 1px solid #222; background: #fff; font-size: 1.3rem; font-weight: 500; color: #222222; border-radius: 3px; cursor: pointer; line-height: 43px; }
 .submit_btns .btn:last-of-type { background: #2D3A4A ; color: lavender }
+.btn:hover { background: #222; color: #fff; }
 /* 버튼 공통 e */
 
 /* 메시지 공통 */
