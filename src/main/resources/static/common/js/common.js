@@ -142,3 +142,43 @@ commonLib.loadEditor = function(id, height) {
         height
     });
 }
+
+
+commonLib.updatePassword = function(newPassword) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/mypage/changePw?newPassword=${newPassword}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackupdatePassword == 'function') {
+                                        callbackupdatePassword(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
+
+
+commonLib.updateNickname = function(newNickname) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/mypage/updateNickname?newNickname=${newNickname}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackupdateNickname == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                                        callbackupdateNickname(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
+
+
+
+commonLib.userIdVerify = function(userId) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/member/userIdcheck?userId=${userId}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackuserIdVerify == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                                        callbackuserIdVerify(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
