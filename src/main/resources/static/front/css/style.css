@@ -98,9 +98,10 @@ padding: 5px 10px; border-radius: 3px; background: #fff; }
 /* 헤더 공통 S */
 header .header_search > div { display: flex; align-items: center; justify-content: space-between; height: 100px; }
 header .header_search .search { display: flex; }
-
-header nav { background: #596b99 ; }
-header nav > .inner a { display: inline-block; height: 45px; line-height: 45px; padding: 0 25px; min-width: 120px; text-align: center; color: #fff; font-size: 1.35rem; }
-header nav > .inner a:hover { background: #222; }
 /* 헤더 공통 S */
 
+/* 마이페이지 내활동 s */
+section nav { background: var(--sub-color); z-index: 5}
+section nav > .inner a { display: inline-block; height: 45px; line-height: 45px; padding: 0 25px; min-width: 120px; text-align: center; color: #fff; font-size: 1.35rem; }
+section nav > .inner a:hover { background:var(--main-color); }
+/* 마이페이지 내활동 e */
