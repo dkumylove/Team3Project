@@ -3,10 +3,11 @@ package org.team3.commons;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.team3.admin.config.controllers.BasicConfig;
-import org.team3.file.service.FileInfoService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.team3.admin.config.controllers.BasicConfig;
+import org.team3.file.entities.FileInfo;
+import org.team3.file.service.FileInfoService;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -177,7 +178,7 @@ public class Utils {
         Stream<String> nums = IntStream.range(0, 10).mapToObj(String::valueOf);
 
         // 특수문자 생성
-        Stream<String> specials = Stream.of("~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "-", "=", "[", "{", "}", "]", ";", ":");
+        Stream<String> specials = Stream.of("~", "!", "@", "#", "$", "%", "^", "*", "(", ")", "_", "+", "-", "[", "{", "}", "]");
 
         List<String> chars = Stream.concat(Stream.concat(alphas, nums), specials).collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(chars);
@@ -194,5 +195,57 @@ public class Utils {
      */
     public static int onlyPositiveNumber(int num, int replace){
         return num < 1 ? replace : num;
+    }
+
+    public String backgroundStyle(FileInfo file) {
+
+        String imageUrl = file.getFileUrl();
+        List<String> thumbsUrl = file.getThumbsUrl();
+        if (thumbsUrl != null && !thumbsUrl.isEmpty()) {
+            imageUrl = thumbsUrl.get(thumbsUrl.size() - 1);
+        }
+
+        String style = String.format("background:url('%s') no-repeat center center;" +
+                " background-size:cover;", imageUrl);
+
+        return style;
+    }
+
+    /**
+     * 요청 데이터 단일 조회 편의 함수
+     *
+     * @param name
+     * @return
+     */
+    public String getParam(String name) {
+        return request.getParameter(name);
+    }
+
+    /**
+     * 요청 데이터 복수개 조회 편의 함수
+     *
+     * @param name
+     * @return
+     */
+    public String[] getParams(String name) {
+        return request.getParameterValues(name);
+    }
+
+    public int guestUid() {
+        String ip = request.getRemoteAddr();
+        String ua = request.getHeader("User-Agent");
+
+        return Objects.hash(ip, ua);
+    }
+
+    /**
+     * 삭제 버튼 클릭시 "정말 삭제하시겠습니까?" confirm 대화상자 출력
+     *
+     * @return
+     */
+    public String confirmDelete() {
+        String message = Utils.getMessage("Confirm.delete.message", "commons");
+
+        return String.format("return confirm('%s');", message);
     }
 }

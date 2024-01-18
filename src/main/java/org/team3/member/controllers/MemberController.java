@@ -47,12 +47,7 @@ public class MemberController implements ExceptionProcessor {
         return utils.tpl("member/join");
     }
 
-    /* 로그인 테스트 중 */
-    @GetMapping("/test")
-    public String test(){
-        // commonProcess("login", model);
-        return "front/member/loginTest";
-    }
+
 
     @PostMapping("/join")
     public String joinPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus){
@@ -92,7 +87,7 @@ public class MemberController implements ExceptionProcessor {
             addCommonScript.add("fileManager");
             addScript.add("member/form");
             addScript.add("member/join");
-            addCss.add("member/join");
+            addCss.add("member/style");
         } else if(mode.equals("findpw")) { // 비밀번호 찾기
             pageTitle = Utils.getMessage("비밀번호_찾기", "commons");
         } else if(mode.equals("findid")){
@@ -176,7 +171,7 @@ public class MemberController implements ExceptionProcessor {
         /* EmailAuthVerified 세션값 비우기 */
         sessionStatus.setComplete();
 
-        Member member = memberRepository.findByEmail(form.email()).orElse(null);
+        Member member = memberRepository.findByEmail(form.getEmail()).orElse(null);
         model.addAttribute("member", member);
         System.out.println(member);
         // 아이디 찾기에 이상 없다면 완료 페이지로 이동

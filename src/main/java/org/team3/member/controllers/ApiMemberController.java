@@ -29,4 +29,22 @@ public class ApiMemberController implements ExceptionRestProcessor {
 
         return data;
     }
-}
+
+    /**
+     * 아이디 중복 여부 체크
+     * @param userId
+     * @return
+     */
+    @GetMapping("/userIdcheck")
+    public JSONData<Object> duplicateUserIdCheck(@RequestParam("userId") String userId) {
+        boolean isExists = memberRepository.existsByUserId(userId);
+        System.out.println("isExists"+isExists);
+        JSONData<Object> data = new JSONData<>();
+        if(isExists){
+            data.setSuccess(false);
+        } else {
+            data.setSuccess(true);
+        }
+        return data;
+    }
+    }

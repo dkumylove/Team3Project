@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate = "~{front/layouts/main}">
+      layout:decorate = "~{front/layouts/loginmain}">
 <main layout:fragment="content">
     <h1 th:text="#{로그인}"></h1>
+
     <form th:action="@{/member/login}" method="post" name="frmLogin" autocomplete="off">
         <input type="hidden" name="redirectURL" th:if="${param.redirectURL != null}" th:value="${param.redirectURL}">
-        <dl>
-            <dt th:text="#{아이디}"></dt>
-            <dd>
-                <input type="text" name="username" th:value="${session.username}">
-                <div class="error" th:if="${session.NotBlank_userId != null}" th:text="${session.NotBlank_userId}"></div>
-            </dd>
-        </dl>
-        <dl>
-            <dt th:text="#{비밀번호}"></dt>
-            <dd>
-                <input type="password" name="password">
-                <div class="error" th:if="${session.NotBlank_password != null}" th:text="${session.NotBlank_password}"></div>
-            </dd>
-        </dl>
-        <button type="submit" th:text="#{로그인}"></button>
-        <div class="error" th:if="${session.Global_error != null}" th:text="${session.Global_error}"></div>
 
-        <div>
-            <input type="checkbox" name="autoLogin" value="true" id="autoLogin">
-            <label for="autoLogin" th:text="#{자동_로그인}"></label>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon8" th:text="#{아이디}"></span>
+            <input type="text" name="username" th:value="${session.username}" class="form-control">
+            <div class="error" th:if="${session.NotBlank_userId != null}" th:text="${session.NotBlank_userId}"></div>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon9" th:text="#{비밀번호}"></span>
+            <input type="password" name="password" class="form-control">
+            <div class="error" th:if="${session.NotBlank_password != null}" th:text="${session.NotBlank_password}"></div>
+        </div>
+
+        <div class="d-grid" style="padding-top: 10px">
+            <button class="btn btn-outline-secondary" type="submit" th:text="#{로그인}"></button>
+            <div class="error" th:if="${session.Global_error != null}" th:text="${session.Global_error}"></div>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" name="autoLogin" value="true" id="autoLogin" class="form-check-input" >
+            <label for="autoLogin" th:text="#{자동_로그인}" class="form-check-label"></label>
         </div>
 
         <a th:href="@{/member/findid}" th:text="#{아이디_찾기}"></a>

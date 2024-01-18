@@ -15,6 +15,11 @@ public class MemberSearchOptions extends MemberSearch {
     private LocalDateTime createEdate;
     private Authority authority;
     private String userId;
+    private String username;
+    private String nickname;
 
     private boolean active;
+
+    private String sopt; // 검색옵션
+    private String skey; // 검색 키워드
 }

@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root { /* 색깔 변수 */
+    --main-color: rgb(0,83,169); /*딥블루 : 로고 색깔과 통일*/
+    --sub-color : rgb(36,162,228); /*하늘색*/
+    --back-color : rgb(244,245,248); /*옅은 회색*/
+}
+
+* { font-family: 'Noto Sans KR', sans-serif; color: #000; box-sizing: border-box; outline: none; }
+html { font-size: 13px; bottom: 0}
+body { margin: 0; }
+a { text-decoration: none; }
+a:hover { font-weight : bolder; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+dl, dt, dd { margin: 0; padding: 0; }
+img { border: 0; }
+
+
+/* 푸터 영역 s */
+footer { position: relative; z-index: 3; bottom: 0; left: 0; width: 100%; height: 150px; align-items: center; background: #fff; font-size: 14px; }
+footer { display: flex; justify-content: space-around; }
+footer > div:first-of-type { width: 210px; }
+footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
+#customer_center { color : var(--sub-color); }
+/* 푸터 영역 s */
+
+
+/* 내용역역 s */
+main { background: lavender; height: 140vh; display: flex; flex-direction: column; }
+#join_main { position:relative; }
+#join_logo { position:absolute; top: 80px; left:30%; width:300px; z-index: 4; }
+#join_form { position:absolute; top: 180px; left:30% ; right: 30%; height: 700px}
+/* 내용영역 e */
+
+
+/* 테이블 공통 s */
+.table_cols { border-spacing: 0; width: 100%; border-top: 2px solid #222; background: #ffffff }
+.table_cols th, .table_cols td {padding: 10px; border-bottom: 1px solid #d5d5d5;}
+.table_cols th { background: #38A5EE   ; font-weight: normal;}
+/* 테이블 공통 e */
+
+/* 입력 공통 s */
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='password'] { border: 1px solid #d5d5d5; height: 35px; padding: 0 10px; width: 100%; }
+textarea { border: 1px solid #d5d5d5; min-height: 200px; padding: 10px; resize: none; width: 100%; }
+select { border: 1px solid #d5d5d5; height: 35px;}
+/* 입력 공통 e */
+
+/* 버튼 공통 s */
+.submit_btns {text-align: center; margin: 30px 0;}
+.submit_btns .btn { display: inline-block; min-width: 200px; height: 45px; padding: 0 15px; border: 1px solid #222; background: #fff; font-size: 1.3rem; font-weight: 500; color: #222222; border-radius: 3px; cursor: pointer; line-height: 43px; }
+.submit_btns .btn:last-of-type { background: #2D3A4A ; color: lavender }
+/* 버튼 공통 e */
+
+/* 메시지 공통 */
+.message_box {box-shadow: 1px 1px 5px lightslategray ; padding: 15px; border-radius: 5px; font-size: 1.384rem; font-weight: 500; text-align: center; background: #ffffff; margin-bottom: 30px; color: steelblue }
+
+/* 마이페이지 사진*/
+.circle {border-radius: 50%; overflow: hidden;}

@@ -6,10 +6,7 @@ import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /* 테스트를 위해 추가 S - 이다은 1/11 */
 @Builder
@@ -48,14 +45,29 @@ public class Member extends Base {
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
 
+// 주석처리 해놓을게요 - 1월 18일 이다은
+//    /* 팔로우때문에 추가한 엔티티 1월16일 이지은 */
+//    // 다대다 관계로 팔로우 관계 설정
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "follow",
+//            joinColumns = @JoinColumn(name = "follower_id"),
+//            inverseJoinColumns = @JoinColumn(name = "following_id"))
+//    private Set<Member> followers = new HashSet<>();
+//
+//    @ManyToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+//    private Set<Member> followings = new HashSet<>();
+//    /* 팔로우때문에 추가한 엔티티 */
+//
 
-    /* 팔로워 */
-    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
-    private List<Follow> followers = new ArrayList<>();
+//
+//    /* 팔로워 */
+//    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
+//    private List<Follow> followers = new ArrayList<>();
+//
+//    /* 팔로잉 */
+//    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
+//    private List<Follow> followings = new ArrayList<>();
 
-    /* 팔로잉 */
-    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
-    private List<Follow> followings = new ArrayList<>();
 
     /* 내가 찜한 게시글 - 보류
     * 이다은 - 1월 9일

@@ -1,31 +1,36 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.aspectj.weaver.MemberUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
+import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
-import org.team3.member.service.JoinService;
-import org.team3.member.service.MemberInfoService;
-import org.team3.member.service.MemberService;
+import org.team3.member.repositories.MemberRepository;
+import org.team3.member.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.team3.member.entities.QMember.member;
 
@@ -37,8 +42,15 @@ public class MypageController implements ExceptionProcessor {
     private final Utils utils;
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
-    private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+    private final ChangePasswordService mypageService;
+    private final MemberUtil memberUtil;
+    private final ChangeEmailService changeEmail;
+    private final ChangePwValidator changePwValidator;
+    private final ChangeEmailValidator changeEmailValidator;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final HttpServletRequest request;
+    private final MemberRepository memberRepository;
 
     // 마이페이지
     @GetMapping
@@ -49,21 +61,46 @@ public class MypageController implements ExceptionProcessor {
 
         model.addAttribute("memberList", data.getItems()); // 목록
 
+
         return utils.tpl("mypage/profile");
     }
 
     @GetMapping("/profile")
-    public String profileForm() {
+    public String profileForm(Model model) {
+
+        // 이메일때매 추가
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+//        model.addAttribute("email", memberInfo.getEmail());
+
         return utils.tpl("mypage/profile");
     }
 
+    // 새로 만들게요 - 이다은 1월 15일
 
-    private void commonProcess(String mode, Model model) {
-        mode = Objects.requireNonNullElse(mode, "list");
-        String pageTitle = "회원 목록";
+//    private void commonProcess(String mode, Model model) {
+//        mode = Objects.requireNonNullElse(mode, "list");
+//        String pageTitle = "회원 목록";
+//
+//
+//        model.addAttribute("subMenuCode", mode);
+//    }
 
-        model.addAttribute("subMenuCode", mode);
-    }
+    // 하단으로 내릴꼐요 - 이지은 1월 16일
+//    private void commonProcess(String mode, Model model){
+//        mode = StringUtils.hasText(mode) ? mode : "profile";
+//        String pageTitle = Utils.getMessage("회원가입", "commons");
+//
+//        List<String> addCommonScript = new ArrayList<>(); // 공통 자바스크립트
+//        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
+//        List<String> addCss = new ArrayList<>(); // css추가
+//
+//        if(mode.equals("changeEmail")){
+//            addScript.add("mypage/changeEmail");
+//        }
+//        model.addAttribute("addScript", addScript);
+//    }
+
 
     @PostMapping("/profile")
     public String profile(@ModelAttribute Member member) {
@@ -73,22 +110,29 @@ public class MypageController implements ExceptionProcessor {
 
     // 닉네임 수정
     @GetMapping("/changeNickname")
-    public String changeNicknameForm() {
+    public String changeNicknameForm(Model model) {
+        commonProcess("changeNickname", model);
+
         return utils.tpl("mypage/changeNickname");
     }
 
-    @PostMapping("/changeNickname")
-    public String changeNickname(@ModelAttribute Member member) {
-        memberService.updateMemberNickname(member.getNickName());
-        return utils.tpl("mypage/profile");
-    }
+    // 자바 스크립트로 처리 - 이다은 : 1월 18일
+//    @PostMapping("/changeNickname.js")
+//    public String changeNickname.js(@ModelAttribute Member member) {
+//
+//
+//        memberService.updateMemberNickname(member.getNickName());
+//        return utils.tpl("mypage/profile");
+//    }
 
     // 비밀번호 수정
     @GetMapping("/changePw")
-    public String changePwForm() {
+    public String changePwForm(@ModelAttribute RequestChangePw requestChangePw, Model model) {
+        commonProcess("changePw", model);
         return utils.tpl("mypage/changePw");
     }
 
+    /* 잠시 주석 걸어둘게요 - 이다은 1월 13일
     @PostMapping("changePw")
     public String changePw(@ModelAttribute Member member, HttpSession httpSession) {
         String newPw = memberService.updateMemberPassword(member.getPassword());
@@ -97,31 +141,113 @@ public class MypageController implements ExceptionProcessor {
         if (result > 0) {
             ((Member) httpSession.getAttribute("memberPw")).setPassword(newPw);
         }
-
         return utils.tpl("mypage/profile");
     }
+     */
+
+    // 자바스크립트로 처리
+//    @PreAuthorize("isAuthenticated()")
+//    @PostMapping("/changePw")
+//    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors, Model model) {
+//
+//        commonProcess("changePw", model);
+//
+//        // 현재 사용자 정보
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        changePwValidator.validate(requestChangePw, errors);
+//        System.out.println(authentication);
+//
+//        if(errors.hasErrors()){
+//            System.out.println(authentication);
+//            return utils.tpl("mypage/changePw");
+//        }
+//
+//        // System.out.println(authentication); // 현재 사용자정보
+//
+//        if(authentication!=null && authentication.isAuthenticated()) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            System.out.println(userDetails.getUsername()); // 현재 사용자 정보
+//            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
+//            return "redirect:/mypage/profile";
+//        } else {
+//            return utils.tpl("mypage/changePw");
+//        }
+//    }
+
+    @ModelAttribute
+    public void modeladd(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+        model.addAttribute("email", memberInfo.getEmail());
+
+        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null);
+        model.addAttribute("nickName", member.getNickName());
+
+    }
+
 
     // 이메일 수정
-    @GetMapping("/changeMail")
-    public String changeMailForm(@ModelAttribute RequestJoin requestJoin, Model model) {
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/changeEmail")
+    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model) {
 
+        commonProcess("changeEmail", model);
+        HttpSession session = request.getSession();
+        session.removeAttribute("EmailAuthVerified");
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+//        model.addAttribute("email", memberInfo.getEmail());
 
+        // sessionStatus.
         // 이메일 인증 여부 false로 초기화
-        model.addAttribute("EmailAuthVerified", false);
-
-        return utils.tpl("mypage/changeMail");
+        // model.addAttribute("EmailAuthVerified", false);
+        // sessionStatus.setComplete();
+        return utils.tpl("mypage/changeEmail");
     }
 
-    @PostMapping("/changeMail")
-    public String changeMailPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus) {
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/changeEmail")
+    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model) {
 
-        // EmailAuthVerified 세션값 비우기 */
-        sessionStatus.setComplete();
+        changeEmailValidator.validate(requestChangeEmail, errors);
+
+        if(errors.hasErrors()){
+            model.addAttribute("EmailAuthVerified", false);
+            return utils.tpl("mypage/changeEmail");
+        }
+
+        // sessionStatus.setComplete();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+
+        changeEmail.changeEmail(((MemberInfo) authentication.getPrincipal()).getEmail(), requestChangeEmail.getNewEmail());
+        System.out.println(((MemberInfo) authentication.getPrincipal()).getEmail() +" " + ((MemberInfo) authentication.getPrincipal()).getPassword());
+        // authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials()));
+        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,authentication.getName()));
+
+        // System.out.println("**********"+authentication.getPrincipal());
+        HttpSession session = request.getSession();
+        session.removeAttribute("EmailAuthVerified");
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:" + utils.tpl("/mypage/profile");
-
+        return "redirect:/mypage/changeEmail";
     }
+    /**
+     * @description 새로운 인증 생성
+     * @param currentAuth 현재 auth 정보
+     * @param username	현재 사용자 Id
+     * @return Authentication
+     * @author Armton
+     */
+    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+        UserDetails newPrincipal = memberInfoService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());
+        return newAuth;
+    }
+
 
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 s */
@@ -146,14 +272,23 @@ public class MypageController implements ExceptionProcessor {
 
     /**
      * 팔로우
-     *
+     * 1월 16일 이지은
      * @return
      */
     @GetMapping("/follow")
-    public String follow() {
+    public String follow(Model model) {
+        // commonProcess("follow", mpdel);
+        model.addAttribute("addCommonScript", new String[] {"tab"});
+        model.addAttribute("addCommonCss", new String[] { "tab"});
 
         return utils.tpl("mypage/follow");
     }
+
+    @GetMapping("/content/{tab}")
+    public String content(@PathVariable("tab") String tab) {
+        return utils.tpl("mypage/content/" + tab);
+    }
+
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
 
     // 회원 탈퇴
@@ -162,6 +297,7 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/deleteMember");
     }
 
+    /* 잠시 닫아 둘게요 - 이다은 1월 13일
     @PostMapping("/deleteMember")
     public ModelAndView deleteMember(@ModelAttribute("currentUser") Member member,
                                      HttpSession session, ModelAndView mv) {
@@ -189,5 +325,45 @@ public class MypageController implements ExceptionProcessor {
         }
         return mv;
     }
+    */
+
+    /**
+     * 공통기능
+     * @param mode
+     * @param model
+     */
+    private void commonProcess(String mode, Model model) {
+
+        String pageTitle = "profile";  // 마이페이지 기본 파이틀
+        mode = StringUtils.hasText(mode) ? mode : "profile"; // 없으면 기본값 profile
+
+
+        List<String> addCommonScript = new ArrayList<>();    // 공통 자바스크립트
+        List<String> addCommonCss = new ArrayList<>();    // 공통 CSS
+        List<String> addCss = new ArrayList<>();       // 프론트 CSS
+        List<String> addScript = new ArrayList<>();    // 프론트 자바스크립트
+
+
+        if (mode.equals("changeEmail")) {  // 이메일 수정
+            addScript.add("mypage/changeEmail");
+            pageTitle = Utils.getMessage("changeEmail", "commons");
+        } else if (mode.equals("follow")) { // 팔로우
+            pageTitle = Utils.getMessage("follow", "commons");
+
+        } else if(mode.equals("changePw")){
+            pageTitle = Utils.getMessage("changePw", "commons");
+            addScript.add("mypage/changePw");
+        } else if(mode.equals("changeNickname")){
+            pageTitle = Utils.getMessage("changeNickname", "commons");
+            addScript.add("mypage/changeNickname");
+        }
+
+        model.addAttribute("pageTitle", pageTitle);
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addScript", addScript);
+        model.addAttribute("addCommonScript", addCommonScript);
+        model.addAttribute("addCommonCss", addCommonCss);
+    }
+
 
 }

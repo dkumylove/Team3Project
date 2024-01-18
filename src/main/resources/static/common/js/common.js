@@ -76,10 +76,10 @@ commonLib.sendEmailVerify = function(email) {
 *
 * @param email : 인증할 이메일
 */
-commonLib.sendEmailVerifyId = function(email) {
+commonLib.sendEmailVerifyId = function(email, name) {
     const { ajaxLoad } = commonLib;
 
-    const url = `/api/email/verify/findid?email=${email}`;
+    const url = `/api/email/verify/findid?email=${email}&name=${name}`;
 
     ajaxLoad("GET", url, null, "json")
         .then(data => {
@@ -108,6 +108,24 @@ commonLib.sendEmailVerifyCheck = function(authNum) {
 };
 
 /**
+* 비밀번호 수정 : 현재 비밀번호 확인하기
+*
+* @param email : 인증할 이메일
+*/
+commonLib.cntpwCheck = function(cntpwd) {
+    const { ajaxLoad } = commonLib;
+    const url = `/api/mypage/changePwCheck?cntpwd=${cntpwd}`;
+    ajaxLoad("GET", url, null, "json")
+        .then(data => {
+            if (typeof callbackcntPwVerifyCheck == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                callbackcntPwVerifyCheck(data);
+            }
+        })
+        .catch(err => console.error(err));
+};
+
+
+/**
 * 위지윅 에디터 로드
 * @param id = id값
 * @param height = 높이
@@ -124,3 +142,43 @@ commonLib.loadEditor = function(id, height) {
         height
     });
 }
+
+
+commonLib.updatePassword = function(newPassword) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/mypage/changePw?newPassword=${newPassword}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackupdatePassword == 'function') {
+                                        callbackupdatePassword(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
+
+
+commonLib.updateNickname = function(newNickname) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/mypage/updateNickname?newNickname=${newNickname}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackupdateNickname == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                                        callbackupdateNickname(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
+
+
+
+commonLib.userIdVerify = function(userId) {
+const { ajaxLoad } = commonLib;
+    const url = `/api/member/userIdcheck?userId=${userId}`;
+    ajaxLoad("GET", url, null, "json")
+                    .then(data => {
+                        if (typeof callbackuserIdVerify == 'function') { // 이메일 승인 코드 메일 전송 완료 후 처리 콜백
+                                        callbackuserIdVerify(data);
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        };
