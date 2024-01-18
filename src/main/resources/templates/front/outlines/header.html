@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
 <header th:fragment="common">
+
     <section class="logo_area">
 
         <a th:href="@{/}">
@@ -10,13 +13,29 @@
                  width="40%" height="40%"
                  class="logo"/>
         </a>
-
     </section>
+
     <section>
         <a th:href="@{/board}">게시판</a>
     </section>
+
     <section>
         <a th:href="@{/rank}">보조지표랭킹</a>
+    </section>
+
+    <section>
+        <div class="header_search">
+            <div class="layout_width">
+                <form name="frmSearch" class="search" th:action="@{/board/search}" autocomplete="off">
+                    <input type="text" name="skey" th:value="${param.skey}" th:placeholder="#{검색어를_입력하세요.}">
+                    <button type="submit" class="search_btn">
+                        <i class="xi-search"></i>
+                    </button>
+                </form>
+            </div>
+            <!--// layout_width -->
+        </div>
+        <!--// search -->
     </section>
 
     <section class="btn_area">
@@ -40,5 +59,6 @@
         </div>
         -->
     </section>
+
 </header>
 </html>

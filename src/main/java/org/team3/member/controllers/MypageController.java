@@ -1,5 +1,7 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -104,8 +106,8 @@ public class MypageController implements ExceptionProcessor {
 
     // 비밀번호 수정
     @GetMapping("/changePw")
-    public String changePwForm(@ModelAttribute RequestChangePw requestChangePw) {
-
+    public String changePwForm(@ModelAttribute RequestChangePw requestChangePw, Model model) {
+        commonProcess("changePw", model);
         return utils.tpl("mypage/changePw");
     }
 
@@ -120,37 +122,34 @@ public class MypageController implements ExceptionProcessor {
         }
         return utils.tpl("mypage/profile");
     }
-
      */
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/changePw")
-    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors) {
+    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors, Model model) {
+
+        commonProcess("changePw", model);
 
         // 현재 사용자 정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         changePwValidator.validate(requestChangePw, errors);
+        System.out.println(authentication);
 
         if(errors.hasErrors()){
+            System.out.println(authentication);
             return utils.tpl("mypage/changePw");
         }
 
-        System.out.println(authentication); // 현재 사용자정보
+        // System.out.println(authentication); // 현재 사용자정보
 
         if(authentication!=null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             System.out.println(userDetails.getUsername()); // 현재 사용자 정보
-
-            if(mypageService.checkPassword(userDetails.getUsername(), requestChangePw.getCntpwd())) {
-                mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
-            } else{
-                return utils.tpl("mypage/changPw");
-            }
+            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
         } else {
             return utils.tpl("mypage/changePw");
         }
-        return "/front/main/index";
+        return utils.tpl("mypage/profile");
     }
 
 
@@ -158,33 +157,40 @@ public class MypageController implements ExceptionProcessor {
     // 이메일 수정
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/changeEmail")
-    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model) {
+    public String changeMailForm(@ModelAttribute RequestChangeEmail requestChangeEmail, Model model, HttpServletRequest request) {
 
         commonProcess("changeEmail", model);
+        HttpSession session = request.getSession();
+        session.removeAttribute("EmailAuthVerified");
+
         Member member = memberUtil.getMember();
         model.addAttribute("email", member.getEmail());
 
+        // sessionStatus.
         // 이메일 인증 여부 false로 초기화
-        model.addAttribute("EmailAuthVerified", false);
+        // model.addAttribute("EmailAuthVerified", false);
+        // sessionStatus.setComplete();
         return utils.tpl("mypage/changeEmail");
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/changeEmail")
-    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model, SessionStatus sessionStatus) {
+    public String changeMailPs(@Valid RequestChangeEmail requestChangeEmail, Errors errors, Model model, HttpServletRequest request) {
 
         changeEmailValidator.validate(requestChangeEmail, errors);
 
         if(errors.hasErrors()){
+            model.addAttribute("EmailAuthVerified", false);
             return utils.tpl("mypage/changeEmail");
         }
 
-        sessionStatus.setComplete();
+        // sessionStatus.setComplete();
 
         Member member = memberUtil.getMember();
         changeEmail.changeEmail(member, requestChangeEmail.getNewEmail());
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:"+utils.tpl("mypage/profile");
+        return "redirect:/mypage/profile";
     }
 
 
@@ -288,6 +294,9 @@ public class MypageController implements ExceptionProcessor {
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
 
+        } else if(mode.equals("changePw")){
+            pageTitle = Utils.getMessage("changePw", "commons");
+            addScript.add("mypage/changePw");
         }
 
         model.addAttribute("pageTitle", pageTitle);
