@@ -3,9 +3,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" class="layout_width">
-    <h1 th:text="#{최신_게시글}" style="z-index: 5"></h1>
 
-    CSS
+    <div id="index_first_row" class="outer_box">
+        <div id="chart_box" class="inner_box">
+            차트 : 주식과 보조지표를 선택함에 따라서 동적으로 변하는 차트
+        </div>
+        <div id="stock_box" class="inner_box">
+            <div id="stock_list_box" class="stock_inner">
+                주식 목록
+            </div>
+            <div id="si_list" class="stock_inner">
+                보조 지표
+            </div>
+        </div>
+    </div>
+
+    <div id="index_h1">
+        <h1 th:text="#{최신_게시글}"></h1>
+    </div>
 
     <ul class="board_latest">
         <li th:each="b : ${boardMenus}">

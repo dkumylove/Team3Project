@@ -18,6 +18,7 @@ import org.team3.member.repositories.MemberRepository;
 @Component
 @RequiredArgsConstructor
 public class ChangePwValidator implements Validator, PasswordValidator {
+
     private final MemberRepository memberRepository;
 
     @Override
@@ -37,14 +38,13 @@ public class ChangePwValidator implements Validator, PasswordValidator {
                 && (!alphaCheck(newpwd, true)
                 || !numberCheck(newpwd)
                 || !specialcharsCheck(newpwd))) {
-            errors.rejectValue("password", "Complexity");
+            errors.rejectValue("newpwd", "Complexity");
         }
 
         // 3. 비밀번호, 비밀번호 확인 일치여부 체크
         if(StringUtils.hasText(newpwd) && StringUtils.hasText(checkpwd) && !newpwd.equals(checkpwd)) {
-            errors.rejectValue("confirmPassword", "Mismatch.password");
+            errors.rejectValue("checkpwd", "Mismatch.password");
         }
-
         }
-    }
+}
 

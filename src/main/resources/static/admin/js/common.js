@@ -20,7 +20,8 @@ window.addEventListener("DOMContentLoaded", function() {
             if (chks.length == 0) { // 체크가 안된 경우
                 alert(`${modeTitle}할 항목을 선택하세요.`);
                 return;
-            }
+           }
+
 
             if (confirm(`정말 ${modeTitle} 하겠습니까?`)) {
                 formEl.submit();
@@ -42,4 +43,6 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
     /* 전체 선택 토글 기능 E */
+
 });
+

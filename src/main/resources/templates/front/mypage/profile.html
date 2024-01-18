@@ -46,9 +46,7 @@
                             비밀번호
                         </td>
                         <td>
-                            <th:block>
-                                <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
-                            </th:block>
+                            <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
                         </td>
                     </tr>
                     <tr>
@@ -57,7 +55,7 @@
                             이메일
                         </td>
                         <td>
-                            <a th:href="@{/mypage/changeMail}" th:text="#{이메일_수정}" ></a>
+                            <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a>
                         </td>
                     </tr>
                     <tr>
@@ -126,7 +124,7 @@
                             <span th:text="${#messages.msg('EMAIL_MSG', session.member.email)}"></span>
                         </td>
                         <td>
-                            <a th:href="@{/mypage/changeMail}" th:text="#{이메일_수정}" ></a>
+                            <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a>
                         </td>
                     </tr>
                     <tr>
