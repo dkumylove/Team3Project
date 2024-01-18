@@ -3,18 +3,21 @@ package org.team3.member.controllers;
 import lombok.RequiredArgsConstructor;
 import org.team3.commons.ExceptionRestProcessor;
 import org.team3.commons.rests.JSONData;
+import org.team3.member.MemberUtil;
 import org.team3.member.repositories.MemberRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class ApiMemberController implements ExceptionRestProcessor {
     private final MemberRepository memberRepository;
-
+    private final MemberUtil memberUtil;
     /**
      * 이메일 중복 여부 체크
      * @param email
@@ -28,5 +31,13 @@ public class ApiMemberController implements ExceptionRestProcessor {
         data.setSuccess(isExists);
 
         return data;
+    }
+
+    /**
+     * 회원정보 업데이트
+     */
+    @GetMapping("/update")
+    public void updateMemberInfo() {
+        memberUtil.update();
     }
 }
