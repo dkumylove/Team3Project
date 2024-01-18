@@ -34,8 +34,10 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 
 /* 내용역역 s */
+main { width: 100%; margin-top: 80px; margin-left: 0; background: lavender  ; min-height: 1000px; display: flex;}
+#index_h1 { width: 100%; padding: 100px 20px 0 20px;  position:absolute; }
 
-main { margin-top: 80px; background: lavender  ; min-height: 1000px; display: flex;}
+
 main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color)  }
 main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
