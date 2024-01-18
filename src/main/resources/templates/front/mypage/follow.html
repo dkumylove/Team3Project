@@ -10,11 +10,11 @@
             <ul class="tabs">
                 <li>
                     <input type="radio" name="tab" class="tab" value="/mypage/content/follower" id="widget_tab1" checked>
-                    <label for="widget_tab1" th>Follower</label>
+                    <label for="widget_tab1" th:text="#{Follower}"></label>
                 </li>
                 <li>
                     <input type="radio" name="tab" class="tab" value="/mypage/content/following" id="widget_tab2">
-                    <label for="widget_tab2">Following</label>
+                    <label for="widget_tab2" th:text="#{Following}"></label>
                 </li>
             </ul>
             <div class="tab_content"></div>

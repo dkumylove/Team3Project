@@ -4,7 +4,27 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>내 활동</h1>
-    <nav th:replace="~{/front/mypage/activities/_activity_menu::menus}"></nav>
+    <!--<nav th:replace="~{/front/mypage/activities/_activity_menu::menus}"></nav>-->
+    <form name="frmSearchUseBoard" method="get" autocomplete="off">
+        <input type="hidden" name="mode" value="myBoard">
+        <div class="widget_tab">
+            <ul class="tabs">
+                <li>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/list" id="widget_tab1" checked>
+                    <label for="widget_tab1" th:text="#{게시글}"></label>
+                </li>
+                <li>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/comment" id="widget_tab2">
+                    <label for="widget_tab2" th:text="#{코멘트}"></label>
+                </li>
+                <li>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/pressLike" id="widget_tab3">
+                    <label for="widget_tab3" th:text="#{좋아요}"></label>
+                </li>
+            </ul>
+            <div class="tab_content"></div>
+        </div>
+    </form>
 
 </section>
 </html>
