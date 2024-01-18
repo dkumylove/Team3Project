@@ -50,16 +50,16 @@ public class MemberController implements ExceptionProcessor {
      * @param chks
      * @return
      */
-//    @PatchMapping
-//    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
-//        commonProcess("list", model);
-//
-//        configSaveService.saveList(chks);
-//
-//        model.addAttribute("script", "parent.location.reload()");
-//
-//        return "common/_execute_script";
-//    }
+    @PatchMapping
+    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
+        commonProcess("list", model);
+        System.out.println("chks"+chks);
+        configSaveService.saveList(chks);
+
+        model.addAttribute("script", "parent.location.reload()");
+
+        return "common/_execute_script";
+    }
 //
 //    @DeleteMapping
 //    public String deleteList(@RequestParam("chk") List<Integer> chks, Model model) {
@@ -97,7 +97,9 @@ public class MemberController implements ExceptionProcessor {
         commonProcess("list", model);
 
         ListData<Member> data = memberInfoService.getList(search);
+
         System.out.println(data.getItems());
+
         model.addAttribute("MemberList", data.getItems()); // 목록
         model.addAttribute("pagination", data.getPagination()); // 페이징
 
