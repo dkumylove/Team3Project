@@ -96,8 +96,8 @@ padding: 5px 10px; border-radius: 3px; background: #fff; }
 /* 페이징 공통 E */
 
 /* 헤더 공통 S */
-header .logo_search > div { display: flex; align-items: center; justify-content: space-between; height: 100px; }
-header .logo_search .search { display: flex; }
+header .header_search > div { display: flex; align-items: center; justify-content: space-between; height: 100px; }
+header .header_search .search { display: flex; }
 
 header nav { background: #596b99 ; }
 header nav > .inner a { display: inline-block; height: 45px; line-height: 45px; padding: 0 25px; min-width: 120px; text-align: center; color: #fff; font-size: 1.35rem; }

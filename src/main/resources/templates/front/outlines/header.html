@@ -20,21 +20,20 @@
         <a th:href="@{/rank}">보조지표랭킹</a>
     </section>
 
-    <div class="logo_search">
-        <div class="layout_width">
-            <a th:href="@{/}" class="logo">
-                <img th:src="@{/common/image/logo.png}">
-            </a>
-            <form name="frmSearch" class="search" th:action="@{/board/search}" autocomplete="off">
-                <input type="text" name="skey" th:value="${param.skey}" th:placeholder="#{검색어를_입력하세요.}">
-                <button type="submit" class="search_btn">
-                    <i class="xi-search"></i>
-                </button>
-            </form>
+    <section>
+        <div class="header_search">
+            <div class="layout_width">
+                <form name="frmSearch" class="search" th:action="@{/board/search}" autocomplete="off">
+                    <input type="text" name="skey" th:value="${param.skey}" th:placeholder="#{검색어를_입력하세요.}">
+                    <button type="submit" class="search_btn">
+                        <i class="xi-search"></i>
+                    </button>
+                </form>
+            </div>
+            <!--// layout_width -->
         </div>
-        <!--// layout_width -->
-    </div>
-    <!--// logo_search -->
+        <!--// search -->
+    </section>
 
     <section class="btn_area">
         <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
