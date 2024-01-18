@@ -39,13 +39,15 @@ function callbackFileUpload(files) {
     const targetTop = document.getElementById("uploaded_files_html_top");
     const targetBottom = document.getElementById("uploaded_files_html_bottom");
 
+    const imageUrl1 = [], imageUrl2 = [];
     for (const file of files) {
         const editor = file.location == 'html_bottom' ? editor2 : editor1;
         const target = file.location == 'html_bottom' ? targetBottom : targetTop;
 
         // editor.execute('insertImage', { source: file.fileUrl });
+        const imageUrls = file.location == 'html_bottom' ? imageUrl2 : imageUrl1;
+        imageUrls.push(file.fileUrl);
 
-        insertImage(editor, file.fileUrl); // 에디터에 이미지 추가
 
         /* 템플릿 데이터 치환 S */
         let html = tpl;
@@ -57,7 +59,7 @@ function callbackFileUpload(files) {
         const fileBox = dom.querySelector(".file_tpl_box");
         target.appendChild(fileBox);
 
-        const el = ileBox.querySelector(".insert_image")
+        const el = fileBox.querySelector(".insert_image")
         if(el) {
             // 이미지 본문 추가 이벤트
             el.addEventListener("click", () => insertImage(editor, file.fileUrl));
@@ -65,6 +67,9 @@ function callbackFileUpload(files) {
 
         /* 템플릿 데이터 치환 E */
     }
+
+    if (imageUrl1.length > 0) insertImage(editor1, imageUrl1);
+    if (imageUrl2.length > 0) insertImage(editor2, imageUrl2);
 }
 
 /**
@@ -73,4 +78,13 @@ function callbackFileUpload(files) {
 */
 function insertImage(editor, source) {
     editor.execute('insertImage', { source });
+}
+
+/**
+* 파일 삭제 콜백
+*
+*/
+function callbackFileDelete(seq) {
+    const el = document.getElementById(`file_${seq}`);
+    el.parentElement.removeChild(el);
 }

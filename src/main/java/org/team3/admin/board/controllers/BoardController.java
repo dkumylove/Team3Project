@@ -50,7 +50,7 @@ public class BoardController implements ExceptionProcessor {
     @GetMapping
     public String list(@ModelAttribute BoardSearch search, Model model) {
         commonProcess("list", model);
-        System.out.println("실행");
+
         ListData<Board> data = configInfoService.getList(search, true);
 
         List<Board> items = data.getItems();
