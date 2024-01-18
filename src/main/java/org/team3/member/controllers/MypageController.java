@@ -205,11 +205,15 @@ public class MypageController implements ExceptionProcessor {
 
     /**
      * 내 활동
+     * 1월 18일 이지은
      *
      * @return
      */
     @GetMapping("/myBoard")
-    public String myBoard() {
+    public String myBoard(Model model) {
+
+        model.addAttribute("addCommonScript", new String[] {"tab"});
+        model.addAttribute("addCommonCss", new String[] { "tab"});
 
         return utils.tpl("mypage/myBoard");
     }
@@ -232,6 +236,7 @@ public class MypageController implements ExceptionProcessor {
     public String content(@PathVariable("tab") String tab) {
         return utils.tpl("mypage/content/" + tab);
     }
+
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
 
@@ -287,10 +292,10 @@ public class MypageController implements ExceptionProcessor {
         List<String> addCss = new ArrayList<>();       // 프론트 CSS
         List<String> addScript = new ArrayList<>();    // 프론트 자바스크립트
 
-
         if (mode.equals("changeEmail")) {  // 이메일 수정
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
+
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
 
