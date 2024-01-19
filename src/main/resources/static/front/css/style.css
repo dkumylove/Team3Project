@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
 :root { /* 색깔 변수 */
-    --main-color: rgb(0,83,169); /*딥블루 : 로고 색깔과 통일*/
-    --sub-color : rgb(36,162,228); /*하늘색*/
+    --main-color: #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
+    --sub-color : #08298A; /* 파랑 */
+    --sub-color2 : lightsteelblue; /*하늘색*/
+    --font-color : #fff; /*흰색글씨*/
     --back-color : rgb(244,245,248); /*옅은 회색*/
 }
 
@@ -36,7 +38,7 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 /* 내용역역 s */
 
-main { width: 100%; margin-top: 80px; margin-left: 0; background: lavender; min-height: 1000px; display: flex;}
+main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; display: flex;}
 
 #outer_box { width: 100%; min-width: 1200px; border:1px solid; padding: 100px 20px 0 20px; position:absolute; }
 
@@ -54,12 +56,13 @@ main { width: 100%; margin-top: 80px; margin-left: 0; background: lavender; min-
 main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color)  }
 main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
-main > aside > a { display: block; height: 71px; color: lavender; font-size: 1.385rem;
+main > aside > a { display: block; height: 71px; color: var(--font-color); font-size: 1.385rem;
     text-align: center; line-height: 70px; position: relative;}
 
-main > aside > a + a { border-top: 1px solid steelblue }
-main > aside > a i { color: lavender; font-size: 1.385rem; }
-main > aside > a.on, main > aside > a:hover { background: #38A5EE; font-weight: 500; }
+main > aside > a + a { border-top: 1px solid var(--font-color) }
+main > aside > a i { color: var(--font-color); font-size: 1.385rem; }
+main > aside > a.on, main > aside > a:hover { background: var(--sub-color2); font-weight: 500; color: var(--main-color)}
+main > aside > a > i.on, main > aside > a > i:hover { background: var(--sub-color2); font-weight: 500; color: var(--main-color)}
 main > aside > a.on:after, main > aside > a:hover:after { content:''; display:block; width: 8px; height: 100%; right: 0; top: 0; background: var(--sub-color) ; position: absolute;}
 
 
