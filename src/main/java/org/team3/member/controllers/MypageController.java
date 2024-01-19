@@ -170,6 +170,11 @@ public class MypageController implements ExceptionProcessor {
 //        }
 //    }
 
+    /**
+     * 강제형변환 부분에서 에러 발생으로 인한 수정
+     * 1월 19일 이지은
+     * @param model
+     */
     @ModelAttribute
     public void modeladd(Model model){
         /*
