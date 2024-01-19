@@ -18,5 +18,5 @@ function updateMemberInfo() {
     const { ajaxLoad } = commonLib;
 
     // 서버에 회원정보 업데이트 요청
-    ajaxLoad("GET", "/api/member/update");
+    ajaxLoad("GET", "/api/mypage/update");
 }

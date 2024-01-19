@@ -51,11 +51,5 @@ public class ApiMemberController implements ExceptionRestProcessor {
         return data;
     }
 
-    /**
-     * 회원정보 업데이트
-     */
-    @GetMapping("/update")
-    public void updateMemberInfo() {
-        memberUtil.update();
-    }
+
 }
