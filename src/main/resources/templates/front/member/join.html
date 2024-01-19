@@ -7,9 +7,7 @@
     <!--autocomplete="off" : 자동완성-->
     <form name="frmJoin" method="post" th:action="@{/member/join}" autocomplete="off" th:object="${requestJoin}">
         <input type="hidden" name="gid" th:field="*{gid}">
-        <div class="error global" th:each="err : ${#fields.globalErrors()}"
-             th:text="${err}"></div>
-
+        <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
 
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1" th:text="#{프로필_이미지}"></span>
@@ -17,7 +15,6 @@
             <button class="btn btn-outline-secondary upload_files" type="button" id="button-addon1" th:text="#{이미지_업로드}"
                     data-image-only="true" data-single-file="true"></button>
 
-            <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
             <script th:replace="~{common/_file_tpl::image1_tpl}"></script>
         </div>
         <!--
@@ -29,40 +26,40 @@
             </dd>
         </dl>
         -->
-
+        <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2" th:text="#{아이디}"></span>
             <input type="text" name="userId" th:field="*{userId}"
                    class="form-control" placeholder="6자리 이상 입력">
             <!--th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified-->
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:text="#{중복확인}" ><!-- id="userId_verify" --> </button>
-            <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
         </div>
 
+        <div class="error" th:each ="err : ${#fields.errors('nickName')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3" th:text="#{닉네임}"></span>
             <input type="text" name="nickName" th:field="*{nickName}" class="form-control" placeholder="">
-            <div class="error" th:each ="err : ${#fields.errors('nickName')}" th:text="${err}"></div>
         </div>
 
+        <div class="error" th:each ="err : ${#fields.errors('password')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4" th:text="#{비밀번호}"></span>
             <input type="password" name="password" th:field="*{password}" class="form-control" placeholder="8자리 이상 입력">
-            <div class="error" th:each ="err : ${#fields.errors('password')}" th:text="${err}"></div>
         </div>
 
+        <div class="error" th:each ="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon5" th:text="#{비밀번호_확인}"></span>
             <input type="password" name="confirmPassword" th:field="*{confirmPassword}" class="form-control">
-            <div class="error" th:each ="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
         </div>
 
+        <div class="error" th:each ="err : ${#fields.errors('name')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon6" th:text="#{회원명}"></span>
             <input type="text" name="name" th:field="*{name}" class="form-control">
-            <div class="error" th:each ="err : ${#fields.errors('name')}" th:text="${err}"></div>
         </div>
 
+        <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon7" th:text="#{이메일}"></span>
             <input type="text" name="email" th:field="*{email}" class="form-control" th:placeholder="#{이메일}"
@@ -71,18 +68,17 @@
                     th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
                     class="btn btn-outline-secondary"> </button>
         </div>
-                <div class="auth_box">
-                    <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
-                        <input type="text" id="auth_num" class="form-control" th:placeholder="#{인증코드_입력}">
-                        <span id="auth_count">03:00</span>
-                        <button type="button" id="email_confirm" th:text="#{확인}" disabled class="btn btn-outline-secondary"></button>
-                        <button type="button" id="email_re_verify" th:text="#{재전송}" disabled class="btn btn-outline-secondary"></button>
-                    </th:block>
-                    <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
-                        <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
-                    </th:block>
-                </div>
-                <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+        <div class="auth_box">
+            <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                <input type="text" id="auth_num" class="form-control" th:placeholder="#{인증코드_입력}">
+                <span id="auth_count">03:00</span>
+                <button type="button" id="email_confirm" th:text="#{확인}" disabled class="btn btn-outline-secondary"></button>
+                <button type="button" id="email_re_verify" th:text="#{재전송}" disabled class="btn btn-outline-secondary"></button>
+            </th:block>
+            <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
+            </th:block>
+        </div>
 
         <select class="form-select form-select-sm" >
             <option selected th:text="#{보조지표}">Open this select menu</option>
