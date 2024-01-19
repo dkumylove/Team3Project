@@ -177,16 +177,18 @@ public class MypageController implements ExceptionProcessor {
      */
     @ModelAttribute
     public void modeladd(Model model){
-        /*
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-        model.addAttribute("email", memberInfo.getEmail());
 
-        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null); */
-        Member member = memberUtil.getMember();
-        if (member != null) {
-            model.addAttribute("nickName", member.getNickName());
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails memberInfo = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("email", memberInfo.getUsername());
+
+        Member member = memberRepository.findByUserId(memberInfo.getUsername()).orElse(null);
+        model.addAttribute("member", member);
+        System.out.println("$$$$$$$$$$$$$$$"+member);
+        // Member member = memberUtil.getMember();
+//        if (member != null) {
+//            model.addAttribute("nickName", member.getNickName());
+//        }
     }
 
 
@@ -235,7 +237,7 @@ public class MypageController implements ExceptionProcessor {
         session.removeAttribute("EmailAuthVerified");
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:/mypage/changeEmail";
+        return "redirect:/mypage/profile";
     }
 
     /**
@@ -251,7 +253,6 @@ public class MypageController implements ExceptionProcessor {
         newAuth.setDetails(currentAuth.getDetails());
         return newAuth;
     }
-
 
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 s */
@@ -273,7 +274,6 @@ public class MypageController implements ExceptionProcessor {
     @GetMapping("/myBoard")
     public String myBoard(Model model) {
         commonProcess("myBoard", model);
-
         return utils.tpl("mypage/myBoard");
     }
 
@@ -285,8 +285,6 @@ public class MypageController implements ExceptionProcessor {
     @GetMapping("/follow")
     public String follow(Model model) {
         commonProcess("follow", model);
-
-
         return utils.tpl("mypage/follow");
     }
 

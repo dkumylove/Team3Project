@@ -1,7 +1,7 @@
 /* 여백 공통 */
 .mb30 { margin-bottom: 30px; }
 .circle { background-color: black; width: 150px; height: 150px; border-radius: 50%;  }
-.circle2 { background-color: black; width: 40px; height: 40px; border-radius: 50%;  }
+
 
 .dn { display: none !important; }
 
