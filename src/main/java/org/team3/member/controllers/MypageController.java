@@ -235,7 +235,7 @@ public class MypageController implements ExceptionProcessor {
         session.removeAttribute("EmailAuthVerified");
 
         // 이메일 수정 후 리다이렉트
-        return "redirect:/mypage/changeEmail";
+        return "redirect:/mypage/profile";
     }
 
     /**
