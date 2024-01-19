@@ -88,4 +88,8 @@ public class Member extends Base {
     private String updateMemberPassword;
     private String deleteMember;
 
+    // 김현교 1/19
+    // 사용자 활성화 상태
+    private boolean enabled = true;
+
 }
