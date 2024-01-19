@@ -170,16 +170,19 @@ public class MypageController implements ExceptionProcessor {
 //        }
 //    }
 
-//    @ModelAttribute
-//    public void modeladd(Model model){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-//        model.addAttribute("email", memberInfo.getEmail());
-//
-//        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null);
-//        model.addAttribute("nickName", member.getNickName());
-//
-//    }
+    @ModelAttribute
+    public void modeladd(Model model){
+        /*
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+        model.addAttribute("email", memberInfo.getEmail());
+
+        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null); */
+        Member member = memberUtil.getMember();
+        if (member != null) {
+            model.addAttribute("nickName", member.getNickName());
+        }
+    }
 
 
     // 이메일 수정
