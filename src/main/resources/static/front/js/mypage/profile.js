@@ -8,8 +8,7 @@ function callbackFileUpload(files) {
     const targetEl3 = document.getElementById("profile_image3");
 
     // 업로드된 파일의 url을 이용하여 프로필 이미지 업데이트
-    targetEl.style.backgroundImage = targetEl2.style.backgroundImage = `url('${file.fileUrl}')`;
-    targetEl.style.backgroundImage = targetEl3.style.backgroundImage = `url('${file.fileUrl}')`;
+    targetEl.style.backgroundImage = targetEl2.style.backgroundImage = targetEl3.style.backgroundImage = `url('${file.fileUrl}')`;
 
     // 회원정보 업데이트
     updateMemberInfo();

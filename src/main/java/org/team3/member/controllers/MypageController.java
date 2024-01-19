@@ -172,13 +172,16 @@ public class MypageController implements ExceptionProcessor {
 
     @ModelAttribute
     public void modeladd(Model model){
+        /*
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
         model.addAttribute("email", memberInfo.getEmail());
 
-        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null);
-        model.addAttribute("nickName", member.getNickName());
-
+        Member member = memberRepository.findByEmail(memberInfo.getEmail()).orElse(null); */
+        Member member = memberUtil.getMember();
+        if (member != null) {
+            model.addAttribute("nickName", member.getNickName());
+        }
     }
 
 
@@ -217,7 +220,6 @@ public class MypageController implements ExceptionProcessor {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-
         changeEmail.changeEmail(((MemberInfo) authentication.getPrincipal()).getEmail(), requestChangeEmail.getNewEmail());
         System.out.println(((MemberInfo) authentication.getPrincipal()).getEmail() +" " + ((MemberInfo) authentication.getPrincipal()).getPassword());
         // authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials()));
@@ -230,6 +232,7 @@ public class MypageController implements ExceptionProcessor {
         // 이메일 수정 후 리다이렉트
         return "redirect:/mypage/changeEmail";
     }
+
     /**
      * @description 새로운 인증 생성
      * @param currentAuth 현재 auth 정보
@@ -349,8 +352,8 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
 
-        } else if (mode.equals("follow")) { // 팔로우
-            pageTitle = Utils.getMessage("follow", "commons");
+//        } else if (mode.equals("follow")) { // 팔로우
+//            pageTitle = Utils.getMessage("follow", "commons");
 
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
