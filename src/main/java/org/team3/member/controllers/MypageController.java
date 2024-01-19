@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.MemberUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
@@ -29,10 +28,6 @@ import org.team3.member.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import static org.team3.member.entities.QMember.member;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,6 +46,7 @@ public class MypageController implements ExceptionProcessor {
     private final AuthenticationManager authenticationManager;
     private final HttpServletRequest request;
     private final MemberRepository memberRepository;
+    private final MemberDeleteService memberDeleteService;
 
     // 마이페이지
     @GetMapping
@@ -332,6 +328,13 @@ public class MypageController implements ExceptionProcessor {
         return mv;
     }
     */
+    @DeleteMapping("/deleteMember")
+    public String deactivateMember(Long seq) {
+        memberDeleteService.deactivateMember(seq);
+        ResponseEntity.ok("회원탈퇴 완료");
+
+        return "redirect:/main/index";
+    }
 
     /**
      * 공통기능
