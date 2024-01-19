@@ -9,12 +9,11 @@
     </a>
     <a th:href="@{/board/asks}">
         <i class="xi-pen"></i> 질문 게시판
+        class="inner layout_width"
     </a>-->
 
-    <div class="inner layout_width">
-        <a th:each="menu : ${boardMenus}" th:object="${menu}"
-           th:href="@{/board/list/{bid}(bid=*{bid})}" th:text="*{bName}"></a>
-    </div>
+    <a th:each="menu : ${boardMenus}" th:object="${menu}"
+       th:href="@{/board/list/{bid}(bid=*{bid})}" th:text="*{bName}"></a>
 
 </aside>
 </html>

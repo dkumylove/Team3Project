@@ -50,6 +50,7 @@ main { width: 100%; margin-top: 80px; margin-left: 0; background: lavender; min-
 
 #index_h1 { width: 100%;  }
 
+/* aside */
 main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color)  }
 main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
 
@@ -60,6 +61,7 @@ main > aside > a + a { border-top: 1px solid steelblue }
 main > aside > a i { color: lavender; font-size: 1.385rem; }
 main > aside > a.on, main > aside > a:hover { background: #38A5EE; font-weight: 500; }
 main > aside > a.on:after, main > aside > a:hover:after { content:''; display:block; width: 8px; height: 100%; right: 0; top: 0; background: var(--sub-color) ; position: absolute;}
+
 
 nav.submenus { box-shadow: 1px 1px 5px #cdced5; height: 60px; background: #fff; border-radius: 5px; margin-bottom: 50px; display: flex; align-items: center; }
 nav.submenus a { height: 60px; line-height: 60px; padding: 0 40px; font-size: 1.385rem; color: #222; }
