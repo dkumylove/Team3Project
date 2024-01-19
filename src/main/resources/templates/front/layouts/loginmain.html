@@ -39,8 +39,8 @@
     <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
-<main id="join_main">
-    <div id="join_logo">
+<main class="join_main">
+    <div class="join_logo">
         <a th:href="@{/}">
             <img th:src="@{/common/soc_logo.png}"
                  alt="Savvy Our Choice 로고"
@@ -49,7 +49,7 @@
         </a>
     </div>
     <section>
-        <section layout:fragment="content" id="join_form"></section>
+        <section layout:fragment="content" class="join_form"></section>
     </section>
 </main>
 <footer th:replace="~{front/outlines/footer::common}"></footer>

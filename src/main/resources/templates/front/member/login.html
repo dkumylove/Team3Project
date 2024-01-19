@@ -8,19 +8,19 @@
     <form th:action="@{/member/login}" method="post" name="frmLogin" autocomplete="off">
         <input type="hidden" name="redirectURL" th:if="${param.redirectURL != null}" th:value="${param.redirectURL}">
 
+        <div class="error" th:if="${session.NotBlank_userId != null}" th:text="${session.NotBlank_userId}"></div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon8" th:text="#{아이디}"></span>
+            <span class="input-group-text" id="basic-addon1" th:text="#{아이디}"></span>
             <input type="text" name="username" th:value="${session.username}" class="form-control">
-            <div class="error" th:if="${session.NotBlank_userId != null}" th:text="${session.NotBlank_userId}"></div>
         </div>
 
+        <div class="error" th:if="${session.NotBlank_password != null}" th:text="${session.NotBlank_password}"></div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon9" th:text="#{비밀번호}"></span>
+            <span class="input-group-text" id="basic-addon2" th:text="#{비밀번호}"></span>
             <input type="password" name="password" class="form-control">
-            <div class="error" th:if="${session.NotBlank_password != null}" th:text="${session.NotBlank_password}"></div>
         </div>
 
-        <div class="d-grid" style="padding-top: 10px">
+        <div class="d-grid">
             <button class="btn btn-outline-secondary" type="submit" th:text="#{로그인}"></button>
             <div class="error" th:if="${session.Global_error != null}" th:text="${session.Global_error}"></div>
         </div>
