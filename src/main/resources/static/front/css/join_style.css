@@ -2,8 +2,13 @@
 
 :root { /* 색깔 변수 */
     --main-color: rgb(0,83,169); /*딥블루 : 로고 색깔과 통일*/
+    --fir : #3333ff;
+    --sec : #5b5bff;
+    --thir: #8484ff;
+    --four: #adadff;
+    --fif: #eaeaff;
     --sub-color : rgb(36,162,228); /*하늘색*/
-    --back-color : rgb(244,245,248); /*옅은 회색*/
+    --back-color : #F8F9FC; /*옅은 회색*/
 }
 
 * { font-family: 'Noto Sans KR', sans-serif; color: #000; box-sizing: border-box; outline: none; }
