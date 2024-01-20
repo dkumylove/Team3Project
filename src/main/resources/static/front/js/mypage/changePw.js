@@ -8,7 +8,6 @@ window.addEventListener("DOMContentLoaded", function() {
     if (verifiedCntPw) {
         verifiedCntPw.addEventListener("click", function() {
 
-            alert('안녕');
 
             const { ajaxLoad, cntpwCheck } = commonLib;
             const cntpwd = frmChangePw.cntpwd.value.trim();
@@ -20,24 +19,10 @@ window.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            /* 이메일 확인 전 이미 가입된 이메일인지 여부 체크 S */
-            //ajaxLoad("GET", `/api/mypage/changePwCheck?cntpwd=${cntpwd}`, null, "json")
 
             cntpwCheck(cntpwd);
 
-            // 비밀번호 수정
-//            cntpwCheck(cntpwd).then(data => {
-//                                if (data.success) { // 확인완료
-//                                    alert("확인되었습니다.");
-//                                    frmChangePw.cntpwd.focus();
-//                                } else {
-//                                    alert("다시 입력해주세요.");
-//                                    frmChangePw.cntpwd.focus();
-//                                }
-//                        }).catch(error => {
-//                                   console.error("AJAX 요청 중 오류 발생:", error);
-//                                   // 오류를 적절히 처리하세요. 예를 들어 사용자에게 일반적인 오류 메시지를 표시합니다.
-//                               });
+
         });
     }
 
@@ -58,10 +43,10 @@ window.addEventListener("DOMContentLoaded", function() {
 
 function callbackupdatePassword(data){
     if(data && data.success) {
-    alert('성공!');
+    alert('성공적으로 변경되었습니다.');
     logoutAndRedirect('/member/login');
     } else{
-    alert('실패!');
+    alert('변경에 실패하였습니다.');
     }
 }
 
@@ -101,7 +86,7 @@ function callbackcntPwVerifyCheck(data) {
         changePw.removeAttribute('disabled');
 
     } else { // 인증 실패
-        alert('불일치!');
+        alert('불일치합니다!');
         // const verified = verified.innerHTML = "<span class='confirmed'>비밀번호가 일치하지 않습니다.</span>";
         location.reload();
     }

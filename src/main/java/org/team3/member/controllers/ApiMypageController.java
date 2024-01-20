@@ -61,12 +61,10 @@ public class ApiMypageController {
     @GetMapping("/changePw")
     public JSONData<Object> changenewpwd(@RequestParam("newPassword") String newPassword){
         JSONData<Object> data = new JSONData<>();
-        // 현재 사용자 정보
+
         MemberInfo memberInfo = getMemberInfo();
-        // System.out.println(authentication);
 
         boolean result = changePasswordService.changePassword(memberInfo.getUserId(), newPassword);
-        System.out.println("&&&&&&&&&&&&result" + result);
 
         if(result){
             data.setSuccess(result);
@@ -97,7 +95,7 @@ public class ApiMypageController {
 
 
         boolean result = changeNicknameService.changeNickname(memberInfo.getUserId(), newNickname);
-        System.out.println("&&&&&&&&&&&&result" + result);
+        memberUtil.update();
 
         if(result){
             data.setSuccess(result);
