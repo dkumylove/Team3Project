@@ -18,6 +18,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.team3.admin.member.controllers.MemberSearchOptions;
+import org.team3.board.controllers.BoardDataSearch;
+import org.team3.board.entities.BoardData;
+import org.team3.board.service.SaveBoardDataService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
@@ -47,6 +50,7 @@ public class MypageController implements ExceptionProcessor {
     private final HttpServletRequest request;
     private final MemberRepository memberRepository;
     private final MemberDeleteService memberDeleteService;
+    private final SaveBoardDataService saveBoardDataService;
 
     // 마이페이지
     @GetMapping
@@ -180,8 +184,18 @@ public class MypageController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/myBoard")
-    public String myBoard(Model model) {
+    public String myBoard(@ModelAttribute BoardDataSearch search, Model model) {
         commonProcess("myBoard", model);
+
+        String mode = "myBoard";
+
+        if (mode.equals("save_post")) {
+            ListData<BoardData> data = saveBoardDataService.getList(search);
+
+            model.addAttribute("items", data.getItems());
+            model.addAttribute("pagination", data.getPagination());
+        }
+
         return utils.tpl("mypage/myBoard");
     }
 
@@ -198,6 +212,7 @@ public class MypageController implements ExceptionProcessor {
 
     @GetMapping("/content/{tab}")
     public String content(@PathVariable("tab") String tab) {
+
         return utils.tpl("mypage/content/" + tab);
     }
 
@@ -255,7 +270,7 @@ public class MypageController implements ExceptionProcessor {
      */
     private void commonProcess(String mode, Model model) {
 
-        String pageTitle = "profile";  // 마이페이지 기본 파이틀
+        String pageTitle = Utils.getMessage("profile", "commons");  // 마이페이지 기본 파이틀
         mode = StringUtils.hasText(mode) ? mode : "profile"; // 없으면 기본값 profile
 
 
@@ -270,15 +285,19 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
 
-//        } else if (mode.equals("follow")) { // 팔로우
-//            pageTitle = Utils.getMessage("follow", "commons");
-
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
             addScript.add("mypage/changePw");
         } else if(mode.equals("changeNickname")){
             pageTitle = Utils.getMessage("changeNickname", "commons");
             addScript.add("mypage/changeNickname");
+        } else if (mode.equals("myBoard")) {  // 내활동
+            pageTitle = Utils.getMessage("myBoard", "commons");
+            addScript.add("board/common");
+            addScript.add("mypage/save_post");
+        } else if (mode.equals("follow")) { // 팔로우
+            pageTitle = Utils.getMessage("follow", "commons");
+
         }
 
         if (mode.equals("follow") || mode.equals("myBoard")) {
