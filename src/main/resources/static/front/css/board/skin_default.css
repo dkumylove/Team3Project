@@ -1,3 +1,11 @@
+:root { /* 색깔 변수 */
+ --main-color: #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
+ --sub-color : #08298A; /* 파랑 */
+ --sub-color2 : lightsteelblue; /*하늘색*/
+ --font-color : #fff; /*흰색글씨*/
+ --back-color : rgb(244,245,248); /*옅은 회색*/
+}
+
 .board_view .subject { board: 1px solid #222; padding: 10px 15px; border-radius: 3px;
 font-size: 1.35rem; font-weight: 500; margin-bottom: 10px; }
 .board_view .content { border: 1px solid #222; padding: 15px; border-radius: 3px;
@@ -39,3 +47,9 @@ cursor: pointer; padding: 0 30px; border-radius: 3px; }
 .board_list .list_search > form > * + * { margin-left: 5px; }
 .board_list .list_search button { width: 180px; }
 .board_list .total { text-align: right; margin: 10px 10px 5px; }
+
+/* 찜 버튼 */
+.share_btns button { width: 45px; height: 45px; background: #fff; border: 1px solid #222; cursor: pointer; }
+.share_btns button i { font-size: 2rem; color: var(--sub-color2); }
+.share_btns button.on { border-color: var(--main-color) ; }
+.share_btns button.on i { color: var(--main-color); }
