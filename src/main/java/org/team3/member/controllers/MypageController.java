@@ -343,7 +343,7 @@ public class MypageController implements ExceptionProcessor {
      */
     private void commonProcess(String mode, Model model) {
 
-        String pageTitle = "profile";  // 마이페이지 기본 파이틀
+        String pageTitle = Utils.getMessage("profile", "commons");  // 마이페이지 기본 파이틀
         mode = StringUtils.hasText(mode) ? mode : "profile"; // 없으면 기본값 profile
 
 
@@ -358,8 +358,8 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
 
-//        } else if (mode.equals("follow")) { // 팔로우
-//            pageTitle = Utils.getMessage("follow", "commons");
+        } else if (mode.equals("follow")) { // 팔로우
+            pageTitle = Utils.getMessage("follow", "commons");
 
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
