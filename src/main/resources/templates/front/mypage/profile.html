@@ -75,7 +75,7 @@
 
             <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                 <input type="hidden" name="gid" th:value="${session.member.gid}">
-                <table border="1">
+                <table border="1" th:fragment="member">
                     <tr>
                         <th rowspan="3">
                             <!--이미지 클릭하면 이미지 수정가능-->

@@ -111,9 +111,11 @@ public class MemberController implements ExceptionProcessor {
         commonProcess("edit", model);
 
         MemberSearchOptions form = configInfoService.getForm(userId);
-        model.addAttribute("requestBoardConfig", form);
+        model.addAttribute("requestMemberConfig", form);
+        configInfoService.getForm(userId)
+        model.addAttribute("requestJoin", form);
 
-        return "admin/board/edit";
+        return "admin/member/edit";
     }
 
     private void commonProcess(String mode, Model model) {
