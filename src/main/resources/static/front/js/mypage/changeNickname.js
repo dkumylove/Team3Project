@@ -5,7 +5,6 @@ window.addEventListener("DOMContentLoaded", function() {
     if (changeNickname) {
         changeNickname.addEventListener("click", function() {
 
-            alert('안녕');
 
             const { ajaxLoad, updateNickname } = commonLib;
             const newNickname = frmChangeNickname.newNickname.value.trim();
@@ -17,9 +16,6 @@ window.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            /* 이메일 확인 전 이미 가입된 이메일인지 여부 체크 S */
-            //ajaxLoad("GET", `/api/mypage/changePwCheck?cntpwd=${cntpwd}`, null, "json")
-
             updateNickname(newNickname);
 
         });
@@ -30,9 +26,10 @@ window.addEventListener("DOMContentLoaded", function() {
 
 function callbackupdateNickname(data){
     if(data && data.success) {
-    alert('성공!');
-    window.location.href = '/mypage/profile';
+        alert('성공적으로 변경되었습니다');
+        window.location.href = '/mypage/profile';
     } else{
-    alert('실패!');
+        alert('변경에 실패하였습니다.');
     }
 }
+
