@@ -4,7 +4,6 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>내 활동</h1>
-    <!--<nav th:replace="~{/front/mypage/activities/_activity_menu::menus}"></nav>-->
     <form name="frmSearchUseBoard" method="get" autocomplete="off">
         <input type="hidden" name="mode" value="myBoard">
         <div class="widget_tab">
@@ -18,8 +17,8 @@
                     <label for="widget_tab2" th:text="#{코멘트}"></label>
                 </li>
                 <li>
-                    <input type="radio" name="tab" class="tab" value="/mypage/content/pressLike" id="widget_tab3">
-                    <label for="widget_tab3" th:text="#{좋아요}"></label>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/save_post" id="widget_tab3">
+                    <label for="widget_tab3" th:text="#{찜_게시글}"></label>
                 </li>
                 <li>
                     <input type="radio" name="tab" class="tab" value="/mypage/content/latestView" id="widget_tab4">

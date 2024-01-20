@@ -47,7 +47,7 @@ public class MypageBoardController implements ExceptionProcessor {
         model.addAttribute("items", data.getItems());
         model.addAttribute("pagination", data.getPagination());
 
-        return utils.tpl("mypage/save_post");
+        return utils.tpl("mypage/content/save_post");
     }
 
     private void commonProcess(String mode, Model model) {
