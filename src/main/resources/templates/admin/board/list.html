@@ -76,7 +76,7 @@
                     <input type="number" th:name="${'listOrder_' + status.index}" th:value="*{listOrder}">
                 </td>
                 <td>
-                    <a th:href="@{/board/list/{bid}(bid=*{bid})}" class="sbtn on" target="_blank">
+                    <a th:href="@{/board/list/{bid}(bid=*{bid})}" class="sbtn" target="_blank">
                         <i class="xi-list"></i> 미리보기
                     </a>
                     <a th:href="@{/admin/board/edit/{bid}(bid=*{bid})}" class="sbtn on">
