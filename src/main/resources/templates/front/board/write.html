@@ -6,15 +6,14 @@
 
     <aside th:replace="~{front/outlines/_boardSide::menus}"></aside>
     <section>
-    <!-- 스킨에 따라 안내하는 대문 페이지-->
+        <!-- 스킨에 따라 안내하는 대문 페이지-->
+        <th:block th:if="${board.skin == null || board.skin == 'default'}">
+            <th:block th:replace="~{front/board/skins/default/write::default}"></th:block>
+        </th:block>
 
-    <th:block th:if="${board.skin == null || board.skin == 'default'}">
-        <th:block th:replace="~{front/board/skins/default/write::default}"></th:block>
-    </th:block>
-
-    <th:block th:if="${board.skin == 'qna'}">
-        <th:block th:replace="~{front/board/skins/qna/write::qna}"></th:block>
-    </th:block>
+        <th:block th:if="${board.skin == 'qna'}">
+            <th:block th:replace="~{front/board/skins/qna/write::qna}"></th:block>
+        </th:block>
     </section>
 </main>
 </html>
