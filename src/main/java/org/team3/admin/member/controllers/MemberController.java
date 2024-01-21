@@ -112,7 +112,7 @@ public class MemberController implements ExceptionProcessor {
 
         MemberSearchOptions form = configInfoService.getForm(userId);
         model.addAttribute("requestMemberConfig", form);
-        configInfoService.getForm(userId)
+        configInfoService.getForm(userId);
         model.addAttribute("requestJoin", form);
 
         return "admin/member/edit";
