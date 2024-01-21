@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.springframework.data.domain.Sort.Order.desc;
 
+
 public interface FollowRepository extends JpaRepository<Follow, Long>, QuerydslPredicateExecutor<Follow> {
     Follow findByFolloweeAndFollower(Member followee, Member follower);
 
