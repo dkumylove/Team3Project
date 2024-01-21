@@ -3,7 +3,8 @@
      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
      layout:fragment="content" class="save_post_page">
     <input type="hidden" name="mode" value="save_post">
-    <h2>save_post</h2>
+
+    <h2 th:text="#{찜_게시글}"></h2>
 
     <ul class="items">
         <li th:if="${items == null || items.isEmpty()}" class="no_data" th:text="#{찜_게시글이_없습니다.}"></li>

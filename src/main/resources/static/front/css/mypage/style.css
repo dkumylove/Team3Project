@@ -33,3 +33,7 @@
 .follow_board_page .profile_image { width: 80px; height: 80px; border-radius: 50%; margin-right: 20px; }
 .follow_board_page .user_nm { font-size: 1.5rem; font-weight: 500; }
 .follow_board_page .user_email { font-size: 1.15rem; color: #555; }
+
+/* 마이페이지 aside */
+aside .follow_info span { text-align: center; }
+aside .follow_info span { color: var(--font-color); font-size: 1rem; }
