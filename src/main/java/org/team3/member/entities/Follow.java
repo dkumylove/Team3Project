@@ -5,27 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.team3.commons.entities.Base;
 
-@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class Follow {
+@Entity
+@Table(indexes = @Index(name="idx_follow", columnList = "followee, follower", unique = true))
+@NoArgsConstructor @AllArgsConstructor
+public class Follow extends Base {
+    @Id @GeneratedValue
+    private Long seq;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "follow_id")
-    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="followee")
+    private Member followee; // 팔로잉 회원
 
-    /* 팔로워 */
-    @ManyToOne
-    @JoinColumn(name = "from_member")
-    private Member fromMember;
-
-    /* 팔로잉 */
-    @ManyToOne
-    @JoinColumn(name = "to_member")
-    private Member toMember;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="follower")
+    private Member follower; // 팔로우 회원
 
 }
