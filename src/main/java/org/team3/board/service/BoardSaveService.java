@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.team3.board.controllers.RequestBoard;
-import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.board.repositories.BoardRepository;
@@ -33,8 +32,12 @@ public class BoardSaveService {
 
         Long seq = form.getSeq();
 
-        BoardData data = null;
+        // 수정 권한 체크
+        if (mode.equals("update")) {
+            boardAuthService.check(mode, seq);
+        }
 
+        BoardData data = null;
         if(seq != null && mode.equals("update")) { // 글 수정
             data = boardDataRepository.findById(seq).orElseThrow(BoardDataNotFoundException::new);
 
@@ -45,14 +48,14 @@ public class BoardSaveService {
             data.setUa(request.getHeader("User-Agent"));
             data.setMember(memberUtil.getMember());
 
-            Board board = boardRepository.findById(form.getBid()).orElse(null);
-            data.setBoard(board);
+
         }
 
         data.setPoster(form.getPoster());
         data.setSubject(form.getSubject());
         data.setContent(form.getContent());
         data.setCategory(form.getCategory());
+        data.setEditorView(data.getBoard().isUseEditor());
 
         // 추가 필드 - 정수
         data.setNum1(form.getNum1());
@@ -88,4 +91,6 @@ public class BoardSaveService {
 
         return data;
     }
+
+
 }
