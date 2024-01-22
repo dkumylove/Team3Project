@@ -187,13 +187,26 @@ public class MypageController implements ExceptionProcessor {
     public String myBoard(@ModelAttribute BoardDataSearch search, Model model) {
         commonProcess("myBoard", model);
 
-        String mode = "myBoard";
+        return utils.tpl("mypage/myBoard/posts");
+    }
 
-        if (mode.equals("save_post")) {
+    @GetMapping("/myBoard/{tab}")
+    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, Model model) {
+        commonProcess("myBoard", model);
+
+        model.addAttribute("tab", tab);
+
+        if (tab.equals("save_posts")) {
             ListData<BoardData> data = saveBoardDataService.getList(search);
 
             model.addAttribute("items", data.getItems());
             model.addAttribute("pagination", data.getPagination());
+        } else if (tab.equals("posts")) { // 게시글
+            
+        } else if (tab.equals("comments")) { // 코멘트
+
+        } else if (tab.equals("latest")) { // 최근 게시글
+
         }
 
         return utils.tpl("mypage/myBoard");
