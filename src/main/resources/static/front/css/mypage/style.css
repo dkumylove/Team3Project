@@ -5,3 +5,4 @@
 .save_post_page .content { margin-top: 10px; transition: all 0.5s; min-height: 300px;}
 .save_post_page .content > div { background: #f8f8f8; padding: 15px; border-radius: 5px; }
 .save_post_page .content.hide { transition: all 0.5s; }
+

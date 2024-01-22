@@ -127,7 +127,13 @@ section nav > .inner a { display: inline-block; height: 45px; line-height: 45px;
 section nav > .inner a:hover { background:var(--main-color); }
 /* 마이페이지 내활동 e */
 
+/* 마이페이지 팔로우*/
+.follow_page h2 span {padding: 8px 20px; background: lightsteelblue; border-radius: 5px;}
+.follow_mode.on {background: var(--main-color); color: #fff;}
+
+
 /* 마이페이지 aside */
 aside .follow_info a > span { text-align: center; }
 aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
-aside .user_nick { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
+aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
+

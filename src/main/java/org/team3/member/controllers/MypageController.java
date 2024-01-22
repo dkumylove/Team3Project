@@ -220,7 +220,6 @@ public class MypageController implements ExceptionProcessor {
     @GetMapping("/follow")
     public String followList(@RequestParam(name="mode", defaultValue = "follower") String mode, RequestPaging paging, Model model) {
         commonProcess("follow", model);
-       // mode = StringUtils.hasText(mode) ? mode : "follower"; // 없으면 기본값 follower
 
         ListData<Member> data = followService.getList(mode, paging);
 

@@ -19,7 +19,7 @@
             th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>-->
 
     <div class="profile_box" sec:authorize="isAuthenticated()">
-        <h2><div class="user_nick" th:text="${session.member.nickName}"></div></h2>
+        <h2><div class="user_nm" th:text="${session.member.nickName}"></div></h2>
 
         <div class="follow_info">
             <a th:href="@{/mypage/follow?mode=follower}">
