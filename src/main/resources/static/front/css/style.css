@@ -82,6 +82,7 @@ h2 { margin: 0 0 10px 0; font-size: 1.385rem; line-height: 1; }
 .table_cols { border-spacing: 0; width: 100%; border-top: 2px solid #222; background: #ffffff }
 .table_cols th, .table_cols td {padding: 10px; border-bottom: 1px solid #d5d5d5;}
 .table_cols th { background: #38A5EE   ; font-weight: normal;}
+.profile_column { text-align: right; }
 /* 테이블 공통 e */
 
 /* 입력 공통 s */
@@ -108,9 +109,8 @@ select { border: 1px solid #d5d5d5; height: 35px;}
                text-align: center; position: relative; }
 
 /* 마이페이지 사진*/
-.circle {border-radius: 50%; overflow: hidden; display: block; position: relative;
-        justify-content: center; margin:14%}
-
+.circle {border-radius: 50%; overflow: hidden; }
+.aside_photo {display: block; position: relative; justify-content: center; margin:14%}
 .layout_width1 { width: 100%; margin: 0; }
 .layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
 

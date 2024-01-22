@@ -6,84 +6,42 @@
 <section layout:fragment="content">
     <h1 th:text="#{내_프로필}"></h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
-
     <form>
         <th:block>
             <h2>내 정보</h2>
             <th:block sec:authorize="isAnonymous()">  <!--미 로그인 상태 -->
+
                 <table class="table">
                     <tr>
                         <th rowspan="3">
                             <div class="circle"></div>
                         </th>
+
                         <th th:text="#{아이디}"></th>
-                        <td colspan="2">
-                            회원ID
-                        </td>
+                        <td colspan="2">회원ID</td>
                     </tr>
+
                     <tr>
                         <th th:text="#{회원명}"></th>
-                        <td colspan="2">
-                            회원이름
-                        </td>
+                        <td colspan="2">회원이름</td>
                     </tr>
+
                     <tr>
                         <th th:text="#{닉네임}"></th>
-                        <td>
-                            회원닉네임
-                        </td>
-                        <td>
-                            <button type="button" class="nName_edit" th:text="#{닉네임_수정}"></button>
-                        </td>
+                        <td>회원닉네임</td>
+                        <td><button type="button" class="nName_edit" th:text="#{닉네임_수정}"></button></td>
                     </tr>
-                </table>
-                <table border="1">
+
                     <tr>
                         <th th:text="#{비밀번호}"></th>
-                        <td>
-                            비밀번호
-                        </td>
-                        <td>
-                            <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
-                        </td>
+                        <td>비밀번호</td>
+                        <td><a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a></td>
                     </tr>
+
                     <tr>
                         <th th:text="#{이메일}"></th>
-                        <td>
-                            이메일
-                        </td>
-                        <td>
-                            <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a>
-                        </td>
+                        <td>이메일</td>
+                        <td><a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a></td>
                     </tr>
                     <tr>
                         <th th:text="#{보조지표}"></th>
