@@ -8,7 +8,7 @@
         <h1>이메일변경</h1>
 
         <dt th:text="#{현재_이메일}"></dt>
-        <dd th:text="${email}"></dd>
+        <dd th:text="${session.member.email}"></dd>
         <input type="hidden" name="mode" value="changeEmail">
         <dl>
             <dt th:text="#{이메일}"></dt>

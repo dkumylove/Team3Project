@@ -75,7 +75,7 @@
 
             <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                 <input type="hidden" name="gid" th:value="${session.member.gid}">
-                <table border="1">
+                <table border="1" th:fragment="member">
                     <tr>
                         <th rowspan="3">
                             <!--이미지 클릭하면 이미지 수정가능-->
@@ -98,7 +98,9 @@
                     <tr>
                         <th th:text="#{닉네임}"></th>
                         <td>
-                            <span th:text="${member.nickName}"></span>
+
+                            <span th:text="${session.member.nickName}"></span>
+
                         </td>
                         <td>
                             <a th:href="@{/mypage/changeNickname}" th:text="#{닉네임_수정}"></a>
@@ -120,7 +122,7 @@
                     <tr>
                         <th th:text="#{이메일}"></th>
                         <td>
-                            <span th:text="${member.email}"></span>
+                            <span th:text="${session.member.email}"></span>
                             <!-- 이메일 수정 : 이다은 1월 18일
                             <span th:text="${#messages.msg('EMAIL_MSG', session.member.email)}"></span>
                             -->

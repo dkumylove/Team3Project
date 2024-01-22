@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.team3.board.controllers.comment.RequestComment;
 import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
@@ -140,6 +141,15 @@ public class BoardController implements ExceptionProcessor {
         }
         // 게시글 보기 하단 목록 노출 E
 
+        // 댓글 커맨드 객체 처리 S
+        RequestComment requestComment = new RequestComment();
+        if (memberUtil.isLogin()) {
+            requestComment.setCommenter(memberUtil.getMember().getName());
+        }
+
+        model.addAttribute("requestComment", requestComment);
+        // 댓글 커맨드 객체 처리 E
+
         return utils.tpl("board/view");
     }
 
@@ -254,6 +264,8 @@ public class BoardController implements ExceptionProcessor {
 
         List<String> addCommonCss = new ArrayList<>();
         List<String> addCss = new ArrayList<>();
+
+        addScript.add("board/common"); // 게시판 공통 스크립트
 
         /* 게시판 설정 처리 S */
         board = configInfoService.get(bid);

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/main}">
+
+<section layout:fragment="content">
+    <h1>회원정보 수정 페이지</h1>
+    <th:block th:replace="~{front/mypage/profile::member}"></th:block>
+</section>
+</html>

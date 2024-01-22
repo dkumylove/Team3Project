@@ -21,7 +21,7 @@ import java.util.UUID;
 @Table(indexes = {
         @Index(name="idx_boardData_basic", columnList = "notice DESC, createdAt DESC")
 })
-public class BoardData extends Base {
+public class BoardData extends Base implements AuthCheck {
     /**
      * BoardData entity 작업
      * 이기흥 - 1월 9일
@@ -87,7 +87,7 @@ public class BoardData extends Base {
 
     private int viewCount; // 조회수
 
-    private int commentCnt; // 댓글 수
+    private int commentCount; // 댓글 수
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberSeq")

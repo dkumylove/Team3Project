@@ -18,6 +18,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.team3.admin.member.controllers.MemberSearchOptions;
+import org.team3.board.controllers.BoardDataSearch;
+import org.team3.board.entities.BoardData;
+import org.team3.board.service.SaveBoardDataService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
@@ -47,6 +50,7 @@ public class MypageController implements ExceptionProcessor {
     private final HttpServletRequest request;
     private final MemberRepository memberRepository;
     private final MemberDeleteService memberDeleteService;
+    private final SaveBoardDataService saveBoardDataService;
 
     // 마이페이지
     @GetMapping
@@ -108,14 +112,6 @@ public class MypageController implements ExceptionProcessor {
         return utils.tpl("mypage/changeNickname");
     }
 
-    // 자바 스크립트로 처리 - 이다은 : 1월 18일
-//    @PostMapping("/changeNickname.js")
-//    public String changeNickname.js(@ModelAttribute Member member) {
-//
-//
-//        memberService.updateMemberNickname(member.getNickName());
-//        return utils.tpl("mypage/profile");
-//    }
 
     // 비밀번호 수정
     @GetMapping("/changePw")
@@ -137,56 +133,6 @@ public class MypageController implements ExceptionProcessor {
     }
      */
 
-    // 자바스크립트로 처리
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping("/changePw")
-//    public String changePw(@Valid RequestChangePw requestChangePw, Errors errors, Model model) {
-//
-//        commonProcess("changePw", model);
-//
-//        // 현재 사용자 정보
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        changePwValidator.validate(requestChangePw, errors);
-//        System.out.println(authentication);
-//
-//        if(errors.hasErrors()){
-//            System.out.println(authentication);
-//            return utils.tpl("mypage/changePw");
-//        }
-//
-//        // System.out.println(authentication); // 현재 사용자정보
-//
-//        if(authentication!=null && authentication.isAuthenticated()) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//            System.out.println(userDetails.getUsername()); // 현재 사용자 정보
-//            mypageService.changePassword(userDetails.getUsername(), requestChangePw.getNewpwd());
-//            return "redirect:/mypage/profile";
-//        } else {
-//            return utils.tpl("mypage/changePw");
-//        }
-//    }
-
-    /**
-     * 강제형변환 부분에서 에러 발생으로 인한 수정
-     * 1월 19일 이지은
-     * @param model
-     */
-    @ModelAttribute
-    public void modeladd(Model model){
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails memberInfo = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("email", memberInfo.getUsername());
-
-        Member member = memberRepository.findByUserId(memberInfo.getUsername()).orElse(null);
-        model.addAttribute("member", member);
-        System.out.println("$$$$$$$$$$$$$$$"+member);
-        // Member member = memberUtil.getMember();
-//        if (member != null) {
-//            model.addAttribute("nickName", member.getNickName());
-//        }
-    }
-
 
     // 이메일 수정
     @PreAuthorize("isAuthenticated()")
@@ -195,15 +141,8 @@ public class MypageController implements ExceptionProcessor {
 
         commonProcess("changeEmail", model);
         HttpSession session = request.getSession();
-        session.removeAttribute("EmailAuthVerified");
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-//        model.addAttribute("email", memberInfo.getEmail());
 
-        // sessionStatus.
-        // 이메일 인증 여부 false로 초기화
-        // model.addAttribute("EmailAuthVerified", false);
-        // sessionStatus.setComplete();
+        session.removeAttribute("EmailAuthVerified");
         return utils.tpl("mypage/changeEmail");
     }
 
@@ -218,36 +157,13 @@ public class MypageController implements ExceptionProcessor {
             return utils.tpl("mypage/changeEmail");
         }
 
-        // sessionStatus.setComplete();
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-
-        changeEmail.changeEmail(((MemberInfo) authentication.getPrincipal()).getEmail(), requestChangeEmail.getNewEmail());
-        System.out.println(((MemberInfo) authentication.getPrincipal()).getEmail() +" " + ((MemberInfo) authentication.getPrincipal()).getPassword());
-        // authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials()));
-        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,authentication.getName()));
-
-        // System.out.println("**********"+authentication.getPrincipal());
         HttpSession session = request.getSession();
+        changeEmail.changeEmail(memberUtil.getMember().getEmail(), requestChangeEmail.getNewEmail());
+        memberUtil.update();
+
         session.removeAttribute("EmailAuthVerified");
 
-        // 이메일 수정 후 리다이렉트
         return "redirect:/mypage/profile";
-    }
-
-    /**
-     * @description 새로운 인증 생성
-     * @param currentAuth 현재 auth 정보
-     * @param username	현재 사용자 Id
-     * @return Authentication
-     * @author Armton
-     */
-    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
-        UserDetails newPrincipal = memberInfoService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
-        newAuth.setDetails(currentAuth.getDetails());
-        return newAuth;
     }
 
 
@@ -268,8 +184,18 @@ public class MypageController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/myBoard")
-    public String myBoard(Model model) {
+    public String myBoard(@ModelAttribute BoardDataSearch search, Model model) {
         commonProcess("myBoard", model);
+
+        String mode = "myBoard";
+
+        if (mode.equals("save_post")) {
+            ListData<BoardData> data = saveBoardDataService.getList(search);
+
+            model.addAttribute("items", data.getItems());
+            model.addAttribute("pagination", data.getPagination());
+        }
+
         return utils.tpl("mypage/myBoard");
     }
 
@@ -286,6 +212,7 @@ public class MypageController implements ExceptionProcessor {
 
     @GetMapping("/content/{tab}")
     public String content(@PathVariable("tab") String tab) {
+
         return utils.tpl("mypage/content/" + tab);
     }
 
@@ -343,7 +270,7 @@ public class MypageController implements ExceptionProcessor {
      */
     private void commonProcess(String mode, Model model) {
 
-        String pageTitle = "profile";  // 마이페이지 기본 파이틀
+        String pageTitle = Utils.getMessage("profile", "commons");  // 마이페이지 기본 파이틀
         mode = StringUtils.hasText(mode) ? mode : "profile"; // 없으면 기본값 profile
 
 
@@ -358,15 +285,19 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/changeEmail");
             pageTitle = Utils.getMessage("changeEmail", "commons");
 
-//        } else if (mode.equals("follow")) { // 팔로우
-//            pageTitle = Utils.getMessage("follow", "commons");
-
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
             addScript.add("mypage/changePw");
         } else if(mode.equals("changeNickname")){
             pageTitle = Utils.getMessage("changeNickname", "commons");
             addScript.add("mypage/changeNickname");
+        } else if (mode.equals("myBoard")) {  // 내활동
+            pageTitle = Utils.getMessage("myBoard", "commons");
+            addScript.add("board/common");
+            addScript.add("mypage/save_post");
+        } else if (mode.equals("follow")) { // 팔로우
+            pageTitle = Utils.getMessage("follow", "commons");
+
         }
 
         if (mode.equals("follow") || mode.equals("myBoard")) {

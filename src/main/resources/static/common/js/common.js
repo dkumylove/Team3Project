@@ -182,3 +182,11 @@ const { ajaxLoad } = commonLib;
                                 })
                                 .catch(err => console.error(err));
                         };
+
+
+commonLib.updateMemberInfo = function updateMemberInfo() {
+    const { ajaxLoad } = commonLib;
+
+    // 서버에 회원정보 업데이트 요청
+    ajaxLoad("GET", "/api/mypage/update");
+}

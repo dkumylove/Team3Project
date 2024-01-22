@@ -18,6 +18,7 @@ import org.team3.board.controllers.RequestBoard;
 import org.team3.board.entities.*;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.board.repositories.BoardViewRepository;
+import org.team3.board.service.comment.CommentInfoService;
 import org.team3.board.service.config.BoardConfigInfoService;
 import org.team3.commons.ListData;
 import org.team3.commons.Pagination;
@@ -32,11 +33,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoardInfoService {
+
     private final EntityManager em;
     private final BoardDataRepository boardDataRepository;
     private final BoardViewRepository boardViewRepository;
 
     private final BoardConfigInfoService configInfoService;
+    private final CommentInfoService commentInfoService;
 
     private final FileInfoService fileInfoService;
     private final HttpServletRequest request;
@@ -54,6 +57,10 @@ public class BoardInfoService {
         BoardData boardData = boardDataRepository.findById(seq).orElseThrow(BoardDataNotFoundException::new);
 
         addBoardData(boardData);
+
+        // 댓글 목록
+        List<CommentData> comments = commentInfoService.getList(seq);
+        boardData.setComments(comments);
 
         return boardData;
     }
