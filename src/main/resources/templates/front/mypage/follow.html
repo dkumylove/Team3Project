@@ -7,10 +7,20 @@
     <h1>Follow</h1>
     <ul class="items">
         <h2 th:if="${mode == 'follower'}">
-            <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'follower'} ? 'on'">1</span> <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span>
+            <a th:href="@{/mypage/follow?mode=follower}">
+                <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'follower'} ? 'on'"></span>
+            </a>
+            <a th:href="@{/mypage/follow?mode=following}">
+                <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span>
+            </a>
         </h2>
         <h2 th:if="${mode == 'following'}">
-            <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span> <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'following'} ? 'on'"></span>
+            <a th:href="@{/mypage/follow?mode=follower}">
+                <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span>
+            </a>
+            <a th:href="@{/mypage/follow?mode=following}">
+                <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'following'} ? 'on'"></span>
+            </a>
         </h2>
         <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
 
