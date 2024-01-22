@@ -23,11 +23,14 @@ import org.team3.board.entities.BoardData;
 import org.team3.board.service.SaveBoardDataService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
+import org.team3.commons.RequestPaging;
 import org.team3.commons.Utils;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
 import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.*;
+import org.team3.member.service.follow.FollowBoardService;
+import org.team3.member.service.follow.FollowService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +43,14 @@ public class MypageController implements ExceptionProcessor {
     private final Utils utils;
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
-    private final ChangePasswordService mypageService;
     private final MemberUtil memberUtil;
     private final ChangeEmailService changeEmail;
-    private final ChangePwValidator changePwValidator;
     private final ChangeEmailValidator changeEmailValidator;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final HttpServletRequest request;
-    private final MemberRepository memberRepository;
     private final MemberDeleteService memberDeleteService;
     private final SaveBoardDataService saveBoardDataService;
+    private final FollowBoardService followBoardService;
+    private final FollowService followService;
 
     // 마이페이지
     @GetMapping
@@ -201,13 +201,50 @@ public class MypageController implements ExceptionProcessor {
 
     /**
      * 팔로우
-     * 1월 16일 이지은
+     * 1월 22일 수정 이지은
      * @return
      */
     @GetMapping("/follow")
-    public String follow(Model model) {
+    public String follow(@RequestParam(name="mode", defaultValue = "follower") String mode, RequestPaging paging, Model model) {
         commonProcess("follow", model);
+
+        ListData<Member> data = followService.getList(mode, paging);
+
+        model.addAttribute("items", data.getItems());
+        model.addAttribute("pagination", data.getPagination());
+        model.addAttribute("mode", mode);
+
         return utils.tpl("mypage/follow");
+    }
+
+    /**
+     * follow 게시글
+     *
+     *
+     * @param userId
+     * @param mode
+     * @param search
+     * @param model
+     * @return
+     */
+    @GetMapping("/follow/{userId}")
+    public String followBoard(@PathVariable("userId") String userId,
+                              @RequestParam(name="mode", defaultValue="follower") String mode,
+                              @ModelAttribute BoardDataSearch search, Model model) {
+
+        // 전체 조회가 아니라면 아이디별 조회
+        if (!userId.equals("all")) {
+            search.setUserId(userId);
+        } else {
+            search.setUserId(null);
+        }
+
+        ListData<BoardData> data = followBoardService.getList(mode, search);
+
+        model.addAttribute("items", data.getItems());
+        model.addAttribute("pagination", data.getPagination());
+
+        return utils.tpl("mypage/follow_board");
     }
 
     @GetMapping("/content/{tab}")
@@ -297,7 +334,7 @@ public class MypageController implements ExceptionProcessor {
             addScript.add("mypage/save_post");
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
-
+            addCommonScript.add("follow");
         }
 
         if (mode.equals("follow") || mode.equals("myBoard")) {
