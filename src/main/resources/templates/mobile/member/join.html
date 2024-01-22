@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{mobile/layouts/main}">
+      layout:decorate="~{mobile/layouts/loginmain}">
 <main layout:fragment="content">
     <h1 th:text="#{회원가입}"></h1>
     <!--autocomplete="off" : 자동완성-->
@@ -128,7 +128,8 @@
             <div class="error" th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
         </div>
 
-        <button type="submit" th:text="#{가입하기}" id="join_btn" disabled></button>
+        <button type="submit" th:text="#{가입하기}" id="join_btn"></button>
+
     </form>
 </main>
 </html>

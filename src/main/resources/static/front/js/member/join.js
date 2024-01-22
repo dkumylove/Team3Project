@@ -4,6 +4,24 @@ window.addEventListener("DOMContentLoaded", function() {
     const emailConfirmEl = document.getElementById("email_confirm"); // 확인 버튼
     const emailReVerifyEl = document.getElementById("email_re_verify"); // 재전송 버튼
     const authNumEl = document.getElementById("auth_num"); // 인증코드
+    const userIdVerifyEl = document.getElementById("button-addon2"); // 아이디 중복체크
+
+    if(userIdVerifyEl){
+        userIdVerifyEl.addEventListener("click", function() {
+                const { ajaxLoad, userIdVerify } = commonLib;
+                const userId = frmJoin.userId.value.trim();
+                if (!userId) {
+                    alert('아이디를 입력하세요.');
+                    // frmJoin.email.focus();
+                    document.getElementById('userId').focus();
+                    return;
+                }
+                if(validateuserId()){
+                userIdVerify(userId);
+               };
+        });
+    }
+
     if (emailVerifyEl) {
         emailVerifyEl.addEventListener("click", function() {
             const { ajaxLoad, sendEmailVerify } = commonLib;
@@ -32,7 +50,6 @@ window.addEventListener("DOMContentLoaded", function() {
                                 sendEmailVerify(email);
                             });
                          }
-
                           /* 인증코드 재전송 처리 E */
 
                           /* 인증번호 확인 처리 S */
@@ -77,6 +94,8 @@ function callbackEmailVerify(data) {
     }
 }
 
+
+
 /**
 * 인증메일 코드 검증 요청 후 콜백 처리
 *
@@ -107,9 +126,11 @@ function callbackEmailVerifyCheck(data) {
         const authBoxEl = document.querySelector(".auth_box");
         authBoxEl.innerHTML = "<span class='confirmed'>확인된 이메일 입니다.</span>";
 
+        /* 에러 처리 완료
         // 5. 인증 성공 시 버튼 활성화
         const joinbtn = document.getElementById("join_btn");
         joinbtn.removeAttribute('disabled');
+        */
 
     } else { // 인증 실패
         alert("이메일 인증에 실패하였습니다.");
@@ -171,3 +192,25 @@ const authCount = {
 };
 
 
+function callbackuserIdVerify(data){
+    if (data && data.success) { // 인증 성공
+        alert('사용 가능한 아이디 입니다.');
+    } else{
+        alert('중복된 아이디 입니다.');
+        location.reload();
+    }
+}
+
+
+function validateuserId() {
+        const userId = document.getElementById('userId').value;
+
+
+                const regex = /^[a-zA-Z][a-zA-Z0-9_]{5,}$/;
+
+                if (!regex.test(userId)) {
+                    alert('대, 소문자로 시작하는 6자리이상 아이디를 입력하세요');
+                } else {
+                    return true;
+                }
+}

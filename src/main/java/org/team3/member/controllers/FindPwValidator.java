@@ -1,5 +1,6 @@
 package org.team3.member.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.team3.member.repositories.MemberRepository;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import org.springframework.validation.Validator;
 public class FindPwValidator implements Validator {
 
     private final MemberRepository memberRepository;
-
+    private final HttpSession httpSession;
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz.isAssignableFrom(RequestFindPw.class);
@@ -25,12 +26,12 @@ public class FindPwValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-        // 아이디 + 이메일 조합으로 조회 되는지 체크
+        // 이메일 + 회원명 조합으로 조회 되는지 체크
         RequestFindPw form = (RequestFindPw) target;
         String email = form.email();
         String userId = form.userId();
 
-        if (StringUtils.hasText(email) && StringUtils.hasText(userId) && !memberRepository.existsByEmailAndName(email, userId)) {
+        if (StringUtils.hasText(email) && StringUtils.hasText(userId) && !memberRepository.existsByEmailAndUserId(email, userId)) {
             errors.reject("NotFound.member");
         }
     }

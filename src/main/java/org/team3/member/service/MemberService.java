@@ -12,7 +12,7 @@ public interface MemberService extends JpaRepository<Member, String> {
 //    String joinMember(Member member);
 
     // 회원 닉네임 수정
-    public void updateMemberNickname(String updateMemberNickname);
+    // public void updateMemberNickname(String updateMemberNickname);
 
     // 회원 비밀번호 수정
     String updateMemberPassword(String updateMemberPassword);

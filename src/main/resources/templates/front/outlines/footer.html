@@ -2,21 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="common">
     <div>
-        로고
+        <img th:src="@{/common/soc_logo.png}"
+             alt="Savvy Our Choice 로고"
+             width="50%" height="50%"
+             class="logo"/>
     </div>
     <div>
         <h3>(주)SOC</h3>
         <p>
             주소: 서울 마포구 신촌로 176 중앙빌딩 <br>
-            상호: 주식회사 SOC  |  대표자: ***  |  사업자등록번호: 123-45-67890  | 통신판매업신고번호: 제 2034-서울이대-05502호
+            상호: 주식회사 SOC  |  대표자: 이쏙쏙  |  사업자등록번호: 123-45-67890  | 통신판매업신고번호: 제 2034-서울이대-05502호
         </p>
         <p>© 2024 (주)SOC, Inc. All rights reserved.</p>
     </div>
 
     <div>
-        <h3>고객센터 info@soc.kr</h3>
+        <h3>고객센터 &nbsp;<a href="#" id="customer_center"> info@soc.kr</a></h3>
         <p>
-            영업시간 <br>
+            영업시간) <br>
             평일 10:00~17:00 <br>
             주말 · 공휴일 휴무
         </p>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content" class="layout_width1">
+
+    <div id="outer_box">
+        <div id="index_first_row" >
+            <div id="chart_box" class="inner_box">
+                차트 : 주식과 보조지표를 선택함에 따라서 동적으로 변하는 차트
+            </div>
+            <div id="stock_list" class="inner_box">
+                주식 목록
+            </div>
+            <div id="si_list" class="inner_box">
+                보조 지표
+            </div>
+        </div>
+
+        <!--<div id="index_h1">
+            <h1 th:text="#{최신_게시글}"></h1>
+        </div>
+    </div>
+
+    <ul class="board_latest">
+        <li th:each="b : ${boardMenus}">
+            <h2>
+                <a th:href="@{/board/list/{bid}(bid=${b.bid})}" th:text="${b.bName}"></a>
+            </h2>
+            <ul class="items">
+                <li th:each="item : ${@boardInfoService.getLatest(b.bid)}" th:object="${item}" class="item">
+                    <a th:href="@{/board/view/{seq}(seq=*{seq})}">
+                        <th:block th:if="*{notice}">
+                            [<th:block th:text="#{공지}"></th:block>]
+                        </th:block>
+                        <th:block th:text="*{subject}"></th:block>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>-->
+</main>
+</html>

@@ -22,6 +22,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final org.team3.commons.entities.QBase _super = new org.team3.commons.entities.QBase(this);
 
+    public final BooleanPath act = createBoolean("act");
+
     public final ListPath<Authorities, QAuthorities> authorities = this.<Authorities, QAuthorities>createList("authorities", Authorities.class, QAuthorities.class, PathInits.DIRECT2);
 
     //inherited
@@ -31,9 +33,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath email = createString("email");
 
-    public final ListPath<Follow, QFollow> followers = this.<Follow, QFollow>createList("followers", Follow.class, QFollow.class, PathInits.DIRECT2);
-
-    public final ListPath<Follow, QFollow> followings = this.<Follow, QFollow>createList("followings", Follow.class, QFollow.class, PathInits.DIRECT2);
+    public final BooleanPath enabled = createBoolean("enabled");
 
     public final StringPath gid = createString("gid");
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/myMain}">
+<section layout:fragment="content">
+    <h1>팔로우팔로잉</h1>
+    <form name="frmSearchFollow" method="get" autocomplete="off">
+        <input type="hidden" name="mode" value="follow">
+        <div class="widget_tab">
+            <ul class="tabs">
+                <li>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/follower" id="widget_tab1" checked>
+                    <label for="widget_tab1" class='num' th:text="${@followService.totalFollowers} + ' followers '"> followers
+                    </label>
+                </li>
+                <li>
+                    <input type="radio" name="tab" class="tab" value="/mypage/content/following" id="widget_tab2">
+                    <label for="widget_tab2" class='num' th:text="${@followService.totalFollowings} + ' following'"></label>
+                </li>
+            </ul>
+            <div class="tab_content"></div>
+        </div>
+    </form>
+
+    <h1>내 활동</h1>
+    <h2>
+        <div class="tabs">
+            <a th:href="@{/mypage/follow/follower}" class="tab" th:classappend="${tab == 'follower'} ? 'on'" th:text="${@followService.totalFollowers} + ' followers '"></a>
+            <a th:href="@{/mypage/follow/following}" class="tab" th:classappend="${tab == 'following'} ? 'on'" th:text="${@followService.totalFollowings} + ' following'"></a>
+        </div>
+    </h2>
+
+    <div class="tab_contents">
+        <th:block th:if="${tab == 'follower'}">
+            <th:block th:replace="~{front/mypage/content/follower::content}"></th:block>
+        </th:block>
+        <th:block th:if="${tab == 'following'}">
+            <th:block th:replace="~{front/mypage/content/following::content}"></th:block>
+        </th:block>
+    </div>
+</section>
+</html>

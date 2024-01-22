@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.team3.admin.menus.Menu;
 import org.team3.admin.menus.MenuDetail;
 import org.team3.board.entities.Board;
+import org.team3.board.service.config.BoardConfigDeleteService;
 import org.team3.board.service.config.BoardConfigInfoService;
 import org.team3.board.service.config.BoardConfigSaveService;
 import org.team3.commons.ExceptionProcessor;
@@ -24,10 +25,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController implements ExceptionProcessor {
 
-    private final BoardConfigSaveService boardConfigSaveService;
+    private final BoardConfigSaveService configSaveService;
     private final BoardConfigInfoService configInfoService;
-    private final BoardConfigValidator configValidator;
+    private final BoardConfigDeleteService configDeleteService;
 
+    private final BoardConfigValidator configValidator;
+    
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
 
@@ -48,7 +51,7 @@ public class BoardController implements ExceptionProcessor {
     public String list(@ModelAttribute BoardSearch search, Model model) {
         commonProcess("list", model);
 
-        ListData<Board> data = configInfoService.getList(search);
+        ListData<Board> data = configInfoService.getList(search, true);
 
         List<Board> items = data.getItems();
         Pagination pagination = data.getPagination();
@@ -57,6 +60,34 @@ public class BoardController implements ExceptionProcessor {
         model.addAttribute("pagination", pagination);
 
         return "admin/board/list";
+    }
+
+    /**
+     * 게시판 목록 - 수정
+     *
+     * @param chks
+     * @return
+     */
+    @PatchMapping
+    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
+        commonProcess("list", model);
+
+        configSaveService.saveList(chks);
+
+        model.addAttribute("script", "parent.location.reload()");
+
+        return "common/_execute_script";
+    }
+
+    @DeleteMapping
+    public String deleteList(@RequestParam("chk") List<Integer> chks, Model model) {
+        commonProcess("list", model);
+
+        configDeleteService.deleteList(chks);
+
+        model.addAttribute("script", "parent.location.reload();");
+
+        return "common/_execute_script";
     }
 
     /**
@@ -71,6 +102,14 @@ public class BoardController implements ExceptionProcessor {
         return "admin/board/add";
     }
 
+    /**
+     * 1월 12일 - 이기흥
+     * 관리자 게시판 목록 수정
+     * 
+     * @param bid
+     * @param model
+     * @return
+     */
     @GetMapping("/edit/{bid}")
     public String edit(@PathVariable("bid") String bid, Model model) {
         commonProcess("edit", model);
@@ -79,6 +118,16 @@ public class BoardController implements ExceptionProcessor {
         model.addAttribute("requestBoardConfig", form);
 
         return "admin/board/edit";
+    }
+
+    @GetMapping("/delete/{bid}")
+    public String delete(@PathVariable("bid") String bid, Model model) {
+        commonProcess("delete", model);
+
+        RequestBoardConfig form = configInfoService.getForm(bid);
+        model.addAttribute("requestBoardConfig", form);
+
+        return "admin/board/delete";
     }
 
     /**
@@ -95,10 +144,11 @@ public class BoardController implements ExceptionProcessor {
         configValidator.validate(config, errors);
 
         if (errors.hasErrors()) {
+            errors.getAllErrors().stream().forEach(System.out::println);
             return "admin/board/" + mode;
         }
 
-        boardConfigSaveService.save(config);
+        configSaveService.save(config);
 
         return "redirect:/admin/board";
     }

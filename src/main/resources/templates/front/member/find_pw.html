@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{front/layouts/main}">
+      layout:decorate="~{front/layouts/findmain}">
 <main layout:fragment="content">
     <h1 th:text="#{비밀번호_찾기}"></h1>
 
     <form name="frmFindPw" method="post" th:action="@{/member/findpw}" autocomplete="off" th:object="${requestFindPw}">
-
         <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
-        <input type="text" name="userId" th:field="*{userId}" th:placeholder="#{아이디}">
+
         <div class="error" th:each="err : ${#fields.errors('userId')}" th:text="${err}"></div>
+        <input type="text" name="userId" th:field="*{userId}" th:placeholder="#{아이디}" class="form-control input-group mb-3">
 
-
-        <input type="text" name="email" th:field="*{email}" th:placeholder="#{이메일}">
         <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+        <input type="email" name="email" th:field="*{email}" th:placeholder="#{이메일}" class="form-control input-group mb-3">
 
-        <button type="submit" th:text="#{비밀번호_찾기}"></button>
+        <div class="d-grid">
+            <button type="submit" th:text="#{비밀번호_찾기}" class="btn btn-outline-secondary" ></button>
+        </div>
     </form>
 </main>
 </html>

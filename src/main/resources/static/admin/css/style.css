@@ -10,7 +10,7 @@ img { border:0; }
 
 /* 헤더 영역 S */
 header { display: flex; justify-content: space-between; height: 80px; align-items:center;
-background: #ffffff;}
+background: #fff;}
 header > section:first-of-type { width: 208px; text-align: center; }
 header > section:last-of-type { flex-grow:1; padding-right:20px; text-align:right;}
 header .btn_area a {display: inline-block; width: 90px; height: 28px;
@@ -74,6 +74,11 @@ font-size: 1.4rem; font-weight: 500; color: #222; border-radius: 3px;  cursor: p
 line-height:43px;}
 .submit_btns .btn:last-of-type { background: #222; color: #fff;}
 
+.search_btn { text-align: center; margin: 20px 0 30px; }
+.search_btn .btn { display: inline-block; min-width: 200px; text-align: center; font-size:1.4rem;
+    font-weight: 500; height: 45px; line-height: 45px; background: #596b99; color: #fff;
+    cursor: pointer; border-radius: 3px; border: 0; }
+
 .sbtn { border: 1px solid #222; color: #222; background: #fff; display: inline-block; padding: 7px 20px;
 border-radius: 3px; cursor: pointer;}
 .sbtn:hover, .sbtn.on { background: #596b99; color: #fff; border-color: #596b99; line-height: 1;}
@@ -103,12 +108,15 @@ padding: 5px 10px; border-radius: 3px; background: #fff; }
 
 /* 파일 공통 S */
 .file_tpl_box { display: inline-block; padding: 7px 10px; border: 1px solid #222;
-border-radius: 3px; margin-top: 2px 2px 0 0; background: #fff; }
+border-radius: 3px; margin-top: 5px 2px 0 0; background: #fff; }
 
 .file_tpl_box a:not(.remove) { text-decoration: underline; }
 .file_tpl_box i { padding: 0 5px; cursor: pointer; }
 /* 파일 공통 E */
 
+/* 입력 항목 그룹화 */
+.input_grp { display: flex; align-items: center; }
+.input_grp > * + * { margin-left: 3px; }
 
 
 .top_box {

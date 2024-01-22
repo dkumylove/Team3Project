@@ -4,7 +4,12 @@
 
 <header th:fragment="common">
     <section class="logo_area">
-        <a th:href="@{/admin}">로고</a>
+        <a th:href="@{/admin}">
+            <img th:src="@{/common/soc_logo.png}"
+                 alt="Savvy Our Choice 로고"
+                 width="40%" height="40%"
+                 class="logo"/>
+        </a>
     </section>
     <section class="btn_area">
         <th:block sec:authorize="isAuthenticated()">

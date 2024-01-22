@@ -32,7 +32,7 @@ public class MemberInfo implements UserDetails {
 
     @Override
     public String getUsername() {
-        return StringUtils.hasText(email) ? email : userId;
+        return userId;
     }
 
     @Override
