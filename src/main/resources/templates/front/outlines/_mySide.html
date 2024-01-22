@@ -18,18 +18,12 @@
     <!--<button type="button" class="upload_files"
             th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>-->
 
-    <div class="follow_info" sec:authorize="isAuthenticated()">
-        <span class='num' th:text="${@followService.totalFollowers}"></span> <span class="txt">followers </span>
-        <span class='num' th:text="${@followService.totalFollowings}"></span> <span class="txt">following</span>
-    </div>
-    <!--// follow_info -->
-
 
     <a th:href="@{/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
         <i class="xi-profile-o"></i> 내 프로필
     </a>
 
-    <a th:href="@{/mypage/myBoard/posts}" th:classappend="${menuCode} =='myBoard' ? 'on'">
+    <a th:href="@{/mypage/myBoard}" th:classappend="${menuCode} =='myBoard' ? 'on'">
         <i class="xi-document"></i> 내 활동
     </a>
 
