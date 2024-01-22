@@ -25,14 +25,12 @@
 
     <section>
         <div class="header_search">
-            <div class="layout_width">
+            <div> <!--class="layout_width" 클래스 일단 제거함-->
                 <form name="frmSearch" class="search" th:action="@{/board/search}" autocomplete="off">
                     <input type="text" name="skey" th:value="${param.skey}" th:placeholder="#{검색어를_입력하세요.}">
-                    <button type="submit" class="search_btn">
-                        <i class="xi-search"></i>
-                    </button>
+                    <button type="submit" class="search_btn"><i class="xi-search"></i></button>
                 </form>
-            </div>
+            </div >
             <!--// layout_width -->
         </div>
         <!--// search -->
