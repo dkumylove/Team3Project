@@ -20,7 +20,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Table(indexes = {
-        @Index(name="idx_boardData_basic", columnList = "notice DESC, createdAt DESC")
+        @Index(name="idx_boardData_basic", columnList = "notice DESC, listOrder DESC, createdAt DESC")
 })
 public class BoardData extends Base implements AuthCheck {
     /**
@@ -117,6 +117,9 @@ public class BoardData extends Base implements AuthCheck {
 
     @Transient
     private boolean deletable; // 삭제 가능 여부
+
+    @Transient
+    private boolean commentable; // 댓글 작성 가능 여부
 
     @Transient
     private boolean mine; // 게시글 소유자

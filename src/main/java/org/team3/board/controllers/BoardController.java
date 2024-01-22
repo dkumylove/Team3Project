@@ -191,6 +191,25 @@ public class BoardController implements ExceptionProcessor {
         return utils.tpl("board/update");
     }
 
+    @GetMapping("/reply/{seq}")
+    public String reply(@PathVariable("seq") Long parentSeq,
+                        @ModelAttribute RequestBoard form, Model model) {
+        commonProcess(parentSeq, "reply", model);
+
+        String content = boardData.getContent();
+        content = String.format("<br><br><br><br><br>===================================================<br>%s", content);
+
+        form.setBid(board.getBid());
+        form.setContent(content);
+        form.setParentSeq(parentSeq);
+
+        if (memberUtil.isLogin()) {
+            form.setPoster(memberUtil.getMember().getName());
+        }
+
+        return utils.tpl("board/write");
+    }
+
     @PostMapping("/save")
     public String save(@Valid RequestBoard form, Errors errors, Model model) {
         String bid = form.getBid();

@@ -32,7 +32,12 @@ commonLib.ajaxLoad = function(method, url, params, responseType){
                 // 제이슨이면 자바스크립트로 바꾸고,, 아닐때는 문자열 형태로
                 // 바꾸는 과정
                 const resData = ( responseType && responseType.toLowerCase() ==='json' ) ? xhr.response : xhr.responseText;
-                resolve(resData); // 성공시 데이터
+
+                if (xhr.status == 200) {
+                   resolve(resData); // 성공시 응답 데이터
+                } else {
+                    reject(resData);
+                }
             }
         };
 

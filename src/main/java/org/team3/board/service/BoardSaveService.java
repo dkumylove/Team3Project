@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.team3.board.controllers.RequestBoard;
+import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.board.repositories.BoardRepository;
@@ -48,6 +49,15 @@ public class BoardSaveService {
             data.setUa(request.getHeader("User-Agent"));
             data.setMember(memberUtil.getMember());
 
+            Board board = boardRepository.findById(form.getBid()).orElse(null);
+            data.setBoard(board);
+            Long parentSeq = form.getParentSeq();
+            data.setParentSeq(parentSeq); // 부모 게시글 번호
+
+            long listOrder = parentSeq == null ?
+                            System.currentTimeMillis() :
+                            getReplyListOrder(parentSeq);
+            data.setListOrder(listOrder);
 
         }
 
@@ -92,5 +102,27 @@ public class BoardSaveService {
         return data;
     }
 
+    /**
+     * 답글 정렬 순서 번호 listOrder
+     * @param parentSeq
+     * @return
+     */
+    private long getReplyListOrder(Long parentSeq) {
+        BoardData data = boardDataRepository.findById(parentSeq).orElse(null);
+        if (data == null) {
+            return System.currentTimeMillis();
+        }
 
+        /**
+         * 답글이 이미 있는 경우 -> 마지막 답글 순서에서  -1
+         * 답글이 하나도 없는 경우 -> 부모 게시글 순서에서 -1
+         */
+        Long lastListOrder = boardDataRepository.getLastReplyListOrder(parentSeq);
+        if (lastListOrder == null || lastListOrder.longValue() == 0L) { // 답글이 없는 경우
+            return data.getListOrder().longValue() - 1000;
+
+        } else { // 답글이 있는 경우
+            return lastListOrder.longValue() - 1;
+        }
+    }
 }
