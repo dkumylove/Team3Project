@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{front/layouts/myMain}">
-<section layout:fragment="content" class="follow_page">
-    <h1>Follow</h1>
-    <ul class="items">
-        <h2 th:if="${mode == 'follower'}">
-            <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'follower'} ? 'on'">1</span> <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span>
-        </h2>
-        <h2 th:if="${mode == 'following'}">
-            <span th:text="${mode == 'follower' ? 'following' : 'follower'}"></span> <span class="follow_mode" th:text="${mode}" th:classappend="${mode == 'following'} ? 'on'"></span>
-        </h2>
-        <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="content">
 
+    <ul class="items">
+        <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
             <div class="profile">
-                <!--<div class="profile_image" th:if="*{profileImage != null}" th:style="*{@utils.backgroundStyle(profileImage, 80, 80)}"></div>-->
+                <div class="profile_image" th:if="*{profileImage != null}" th:style="*{@utils.backgroundStyle(profileImage, 80, 80)}"></div>
                 <a class="user_info" th:href="@{/mypage/follow/{userId}(userId=*{userId}, mode=${mode})}">
                     <div class="user_nm" th:text="*{#strings.concat(name, '(', userId, ')')}"></div>
                     <div class="user_email" th:text="*{email}"></div>
@@ -29,5 +20,6 @@
     </ul>
 
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
-</section>
+
+</th:block>
 </html>

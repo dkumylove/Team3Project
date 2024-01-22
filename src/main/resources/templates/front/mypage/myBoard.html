@@ -4,30 +4,28 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>내 활동</h1>
-    <form name="frmSearchUseBoard" method="get" autocomplete="off">
-        <input type="hidden" name="mode" value="myBoard">
-        <div class="widget_tab">
-            <ul class="tabs">
-                <li>
-                    <input type="radio" name="tab" class="tab" value="/mypage/content/list" id="widget_tab1" checked>
-                    <label for="widget_tab1" th:text="#{게시글}"></label>
-                </li>
-                <li>
-                    <input type="radio" name="tab" class="tab" value="/mypage/content/comment" id="widget_tab2">
-                    <label for="widget_tab2" th:text="#{코멘트}"></label>
-                </li>
-                <li>
-                    <input type="radio" name="tab" class="tab" value="/mypage/content/save_post" id="widget_tab3">
-                    <label for="widget_tab3" th:text="#{찜_게시글}"></label>
-                </li>
-                <li>
-                    <input type="radio" name="tab" class="tab" value="/mypage/content/latestView" id="widget_tab4">
-                    <label for="widget_tab4" th:text="#{최근본글}"></label>
-                </li>
-            </ul>
-            <div class="tab_content"></div>
+    <h2>
+        <div class="tabs">
+            <a th:href="@{/mypage/myBoard/posts}" class="tab" th:classappend="${tab == 'posts'} ? 'on'" th:text="#{게시글}"></a>
+            <a th:href="@{/mypage/myBoard/comments}" class="tab" th:classappend="${tab == 'comments'} ? 'on'" th:text="#{코멘트}"></a>
+            <a th:href="@{/mypage/myBoard/save_posts}" class="tab" th:classappend="${tab == 'save_posts'} ? 'on'" th:text="#{찜_게시글}"></a>
+            <a th:href="@{/mypage/myBoard/latest}" class="tab" th:classappend="${tab == 'latest'} ? 'on'" th:text="#{최근본글}"></a>
         </div>
-    </form>
+    </h2>
 
+    <div class="tab_contents">
+        <th:block th:if="${tab == 'posts'}">
+            <th:block th:replace="~{front/mypage/content/posts::content}"></th:block>
+        </th:block>
+        <th:block th:if="${tab == 'comments'}">
+            <th:block th:replace="~{front/mypage/content/comments::content}"></th:block>
+        </th:block>
+        <th:block th:if="${tab == 'save_posts'}">
+            <th:block th:replace="~{front/mypage/content/save_posts::content}"></th:block>
+        </th:block>
+        <th:block th:if="${tab == 'latest'}">
+            <th:block th:replace="~{front/mypage/content/latest::content}"></th:block>
+        </th:block>
+    </div>
 </section>
 </html>
