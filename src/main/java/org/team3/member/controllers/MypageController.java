@@ -239,10 +239,11 @@ public class MypageController implements ExceptionProcessor {
      * @param model
      * @return
      */
-    @GetMapping("/follow/{userId}")
+    @GetMapping("/usePage/{userId}")
     public String followBoard(@PathVariable("userId") String userId,
-                              @RequestParam(name="mode", defaultValue="follower") String mode,
+                              @RequestParam(name="mode", defaultValue="usePage") String mode,
                               @ModelAttribute BoardDataSearch search, Model model) {
+        commonProcess("usePage", model);
 
         // 전체 조회가 아니라면 아이디별 조회
         if (!userId.equals("all")) {
@@ -255,8 +256,9 @@ public class MypageController implements ExceptionProcessor {
 
         model.addAttribute("items", data.getItems());
         model.addAttribute("pagination", data.getPagination());
+//        model.addAttribute("mode", "usePage");
 
-        return utils.tpl("mypage/follow_board");
+        return utils.tpl("mypage/usePage");
     }
 
     @GetMapping("/content/{tab}")
@@ -347,9 +349,12 @@ public class MypageController implements ExceptionProcessor {
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
             addCommonScript.add("follow");
+        } else if (mode.equals("usePage")) { // 유저페이지
+            pageTitle = Utils.getMessage("usePage", "commons");
+            addCommonScript.add("follow");
         }
 
-        if (mode.equals("follow") || mode.equals("myBoard")) {
+        if (mode.equals("follow") || mode.equals("myBoard") || mode.equals("usePage")) {
             addCommonCss.add("tab");
             addCommonScript.add("tab");
         } else if (mode.equals("profile")) {
