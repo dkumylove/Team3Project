@@ -141,5 +141,5 @@ section nav > .inner a:hover { background:var(--main-color); }
 /* 마이페이지 aside */
 aside .follow_info a > span { text-align: center; }
 aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
-aside .user_nm { padding: 0 25px;  color: var(--font-color); font-size: 1.3rem;}
+aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
 
