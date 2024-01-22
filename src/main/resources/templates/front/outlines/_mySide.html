@@ -7,7 +7,7 @@
     </th:block>
     <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
         <!--이미지 클릭하면 이미지 수정가능-->
-        <div class="circle upload_files" data-image-only="true" data-single-file="true" data-done="true" id="profile_image2"
+        <div class="circle upload_files aside_photo" data-image-only="true" data-single-file="true" data-done="true" id="profile_image2"
                  th:style="${@utils.backgroundStyle(session.member.profileImage)}"></div>
         <!--<div class="circle">
             <th:block  th:if="${session.member.profileImage != null}"
