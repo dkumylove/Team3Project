@@ -20,11 +20,12 @@ img { border: 0; }
 
 /* 헤더 영역 s */
 header { position: fixed; z-index: 1 ;top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; height: 80px; align-items: center; background: #fff; }
-header > section { width: 210px; text-align: center; font-size: 14px; }
-header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; }
-header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: black; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500;}
-header .btn_area a:last-of-type { background: var(--main-color); ; color: var(--back-color)}
-header .btn_area .circle2 { background-color: black; width: 40px; height: 40px; border-radius: 50%;  }
+header > section { width: 210px; text-align: center; font-size: 14px; flex-wrap:nowrap;}
+header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; flex-wrap:nowrap; }
+header .btn_area a {display: inline-block; width: 90px; height: 28px; border: 1px solid #2D3A4A; color: black; border-radius: 5px; line-height: 26px; text-align: center; font-weight: 500; margin-bottom:25px; flex-wrap:nowrap;}
+header .btn_area a:last-of-type { background: var(--main-color); ; color: var(--back-color); flex-wrap:nowrap;}
+.circle2 { background-color: black; width: 40px; height: 40px; border-radius: 50%;
+            display: inline-block; justify-content:flex-end; flex-wrap:nowrap;}
 /* 헤더 영역 e */
 
 /* 푸터 영역 s */
@@ -102,8 +103,13 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 /* 메시지 공통 */
 .message_box {box-shadow: 1px 1px 5px lightslategray ; padding: 15px; border-radius: 5px; font-size: 1.384rem; font-weight: 500; text-align: center; background: #ffffff; margin-bottom: 30px; color: steelblue }
 
+/* 마이페이지 회원정보 칸 */
+.profile_box { display: block; color: var(--font-color); font-size: 1.385rem;
+               text-align: center; position: relative; }
+
 /* 마이페이지 사진*/
-.circle {border-radius: 50%; overflow: hidden;}
+.circle {border-radius: 50%; overflow: hidden; display: block; position: relative;
+        justify-content: center; margin:14%}
 
 .layout_width1 { width: 100%; margin: 0; }
 .layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
@@ -135,5 +141,5 @@ section nav > .inner a:hover { background:var(--main-color); }
 /* 마이페이지 aside */
 aside .follow_info a > span { text-align: center; }
 aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
-aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
+aside .user_nm { padding: 0 25px;  color: var(--font-color); font-size: 1.3rem;}
 
