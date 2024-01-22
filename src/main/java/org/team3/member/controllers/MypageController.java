@@ -218,8 +218,9 @@ public class MypageController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/follow")
-    public String follow(@RequestParam(name="mode", defaultValue = "follower") String mode, RequestPaging paging, Model model) {
+    public String followList(@RequestParam(name="mode", defaultValue = "follower") String mode, RequestPaging paging, Model model) {
         commonProcess("follow", model);
+       // mode = StringUtils.hasText(mode) ? mode : "follower"; // 없으면 기본값 follower
 
         ListData<Member> data = followService.getList(mode, paging);
 
@@ -232,7 +233,6 @@ public class MypageController implements ExceptionProcessor {
 
     /**
      * follow 게시글
-     *
      *
      * @param userId
      * @param mode

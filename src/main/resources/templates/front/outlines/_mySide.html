@@ -18,6 +18,19 @@
     <!--<button type="button" class="upload_files"
             th:text="#{이미지_수정}" data-image-only="true" data-single-file="true"></button>-->
 
+    <div class="profile_box" sec:authorize="isAuthenticated()">
+        <h2><div class="user_nick" th:text="${session.member.nickName}"></div></h2>
+
+        <div class="follow_info">
+            <a th:href="@{/mypage/follow?mode=follower}">
+                <span class='num' th:text="${@followService.totalFollowers}"></span> <span class="txt">followers</span>
+            </a>
+
+            <a th:href="@{/mypage/follow?mode=following}">
+                <span class='num' th:text="${@followService.totalFollowings}"></span> <span class="txt">following</span>
+            </a>
+        </div>
+    </div>
 
     <a th:href="@{/mypage/profile}" th:classappend="${menuCode} =='profile' ? 'on'">
         <i class="xi-profile-o"></i> 내 프로필
@@ -27,9 +40,9 @@
         <i class="xi-document"></i> 내 활동
     </a>
 
-    <a th:href="@{/mypage/follow}" th:classappend="${menuCode} == 'follow' ? 'on'">
+    <!--<a th:href="@{/mypage/follow}" th:classappend="${menuCode} == 'follow' ? 'on'">
         <i class="xi-users-o"></i> 팔로우팔로잉
-    </a>
+    </a>-->
 
     <a th:href="@{/mypage/deleteMember}" th:classappend="${menuCode} == 'delete' ? 'on'">
         <i class="xi-emoticon-sad-o"></i> 회원탈퇴
