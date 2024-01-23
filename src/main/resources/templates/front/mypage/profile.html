@@ -67,7 +67,7 @@
                             <div class="circle upload_files" data-image-only="true" data-single-file="true" data-done="true" id="profile_image"
                                  th:style="${@utils.backgroundStyle(session.member.profileImage)}"></div>
                         </th>
-                        <th th:text="#{아이디}"></th>
+                        <th th:text="#{아이디}" class="profile_col"></th>
                         <td colspan="2">
                             <span th:text="${#messages.msg('USERID_MSG', session.member.userId)}"></span>
                         </td>
@@ -94,7 +94,7 @@
                 </table>
                 <table border="1">
                     <tr>
-                        <th th:text="#{비밀번호}"></th>
+                        <th th:text="#{비밀번호}" class="profile_col"></th>
                         <td>
                             <span th:text="${#messages.msg('PASSWORD_MSG', session.member.password)}"></span>
                         </td>
