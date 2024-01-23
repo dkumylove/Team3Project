@@ -232,6 +232,7 @@ public class MypageController implements ExceptionProcessor {
 
     /**
      * follow 게시글
+     * 유저 페이지
      *
      * @param userId
      * @param mode
