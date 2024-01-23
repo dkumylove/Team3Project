@@ -1,5 +1,6 @@
 package org.team3.board.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Table(indexes = {
-        @Index(name="idx_boardData_basic", columnList = "notice DESC, createdAt DESC")
+        @Index(name="idx_boardData_basic", columnList = "notice DESC, listOrder DESC, listOrder2 ASC, createdAt DESC")
 })
 public class BoardData extends Base implements AuthCheck {
     /**
@@ -54,6 +55,17 @@ public class BoardData extends Base implements AuthCheck {
     @Lob
     @Column(nullable = false)
     private String content;
+
+    private boolean editorView; // true : 에디터를 통해서 작성
+
+    private Long parentSeq; // 부모 게시글 번호 - 답글인 경우
+
+    private Long listOrder; // 1차 정렬 순서 - 내림차순
+
+    @Column(length=60)
+    private String listOrder2 = "R"; // 답글 2차 정렬 -> 오름차순
+
+    private int depth; // 답글 들여쓰기 정도
 
     @Column(length = 20)
     private String ip; // IP 주소
@@ -96,6 +108,7 @@ public class BoardData extends Base implements AuthCheck {
     /* 연관관계 필요합니다 */
     // @OneToMany
     @Transient
+    @JsonIgnore
     private List<CommentData> comments; // 댓글 목록 -> 댓글
 
     @Transient
@@ -109,6 +122,9 @@ public class BoardData extends Base implements AuthCheck {
 
     @Transient
     private boolean deletable; // 삭제 가능 여부
+
+    @Transient
+    private boolean commentable; // 댓글 작성 가능 여부
 
     @Transient
     private boolean mine; // 게시글 소유자

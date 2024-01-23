@@ -1,5 +1,6 @@
 package org.team3.board.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class CommentData extends Base implements AuthCheck {
     @Id @GeneratedValue
     private Long seq;  // 코멘트 넘버
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="boardData_seq")
     private BoardData boardData;  // 게시물정보
