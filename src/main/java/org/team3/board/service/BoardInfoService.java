@@ -25,6 +25,7 @@ import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
 import org.team3.file.entities.FileInfo;
 import org.team3.file.service.FileInfoService;
+import org.team3.member.Authority;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
 
@@ -94,7 +95,7 @@ public class BoardInfoService {
      */
     public ListData<BoardData> getList(String bid, BoardDataSearch search) {
 
-        Board board = configInfoService.get(bid);
+        Board board = StringUtils.hasText(bid) ? configInfoService.get(bid) : new Board();
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), board.getRowsPerPage());
@@ -103,7 +104,9 @@ public class BoardInfoService {
         QBoardData boardData = QBoardData.boardData;
         BooleanBuilder andBuilder = new BooleanBuilder();
 
-        andBuilder.and(boardData.board.bid.eq(bid)); // 게시판 ID
+        if (StringUtils.hasText(bid)) {
+            andBuilder.and(boardData.board.bid.eq(bid)); // 게시판 ID
+        }
 
         /* 검색 조건 처리 S */
 
@@ -160,6 +163,7 @@ public class BoardInfoService {
         /* 검색 조건 처리 E */
 
         PathBuilder<BoardData> pathBuilder = new PathBuilder<>(BoardData.class,"boardData");
+
         List<BoardData> items = new JPAQueryFactory(em)
                 .selectFrom(boardData)
                 .leftJoin(boardData.member)
@@ -169,6 +173,8 @@ public class BoardInfoService {
                 .where(andBuilder)
                 .orderBy(
                         new OrderSpecifier(Order.DESC, pathBuilder.get("notice")),
+                        new OrderSpecifier(Order.DESC, pathBuilder.get("listOrder")),
+                        new OrderSpecifier(Order.ASC, pathBuilder.get("listOrder2")),
                         new OrderSpecifier(Order.DESC, pathBuilder.get("createdAt"))
                 )
                 .fetch();
@@ -181,6 +187,10 @@ public class BoardInfoService {
         Pagination pagination = new Pagination(page, (int)total, ranges, limit, request);
 
         return new ListData<>(items, pagination);
+    }
+
+    public ListData<BoardData> getList(BoardDataSearch search) {
+        return getList(null, search);
     }
 
     /**
@@ -258,6 +268,29 @@ public class BoardInfoService {
         boardData.setShowDeleteButton(showDeleteButton);
 
         /* 수정, 삭제 권한 정보 처리 E */
+
+
+        /* 댓글 작성 권한 처리 S */
+        boolean commentable = false;
+        Board board = boardData.getBoard();
+        Authority commentAccessType = board.getCommentAccessType();
+        // 관리자이거나 전체 작성 가능이면
+        if (commentAccessType == Authority.ALL) {
+            commentable = true;
+        }
+
+        if (memberUtil.isLogin()) {
+            if (commentAccessType == Authority.USER) {
+                commentable = true;
+            }
+
+            if (commentAccessType == Authority.ADMIN && memberUtil.isAdmin()) {
+                commentable = true;
+            }
+        }
+
+        boardData.setCommentable(commentable);
+        /* 댓글 작성 권한 처리 E */
     }
 
     /**

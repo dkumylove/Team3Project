@@ -1,5 +1,6 @@
 package org.team3.member.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.team3.member.Authority;
@@ -12,6 +13,7 @@ public class Authorities {
     @GeneratedValue
     private Long seq;
 
+    @JsonIgnore
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="member_seq")
     private Member member;

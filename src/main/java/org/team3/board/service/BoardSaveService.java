@@ -1,5 +1,6 @@
 package org.team3.board.service;
 
+import com.querydsl.core.BooleanBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.team3.board.controllers.RequestBoard;
 import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
+import org.team3.board.entities.QBoardData;
 import org.team3.board.repositories.BoardDataRepository;
 import org.team3.board.repositories.BoardRepository;
 import org.team3.file.service.FileUploadService;
@@ -33,8 +35,12 @@ public class BoardSaveService {
 
         Long seq = form.getSeq();
 
-        BoardData data = null;
+        // 수정 권한 체크
+        if (mode.equals("update")) {
+            boardAuthService.check(mode, seq);
+        }
 
+        BoardData data = null;
         if(seq != null && mode.equals("update")) { // 글 수정
             data = boardDataRepository.findById(seq).orElseThrow(BoardDataNotFoundException::new);
 
@@ -47,12 +53,30 @@ public class BoardSaveService {
 
             Board board = boardRepository.findById(form.getBid()).orElse(null);
             data.setBoard(board);
+            Long parentSeq = form.getParentSeq();
+            data.setParentSeq(parentSeq); // 부모 게시글 번호
+
+            long listOrder = parentSeq == null ?
+                            System.currentTimeMillis() :
+                            getReplyListOrder(parentSeq);
+            data.setListOrder(listOrder);
+
+            if(parentSeq == null) { // 본글
+                data.setListOrder2("R");
+
+            } else { // 답글
+                String listOrder2 = getReplyListOrder2(parentSeq);
+                data.setListOrder2(listOrder2); // A의 개수가 -> depth
+                int depth = StringUtils.countOccurrencesOf(listOrder2, "A");
+                data.setDepth(depth);
+            }
         }
 
         data.setPoster(form.getPoster());
         data.setSubject(form.getSubject());
         data.setContent(form.getContent());
         data.setCategory(form.getCategory());
+        data.setEditorView(data.getBoard().isUseEditor());
 
         // 추가 필드 - 정수
         data.setNum1(form.getNum1());
@@ -87,5 +111,44 @@ public class BoardSaveService {
         fileUploadService.processDone(data.getGid());
 
         return data;
+    }
+
+    /**
+     * 답글 정렬 순서 번호 listOrder
+     * @param parentSeq
+     * @return
+     */
+    private long getReplyListOrder(Long parentSeq) {
+        BoardData data = boardDataRepository.findById(parentSeq).orElse(null);
+        if (data == null) {
+            return System.currentTimeMillis();
+        }
+
+        return data.getListOrder();
+    }
+
+    /**
+     * 답글 2차 정렬
+     *
+     * @param parentSeq
+     * @return
+     */
+    private String getReplyListOrder2(Long parentSeq) {
+        BoardData data = boardDataRepository.findById(parentSeq).orElse(null);
+        if (data == null) { // 처음 답글
+            return "A1000";
+        }
+
+        int depth = data.getDepth() + 1; // 0 - 본글 - 답글,  1 답글 - 다답글, 2 다답글 - 다다답글
+
+        QBoardData boardData = QBoardData.boardData;
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(boardData.parentSeq.eq(parentSeq))
+                .and(boardData.depth.eq(depth));
+
+        long count = boardDataRepository.count(builder);
+        long seqNum = 1000 + count;
+
+        return data.getListOrder2() + "A" + seqNum;
     }
 }
