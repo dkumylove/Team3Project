@@ -18,6 +18,7 @@ import org.team3.board.service.config.BoardConfigInfoService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Utils;
+import org.team3.commons.exceptions.UnAuthorizedException;
 import org.team3.file.entities.FileInfo;
 import org.team3.file.service.FileInfoService;
 import org.team3.member.MemberUtil;
@@ -195,6 +196,9 @@ public class BoardController implements ExceptionProcessor {
     public String reply(@PathVariable("seq") Long parentSeq,
                         @ModelAttribute RequestBoard form, Model model) {
         commonProcess(parentSeq, "reply", model);
+        if (!board.isUseReply()) { // 답글 사용 불가
+            throw new UnAuthorizedException();
+        }
 
         String content = boardData.getContent();
         content = String.format("<br><br><br><br><br>===================================================<br>%s", content);
