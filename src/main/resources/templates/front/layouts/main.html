@@ -38,9 +38,8 @@
 </head>
 <body>
 <header th:replace="~{front/outlines/header::common}"></header>
-<main>
-    <aside th:replace="~{front/outlines/_boardSide::menus}"></aside>
-    <section layout:fragment="content"></section>
+<main layout:fragment="content">
+
 </main>
 <footer th:replace="~{front/outlines/footer::common}"></footer>
 <iframe name="ifrmProcess" class="dn"></iframe>
