@@ -15,11 +15,18 @@
                 <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
             </div>
             <div class="subject">
-                <div class="subject1" th:text="#{제목_1}"></div>
-                <div class="subject2" th:text="*{subject}"></div>
+                <div class="subject_">
+                    <div class="subject1" th:text="#{제목_1}"></div>
+                    <div class="subject2" th:text="*{subject}"></div>
+                </div>
+                <div class="toggle-icons">
+                    <i class="xi-angle-down"></i>
+                    <i class="xi-angle-up" style="display:none;"></i>
+                </div>
             </div>
-
-            <div class="content" th:utext="*{content}"></div>
+            <div class="content hide">
+                <div class="content" th:utext="*{content}"></div>
+            </div>
         </li>
     </ul>
 

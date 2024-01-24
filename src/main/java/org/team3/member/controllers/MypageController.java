@@ -340,19 +340,23 @@ public class MypageController implements ExceptionProcessor {
         } else if(mode.equals("changePw")){
             pageTitle = Utils.getMessage("changePw", "commons");
             addScript.add("mypage/changePw");
+
         } else if(mode.equals("changeNickname")){
             pageTitle = Utils.getMessage("changeNickname", "commons");
             addScript.add("mypage/changeNickname");
+
         } else if (mode.equals("myBoard")) {  // 내활동
             pageTitle = Utils.getMessage("myBoard", "commons");
             addScript.add("board/common");
             addScript.add("mypage/save_post");
+
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");
             addCommonScript.add("follow");
         } else if (mode.equals("usePage")) { // 유저페이지
             pageTitle = Utils.getMessage("usePage", "commons");
             addCommonScript.add("follow");
+            addScript.add("mypage/save_post");
         }
 
         if (mode.equals("follow") || mode.equals("myBoard") || mode.equals("usePage")) {
