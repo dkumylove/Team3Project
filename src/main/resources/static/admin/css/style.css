@@ -98,7 +98,7 @@ line-height:43px;}
 ..search_btn .btn:hover {background: var(--on-color);}
 
 .sbtn { border: 1px solid #222; color: #222; background: #fff; display: inline-block; padding: 7px 20px;
-border-radius: 3px; cursor: pointer;}
+border-radius: 3px; cursor: pointer; line-height: 1;}
 .sbtn:hover, .sbtn.on { background: var(--main-color); color: #fff; border-color: var(--main-color); line-height: 1;}
 .sbtn i {color: #222; font-size: 1.1rem; vertical-align:middle;}
 .sbtn:hover i, .sbtn.on i {color: #fff;}
