@@ -7,12 +7,23 @@
 }
 
 /* 찜 게시글 목록 */
-.save_post_page .items li { border: 1px solid #d5d5d5; border-radius: 5px; }
+.save_post {padding: 20px}
+.save_post_page .items li { border: 1px solid #d5d5d5; padding: 15px; border-radius: 5px; }
 .save_post_page .items li + li { margin-top: 10px; }
-.save_post_page .subject { padding: 10px 15px; cursor: pointer; }
-.save_post_page .content { margin-top: 10px; transition: all 0.5s; min-height: 300px;}
-.save_post_page .content > div { background: #f8f8f8; padding: 15px; border-radius: 5px; }
+.save_post_page .subject { display: flex; justify-content: space-between; border-bottom: 1px; margin: 10px 0;}
+.save_post_page .subject_ { display: flex;}
+.save_post_page .subject1 { font-size: 1.25rem; font-weight: 500; padding-bottom: 10px; }
+.save_post_page .subject2 { font-size: 1.25rem; margin-left: 10px; padding-bottom: 10px; }
+
+.save_post_page .content { background: #f8f8f8; padding: 10px; border-radius: 3px; }
 .save_post_page .content.hide { transition: all 0.5s; }
+
+.save_post_page .post_info { flex-grow: 1; display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.save_post_page .board_seq { display: flex}
+.save_post_page .board_seq1 { font-size: 1.3rem; font-weight: 500; }
+.save_post_page .board_seq2 { font-size: 1.3rem; color: #555; margin-left: 10px}
+
+
 
 /* 팔로우, 팔로잉 페이지 */
 .follow_page .items .item + .item { border-top: 1px solid lavender; }
@@ -33,6 +44,7 @@
 .follow_board_page .subject2 { font-size: 1.25rem; margin-left: 10px; padding-bottom: 10px; }
 
 .follow_board_page .content { background: #f8f8f8; padding: 10px; border-radius: 3px; }
+.follow_board_page .content.hide { transition: all 0.5s; }
 .follow_board_page .post_info { flex-grow: 1; display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
 .follow_board_page .profile_image { width: 80px; height: 80px; border-radius: 50%; margin-right: 20px; }
 .follow_board_page .board_seq { display: flex}
