@@ -7,18 +7,19 @@
     <ul class="items">
         <li class="no_data" th:if="${items == null || items.isEmpty()}" th:text="#{조회된_게시글이_없습니다.}"></li>
         <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
-            <div class="subject" th:text="*{subject}"></div>
-            <div class="content" th:utext="*{content}"></div>
             <div class="post_info">
-                <div class="profile">
-                    <div class="profile_image" th:if="*{member.profileImage != null}" th:style="*{@utils.backgroundStyle(member.profileImage, 80, 80)}"></div>
-                    <div>
-                        <div class="user_nm" th:text="*{#strings.concat(member.name, '(', member.userId, ')')}"></div>
-                        <div class="user_email" th:text="*{member.email}"></div>
-                    </div>
+                <div class="board_seq">
+                    <div class="board_seq1" th:text="#{게시판}"></div>
+                    <div class="board_seq2" th:text="*{board.bid}"></div>
                 </div>
                 <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
             </div>
+            <div class="subject">
+                <div class="subject1" th:text="#{제목_1}"></div>
+                <div class="subject2" th:text="*{subject}"></div>
+            </div>
+
+            <div class="content" th:utext="*{content}"></div>
         </li>
     </ul>
 
