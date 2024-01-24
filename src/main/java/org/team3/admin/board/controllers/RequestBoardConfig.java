@@ -40,7 +40,7 @@ public class RequestBoardConfig {
 
     private boolean useUploadFile; // 파일 첨부 사용 여부
 
-    private String locationAfterWriting = "LIST"; // 글 작성 후 이동 위치
+    private String locationAfterWriting = "list"; // 글 작성 후 이동 위치
 
     private boolean showListBelowView; // 글 보기 하단 목록 노출 여부
 
