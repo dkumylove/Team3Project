@@ -7,23 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.team3.admin.board.controllers.RequestBoardConfig;
-import org.team3.admin.config.service.ConfigInfoService;
 import org.team3.admin.menus.Menu;
 import org.team3.admin.menus.MenuDetail;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
+import org.team3.commons.Pagination;
 import org.team3.member.config.MemberConfigDeleteService;
 import org.team3.member.config.MemberConfigSaveService;
+import org.team3.member.config.MemberConfigValidator;
 import org.team3.member.controllers.MemberSearch;
 import org.team3.member.entities.Member;
-import org.team3.member.service.MemberConfigInfoService;
 import org.team3.member.service.MemberInfoService;
+import org.team3.member.config.MemberConfigInfoService;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller("adminMemberController")
 @RequestMapping("/admin/member")
@@ -31,10 +30,10 @@ import java.util.Objects;
 public class MemberController implements ExceptionProcessor {
 
     //    private final MemberRepository repository;
-    private final MemberInfoService memberInfoService;
     private final MemberConfigInfoService configInfoService;
     private final MemberConfigSaveService configSaveService;
     private final MemberConfigDeleteService configDeleteService;
+    private final MemberConfigValidator validator;
 
 
 //    @ModelAttribute("memberList")
@@ -44,22 +43,7 @@ public class MemberController implements ExceptionProcessor {
 
     // 메뉴는 공통으로 쓰는 부분임
 
-    /**
-     * 게시판 목록 - 수정
-     *
-     * @param chks
-     * @return
-     */
-    @PatchMapping
-    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
-        commonProcess("list", model);
-        System.out.println("chks"+chks);
-        configSaveService.saveList(chks);
 
-        model.addAttribute("script", "parent.location.reload()");
-
-        return "common/_execute_script";
-    }
 //
 //    @DeleteMapping
 //    public String deleteList(@RequestParam("chk") List<Integer> chks, Model model) {
@@ -93,37 +77,121 @@ public class MemberController implements ExceptionProcessor {
 //        return "admin/member/list";
 //    }
     @GetMapping
-    public String list(@ModelAttribute MemberSearchOptions search, Model model) {
+    public String list(@ModelAttribute MemberSearch search, Model model) {
         commonProcess("list", model);
 
-        ListData<Member> data = memberInfoService.getList(search);
+        ListData<Member> data = configInfoService.getList(search, true);
+        List<Member> items = data.getItems();
+        Pagination pagination = data.getPagination();
+
 
         System.out.println(data.getItems());
 
-        model.addAttribute("MemberList", data.getItems()); // 목록
-        model.addAttribute("pagination", data.getPagination()); // 페이징
+        model.addAttribute("MemberList", items); // 목록
+        model.addAttribute("pagination", pagination); // 페이징
 
         return "admin/member/list";
+    }
+
+    /**
+     * 게시판 등록/수정 처리
+     *
+     * @return
+     */
+    @PostMapping("/save")
+    public String save(@Valid RequestMemberConfig config, Errors errors, Model model) {
+        String mode = config.getMode();
+
+        commonProcess(mode, model);
+        validator.validate(config, errors);
+
+        if (errors.hasErrors()) {
+            errors.getAllErrors().stream().forEach(System.out::println);
+            return "admin/member/" + mode;
+        }
+
+        configSaveService.save(config);
+
+        return "redirect:/admin/member";
     }
 
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") String userId, Model model) {
         commonProcess("edit", model);
 
-        MemberSearchOptions form = configInfoService.getForm(userId);
-        model.addAttribute("requestMemberConfig", form);
-        configInfoService.getForm(userId);
-        model.addAttribute("requestJoin", form);
+        RequestMemberConfig requestMemberConfig = configInfoService.getForm(userId);
+        model.addAttribute("requestMemberConfig", requestMemberConfig);
 
         return "admin/member/edit";
     }
+    /**
+     * 회원 등록
+     *
+     * @return
+     */
+    @GetMapping("/add")
+    public String add(@ModelAttribute RequestMemberConfig config, Model model) {
+        commonProcess("add", model);
 
+        return "admin/member/add";
+    }
     private void commonProcess(String mode, Model model) {
-        mode = Objects.requireNonNullElse(mode, "list");
-        String pageTitle = "회원 목록";
+//        mode = Objects.requireNonNullElse(mode, "list");
+        String pageTitle = "회원목록";
+        mode = StringUtils.hasText(mode) ? mode : "list";
 
-        model.addAttribute("subMenuCode", mode);
+        if(mode.equals("add")) {
+            pageTitle = "회원 등록";
+
+        } else if (mode.equals("edit")) {
+            pageTitle = "회원 수정";
+
+        }
+
+        List<String> addCommonScript = new ArrayList<>();
+        List<String> addScript = new ArrayList<>();
+
+        if(mode.equals("add") || mode.equals("edit")) {
+            addCommonScript.add("fileManager");
+            addScript.add("member/form");
+            // addScript.add("board/form");
+        }
+
         model.addAttribute("pageTitle", pageTitle);
+        model.addAttribute("subMenuCode", mode);
+        model.addAttribute("addCommonScript", addCommonScript);
+        model.addAttribute("addScript", addScript);
+    }
+
+
+    @DeleteMapping
+    public String deleteList(@RequestParam("chk") List<Integer> chks, Model model) {
+        commonProcess("list", model);
+
+        configDeleteService.deleteList(chks);
+
+        model.addAttribute("script", "parent.location.reload();");
+
+        return "common/_execute_script";
+    }
+
+
+    /**
+     * 게시판 목록 - 수정
+     *
+     * @param chks
+     * @return
+     */
+    @PatchMapping
+    public String editList(@RequestParam("chk") List<Integer> chks, Model model) {
+        commonProcess("list", model);
+        System.out.println("chks"+chks);
+
+        configSaveService.saveList(chks);
+
+        model.addAttribute("script", "parent.location.reload()");
+
+        return "common/_execute_script";
     }
 
 }

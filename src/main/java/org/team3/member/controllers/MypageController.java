@@ -6,18 +6,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
 import org.team3.board.service.SaveBoardDataService;
@@ -27,7 +20,6 @@ import org.team3.commons.RequestPaging;
 import org.team3.commons.Utils;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
-import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.*;
 import org.team3.member.service.follow.FollowBoardService;
 import org.team3.member.service.follow.FollowService;
@@ -54,7 +46,7 @@ public class MypageController implements ExceptionProcessor {
 
     // 마이페이지
     @GetMapping
-    public String mypage(@ModelAttribute MemberSearchOptions search, Model model) {
+    public String mypage(@ModelAttribute MemberSearch search, Model model) {
 
         ListData<Member> data = memberInfoService.getList(search);
         System.out.println(data.getItems());

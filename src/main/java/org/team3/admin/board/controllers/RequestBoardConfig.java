@@ -66,4 +66,6 @@ public class RequestBoardConfig {
 
     @Transient
     private List<FileInfo> htmlBottomImages; // 게시판 하단 Bottom 이미지
+
+
 }
