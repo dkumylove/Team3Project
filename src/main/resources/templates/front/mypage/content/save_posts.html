@@ -1,33 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="content">
-    <h2 th:text="#{찜_게시글}"></h2>
+<th:block th:fragment="content" >
 
-    <ul class="items">
-        <li th:if="${items == null || items.isEmpty()}" class="no_data" th:text="#{찜_게시글이_없습니다.}"></li>
-        <li th:unless="${items == null || items.isEmpty()}"
-            th:each="item : ${items}" th:object="${item}">
-            <div class="subject" th:text="*{subject}"></div>
-            <div class="content hide">
-                <div>
-                    <div class="post_info">
-                        <div>
-                            <th:block th:text="#{작성자}"></th:block> :
-                            <th:block th:text="*{poster}"></th:block>
-                            <th:block th:if="*{member != null}" th:text="*{'(' + member.userId + ')'}"></th:block>
-                        </div>
-                        <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
+    <h2 class="save_post" th:text="#{찜_게시글}"></h2>
+
+    <div class="save_post_page">
+        <ul class="items">
+            <li th:if="${items == null || items.isEmpty()}" class="no_data" th:text="#{찜_게시글이_없습니다.}"></li>
+            <li th:unless="${items == null || items.isEmpty()}"
+                th:each="item : ${items}" th:object="${item}">
+                <!--<div class="subject" th:text="*{subject}"></div>-->
+                <div class="post_info">
+                    <div class="board_seq">
+                        <div class="board_seq1" th:text="#{게시판}"></div>
+                        <div class="board_seq2" th:text="*{board.bid}"></div>
                     </div>
-                    <th:block th:utext="*{content}"></th:block>
-
-                    <div class="btns">
-                        <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>
-                        <button class="save_post on" data-refresh="true" th:data-seq="*{seq}" th:text="#{찜_해제}"></button>
+                    <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
+                </div>
+                <div class="subject">
+                    <div class="subject_">
+                        <div class="subject1" th:text="#{제목_1}"></div>
+                        <div class="subject2" th:text="*{subject}"></div>
+                    </div>
+                    <div class="toggle-icons">
+                        <i class="xi-angle-down"></i>
+                        <i class="xi-angle-up" style="display:none;"></i>
                     </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+
+                <div class="content hide">
+                    <div>
+                        <div class="post_info">
+                            <div>
+                                <th:block th:text="#{작성자}"></th:block> :
+                                <th:block th:text="*{poster}"></th:block>
+                                <th:block th:if="*{member != null}" th:text="*{'(' + member.userId + ')'}"></th:block>
+                            </div>
+                        </div>
+                        <th:block th:utext="*{content}"></th:block>
+
+                        <div class="btns">
+                            <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>
+                            <button class="save_post on" data-refresh="true" th:data-seq="*{seq}" th:text="#{찜_해제}"></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
     <div class="list_search">
         <form name="frmSearch" method="get" th:action="@{/mypage/myBoard/save_posts}" autocomplete="off" th:object="${boardDataSearch}">
             <select name="sopt" th:field="*{sopt}">

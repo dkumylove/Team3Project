@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
 :root { /* 색깔 변수 */
-    --main-color: #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
-    --on-color ; #3c4e7a; /*잿빛 파랑 : --main-color에 잿빛 섞인 색깔 */
+    --main-color : #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
+    --on-color : #3c4e7a; /*잿빛 파랑 : --main-color에 잿빛 섞인 색깔 */
     --sub-color : #08298A; /* 파랑 */
     --sub-color2 : lightsteelblue; /*하늘색*/
     --font-color : #fff; /*흰색 글씨*/
@@ -69,9 +69,7 @@ main > aside > a { display: block; height: 71px; color: var(--font-color); font-
 
 main > aside > a + a { border-top: 1px solid var(--font-color) }
 main > aside > a i { color: var(--font-color); font-size: 1.385rem; }
-main > aside > a:on { background: #3c4e7a; font-weight: 500; }
-main > aside > a:hover { background: #3c4e7a; font-weight: 500; }
-main > aside > a > i.on, main > aside > a > i:hover { background: var(--on-color); font-weight: 500; color: var(--main-color); }
+main > aside > a.on, main > aside > a:hover { background: #3c4e7a; font-weight: 500; }
 main > aside > a.on:after, main > aside > a:hover:after { content:''; display:block; width: 8px;
 height: 100%; right: 0; top: 0; background: var(--sub-color2) ; position: absolute;}
 
