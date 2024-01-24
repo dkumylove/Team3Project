@@ -8,13 +8,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.team3.admin.member.controllers.MemberSearchOptions;
 import org.team3.commons.ListData;
 import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
-import org.team3.member.controllers.*;
 import org.team3.file.entities.FileInfo;
 import org.team3.file.service.FileInfoService;
+import org.team3.member.controllers.MemberSearch;
 import org.team3.member.entities.Authorities;
 import org.team3.member.entities.Member;
 import org.team3.member.entities.QMember;
@@ -81,7 +80,7 @@ public class MemberInfoService implements UserDetailsService {
      * @param search
      * @return
      */
-    public ListData<Member> getList(MemberSearchOptions search){
+    public ListData<Member> getList(MemberSearch search){
         int page = Utils.onlyPositiveNumber(search.getPage(), 1); // 페이지 구간
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 20); // 페이지당 레코드 갯수
         int offset = (page-1) * limit;

@@ -33,7 +33,6 @@ public class BoardController implements ExceptionProcessor {
     
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
-
         return "board";
     }
 

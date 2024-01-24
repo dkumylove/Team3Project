@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="form" th:object="${requestMemberConfig}">
+<!--    <div class="error global" th:each="err : ${#fields.globalErrors()}"-->
+<!--         th:text="${err}"></div>-->
+    <input type="hidden" name="gid" th:field="*{gid}">
+
+    <h2>기본 설정</h2>
+    <table class="table_cols mb30">
+        <tr>
+            <th width="180">활동여부</th>
+            <td>
+                <input type="radio" name="act" value="true" id="act_true"
+                       th:field="*{act}">
+                <label for="act_true">활동</label>
+
+                <input type="radio" name="act" value="false" id="act_false"
+                       th:field="*{act}">
+                <label for="act_false">중단</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>회원명</th>
+            <td th:if="${mode != 'edit'}">
+                <input type="text" name="name" th:field="*{name}">
+                <div class="error" th:each="err : ${#fields.errors('name')}"
+                     th:text="${err}"></div>
+            </td>
+            <td th:if="${mode == 'edit'}"> <!-- 수정 -->
+                <input type="hidden" name="name" th:field="*{name}">
+                <th:block th:text="*{name}"></th:block>
+            </td>
+        </tr>
+
+        <tr>
+            <th>회원 ID</th>
+            <td>
+                <input type="text" name="userId" th:field="*{userId}">
+                <div class="error" th:each="err : ${#fields.errors('userId')}"
+                     th:text="${err}"></div>
+            </td>
+        </tr>
+        <tr>
+            <th>비밀번호</th>
+            <td>
+                <input type="password" name="password" th:field="*{password}">
+                <div class="error" th:each="err : ${#fields.errors('password')}"
+                     th:text="${err}"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>닉네임</th>
+            <td>
+                <input type="text" name="nickName" th:field="*{nickName}">
+                <div class="error" th:each="err : ${#fields.errors('nickName')}"
+                     th:text="${err}"></div>
+            </td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:if="${mode != 'edit'}">
+                <input type="text" name="email" th:field="*{email}">
+                <div class="error" th:each="err : ${#fields.errors('email')}"
+                     th:text="${err}"></div>
+            </td>
+            <td th:if="${mode == 'edit'}"> <!-- 수정 -->
+                <input type="hidden" name="email" th:field="*{email}">
+                <th:block th:text="*{email}"></th:block>
+            </td>
+        </tr>
+
+        <tr>
+            <th>권한</th>
+            <td>
+                <input type="checkbox" name="managerType" value="admin" id="admin"
+                       th:field="*{managerType}">
+                <label for="admin">관리자</label>
+
+                <input type="checkbox" name="managerType" value="user" id="user"
+                       th:field="*{managerType}">
+                <label for="user">일반회원</label>
+            </td>
+        </tr>
+
+        <tr>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1" th:text="#{프로필_이미지}"></span>
+                <div class="circle" id="profile_image"></div>
+                <button class="btn btn-outline-secondary upload_files" type="button" id="button-addon1" th:text="#{이미지_업로드}"
+                        data-image-only="true" data-single-file="true"></button>
+
+                <script th:replace="~{common/_file_tpl::image1_tpl}"></script>
+            </div>
+        </tr>
+
+        <tr>
+            <th>보조지표</th>
+            <td>
+                <select class="form-select form-select-sm" >
+                    <option selected th:text="#{보조지표}">Open this select menu</option>
+                    <option value="1">지표1</option>
+                    <option value="2">지표2</option>
+                    <option value="3">지표3</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>약관동의여부</th>
+            <td>
+                <input type="radio" name="agree" value="true" id="agree_true"
+                       th:field="*{agree}">
+                <label for="agree_true">동의</label>
+
+                <input type="radio" name="agree" value="false" id="agree_false"
+                       th:field="*{agree}">
+                <label for="agree_false">비동의</label>
+            </td>
+        </tr>
+    </table>
+
+
+    <script th:replace="~{common/_file_tpl::editor_tpl}"></script>
+</th:block>
+</html>

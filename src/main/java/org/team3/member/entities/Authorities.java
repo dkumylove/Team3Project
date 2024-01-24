@@ -9,6 +9,7 @@ import org.team3.member.Authority;
 @Entity
 @Table(indexes=@Index(name="uq_member_authority", columnList = "member_seq, authority", unique = true))
 public class Authorities {
+
     @Id
     @GeneratedValue
     private Long seq;

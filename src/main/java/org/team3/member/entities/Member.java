@@ -5,6 +5,7 @@ import lombok.*;
 import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
+import org.team3.member.Authority;
 
 import java.util.*;
 
@@ -38,14 +39,18 @@ public class Member extends Base {
     @Column(length = 20, nullable = false)
     private String nickName; // 닉네임
 
-    private boolean act; // 활동 여부
+    private boolean act = true; // 활동 여부 : 이다은(1월 24일) true로 디폴트값 설정
 
     @ToString.Exclude  // 순환참조 방지
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Authorities> authorities = new ArrayList<>();
 
     @Transient  // 내부사용목적
     private FileInfo profileImage;   // path, url
+
+    // 권한 추가
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
 // 주석처리 해놓을게요 - 1월 18일 이다은
 //    /* 팔로우때문에 추가한 엔티티 1월16일 이지은 */
