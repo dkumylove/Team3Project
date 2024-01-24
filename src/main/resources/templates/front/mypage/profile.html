@@ -60,14 +60,14 @@
 
             <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
                 <input type="hidden" name="gid" th:value="${session.member.gid}">
-                <table border="1" th:fragment="member">
+                <table th:fragment="member" >
                     <tr>
                         <th rowspan="3">
                             <!--이미지 클릭하면 이미지 수정가능-->
                             <div class="circle upload_files" data-image-only="true" data-single-file="true" data-done="true" id="profile_image"
                                  th:style="${@utils.backgroundStyle(session.member.profileImage)}"></div>
                         </th>
-                        <th th:text="#{아이디}" class="profile_col"></th>
+                        <th th:text="#{아이디}" class="profile_col profile_padding_left_30"></th>
                         <td colspan="2">
                             <span th:text="${#messages.msg('USERID_MSG', session.member.userId)}"></span>
                         </td>
@@ -75,37 +75,39 @@
 
 
                     <tr>
-                        <th th:text="#{회원명}"></th>
+                        <th th:text="#{회원명}" class="profile_col profile_padding_left_30"></th>
                         <td colspan="2">
                             <span th:text="${#messages.msg('USERNAME_MSG', session.member.name)}"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th th:text="#{닉네임}"></th>
-                        <td>
+                        <th th:text="#{닉네임}" class="profile_col profile_padding_left_30"></th>
+                        <td class="width_100">
 
-                            <span th:text="${session.member.nickName}"></span>
+                            <span th:text="${session.member.nickName}" ></span>
 
                         </td>
                         <td>
-                            <a th:href="@{/mypage/changeNickname}" th:text="#{닉네임_수정}"></a>
+                            <a th:href="@{/mypage/changeNickname}" th:text="#{닉네임_수정}" class="profile_edit_btn"></a>
                         </td>
                     </tr>
                 </table>
-                <table border="1">
+
+                <hr>
+                <table>
                     <tr>
-                        <th th:text="#{비밀번호}" class="profile_col"></th>
-                        <td>
-                            <span th:text="${#messages.msg('PASSWORD_MSG', session.member.password)}"></span>
+                        <th th:text="#{비밀번호}" class="profile_col "></th>
+                        <td class="width_300">
+                            <p class="width_300" th:text="${#messages.msg('PASSWORD_MSG', session.member.password)}"></p>
                         </td>
                         <td>
                             <th:block>
-                                <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}"></a>
+                                <a th:href="@{/mypage/changePw}" th:text="#{비밀번호_수정}" class="profile_edit_btn"></a>
                             </th:block>
                         </td>
                     </tr>
                     <tr>
-                        <th th:text="#{이메일}"></th>
+                        <th th:text="#{이메일}" class="profile_col"></th>
                         <td>
                             <span th:text="${session.member.email}"></span>
                             <!-- 이메일 수정 : 이다은 1월 18일
@@ -113,18 +115,18 @@
                             -->
                         </td>
                         <td>
-                            <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" ></a>
+                            <a th:href="@{/mypage/changeEmail}" th:text="#{이메일_수정}" class="profile_edit_btn"></a>
                         </td>
                     </tr>
                     <tr>
-                        <th th:text="#{보조지표}"></th>
+                        <th th:text="#{보조지표}" class="profile_col"></th>
                         <td>
                             <dd>지표1</dd>
                             <dd>지표2</dd>
                             <dd>지표3</dd>
                         </td>
                         <td>
-                            <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}"></a>
+                            <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}" class="profile_edit_btn"></a>
                         </td>
                     </tr>
                 </table>
