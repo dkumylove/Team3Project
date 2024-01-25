@@ -161,3 +161,17 @@ aside .follow_info a > span { text-align: center; }
 aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
 aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
 
+/* 검색 */
+.board_list .list_search { padding: 10px; border-bottom: 1px solid #d5d5d5; }
+.board_list .list_search > form { display: flex; }
+.board_list .list_search > form > * + * { margin-left: 5px; }
+.board_list .list_search button { width: 180px; background: var(--main-color);color: #fff;}
+.board_list .total { text-align: right; margin: 10px 10px 5px; }
+.board_list .depth_1 { text-indent: 0px; }
+.board_list .depth_2 { text-indent: 20px; }
+.board_list .depth_3 { text-indent: 40px; }
+.board_list .depth_4 { text-indent: 60px; }
+.board_list .depth_5 { text-indent: 80px; }
+.board_list .depth_6 { text-indent: 100px; }
+.board_list .depth_7 { text-indent: 120px; }
+.board_list .depth_8 { text-indent: 140px; }
