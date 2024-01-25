@@ -123,6 +123,21 @@ public class MemberInfoService implements UserDetailsService {
         /* 프로필 이미지 처리 E */
     }
 
+
+    public Member getMember(String userId){
+
+        Member member = memberRepository.findByUserId(userId).orElse(null);
+
+        if(member != null){
+
+            addMemberInfo(member);
+
+        }
+
+        return member;
+
+    }
+
 }
 
 

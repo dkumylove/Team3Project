@@ -20,6 +20,7 @@ import org.team3.commons.RequestPaging;
 import org.team3.commons.Utils;
 import org.team3.member.MemberUtil;
 import org.team3.member.entities.Member;
+import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.*;
 import org.team3.member.service.follow.FollowBoardService;
 import org.team3.member.service.follow.FollowService;
@@ -43,6 +44,7 @@ public class MypageController implements ExceptionProcessor {
     private final SaveBoardDataService saveBoardDataService;
     private final FollowBoardService followBoardService;
     private final FollowService followService;
+    private final MemberRepository memberRepository;
 
     // 마이페이지
     @GetMapping
@@ -244,7 +246,9 @@ public class MypageController implements ExceptionProcessor {
         } else {
             search.setUserId(null);
         }
+        Member member = memberInfoService.getMember(userId);
 
+        model.addAttribute("member", member);
         ListData<BoardData> data = followBoardService.getList(mode, search);
 
         model.addAttribute("items", data.getItems());
