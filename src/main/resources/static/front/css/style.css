@@ -125,11 +125,11 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 .layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
 
 /* 마이페이지 내 프로필 */
-.profile_col { width:150px; height: 50px; text-align: left;  }
+.profile_col { min-width:150px; height: 50px; text-align: left;  }
 .profile_edit_btn { width:150px; line-height: 15px; background: var(--main-color); border-radius: 5px; color:var(--font-color); padding: 0 10px; }
 .profile_padding_left_30 { padding-left: 30px; }
-.width_100 { width: 50px; }
-.width_300 { width:200px; }
+.width_100 { min-width:100px; }
+.last_col { min-width:70px; width:80%; text-align: right; }
 
 
 /* 페이징 공통 S */
@@ -161,5 +161,23 @@ aside .follow_info a > span { text-align: center; }
 aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
 aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
 
+
 /* 유저페이지 aside */
 aside .user_info { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.1rem;}
+
+
+/* 검색 */
+.board_list .list_search { padding: 10px; border-bottom: 1px solid #d5d5d5; }
+.board_list .list_search > form { display: flex; }
+.board_list .list_search > form > * + * { margin-left: 5px; }
+.board_list .list_search button { width: 180px; background: var(--main-color);color: #fff;}
+.board_list .total { text-align: right; margin: 10px 10px 5px; }
+.board_list .depth_1 { text-indent: 0px; }
+.board_list .depth_2 { text-indent: 20px; }
+.board_list .depth_3 { text-indent: 40px; }
+.board_list .depth_4 { text-indent: 60px; }
+.board_list .depth_5 { text-indent: 80px; }
+.board_list .depth_6 { text-indent: 100px; }
+.board_list .depth_7 { text-indent: 120px; }
+.board_list .depth_8 { text-indent: 140px; }
+

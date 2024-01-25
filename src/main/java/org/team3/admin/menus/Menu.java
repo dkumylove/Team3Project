@@ -27,6 +27,11 @@ public class Menu {
                 new MenuDetail("follow", "팔로우팔로잉", "/front/mypage/follow"),
                 new MenuDetail("delete", "회원탈퇴", "/front/mypage/deleteMember")
         ));
+
+        menus.put("option", Arrays.asList(
+                new MenuDetail("list", "보조지표목록", "/admin/option"),
+                new MenuDetail("add", "보조지표등록", "/admin/option/add")
+        ));
     }
 
     public static List<MenuDetail> getMenus(String code) {
