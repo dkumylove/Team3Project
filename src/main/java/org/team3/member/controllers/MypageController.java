@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
+import org.team3.board.service.BoardInfoService;
 import org.team3.board.service.SaveBoardDataService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
@@ -34,17 +35,21 @@ import java.util.List;
 public class MypageController implements ExceptionProcessor {
 
     private final Utils utils;
+    private final MemberUtil memberUtil;
+
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
-    private final MemberUtil memberUtil;
+
     private final ChangeEmailService changeEmail;
     private final ChangeEmailValidator changeEmailValidator;
-    private final HttpServletRequest request;
     private final MemberDeleteService memberDeleteService;
+
+    private final BoardInfoService boardInfoService;
     private final SaveBoardDataService saveBoardDataService;
     private final FollowBoardService followBoardService;
     private final FollowService followService;
-    private final MemberRepository memberRepository;
+
+    private final HttpServletRequest request;
 
     // 마이페이지
     @GetMapping
@@ -190,13 +195,23 @@ public class MypageController implements ExceptionProcessor {
 
         model.addAttribute("tab", tab);
 
+
+
         if (tab.equals("save_posts")) {
             ListData<BoardData> data = saveBoardDataService.getList(search);
 
             model.addAttribute("items", data.getItems());
             model.addAttribute("pagination", data.getPagination());
         } else if (tab.equals("posts")) { // 게시글
-            
+            search.setUserId(memberUtil.getMember().getUserId());
+            ListData<BoardData> data = boardInfoService.getList(search);
+
+            model.addAttribute("items", data.getItems());
+            model.addAttribute("pagination", data.getPagination());
+
+//            System.out.println("data = " + data);
+            System.out.println("items = " + data.getItems());
+
         } else if (tab.equals("comments")) { // 코멘트
 
         } else if (tab.equals("latest")) { // 최근 게시글
@@ -205,6 +220,8 @@ public class MypageController implements ExceptionProcessor {
 
         return utils.tpl("mypage/myBoard");
     }
+
+
 
     /**
      * 팔로우
