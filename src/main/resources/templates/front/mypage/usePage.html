@@ -4,6 +4,7 @@
       layout:decorate="~{front/layouts/useMain}">
 
 <section layout:fragment="content" class="follow_board_page">
+    <h1>게시글</h1>
     <ul class="items">
         <li class="no_data" th:if="${items == null || items.isEmpty()}" th:text="#{조회된_게시글이_없습니다.}"></li>
         <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
