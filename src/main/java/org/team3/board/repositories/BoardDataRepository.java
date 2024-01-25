@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.team3.board.entities.BoardData;
+import org.team3.board.entities.QBoardData;
 
 import java.util.List;
 
@@ -16,4 +17,11 @@ public interface BoardDataRepository extends JpaRepository<BoardData, Long>,
 
     @Query("SELECT MIN(b.listOrder) FROM BoardData b WHERE b.parentSeq=:parentSeq")
     Long getLastReplyListOrder(@Param("parentSeq") Long seq);
+
+    // 답글 유무 체크
+    default boolean replyExists(Long seq) {
+        QBoardData boardData = QBoardData.boardData;
+
+        return exists(boardData.parentSeq.eq(seq));
+    }
 }

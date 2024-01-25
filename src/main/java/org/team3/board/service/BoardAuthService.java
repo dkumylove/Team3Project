@@ -10,6 +10,7 @@ import org.team3.board.entities.AuthCheck;
 import org.team3.board.entities.Board;
 import org.team3.board.entities.BoardData;
 import org.team3.board.entities.CommentData;
+import org.team3.board.repositories.BoardDataRepository;
 import org.team3.board.service.comment.CommentInfoService;
 import org.team3.board.service.config.BoardConfigInfoService;
 import org.team3.commons.Utils;
@@ -21,6 +22,8 @@ import org.team3.member.entities.Member;
 
 @Service
 public class BoardAuthService {
+    @Autowired
+    private BoardDataRepository boardDataRepository;
 
     @Autowired
     private BoardConfigInfoService configInfoService;
@@ -58,6 +61,12 @@ public class BoardAuthService {
             data = commentInfoService.get(seq);
         } else { // 게시글
             data = infoService.get(seq);
+        }
+
+        if (mode.contains("delete")) {
+            if (boardDataRepository.replyExists(seq)) {
+                throw new UnAuthorizedException(Utils.getMessage("Reply.included", "errors"));
+            }
         }
 
         if ((mode.contains("update") && !data.isEditable())
