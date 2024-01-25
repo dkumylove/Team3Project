@@ -2,6 +2,7 @@ package org.team3.member.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.team3.admin.option.entities.Options;
 import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
 import org.team3.file.entities.FileInfo;
@@ -51,6 +52,18 @@ public class Member extends Base {
     // 권한 추가
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @Column(name = "option_name")
+    @ToString.Exclude
+    private List<Options> option = new ArrayList<>();
+
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @Column(name = "option_name")
+//    private List<Options> optionsList = new ArrayList<>();
+
+
+    // private String[] option;
 
 // 주석처리 해놓을게요 - 1월 18일 이다은
 //    /* 팔로우때문에 추가한 엔티티 1월16일 이지은 */

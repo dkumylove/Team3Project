@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.team3.admin.option.entities.Options;
+import org.team3.admin.option.service.OptionConfigInfoService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.Utils;
 import org.team3.member.entities.Member;
@@ -36,13 +38,14 @@ public class MemberController implements ExceptionProcessor {
     private final FindPwService findPwService;
     private final FindIdService findIdService;
     private final MemberRepository memberRepository;
-
+    private final OptionConfigInfoService optionConfigInfoService;
 
     @GetMapping("/join")
     public String join(@ModelAttribute RequestJoin requestJoin, Model model){
         commonProcess("join", model);
         // model.addAttribute("pageTitle", "회원가입");
-
+        List<Options> optionList = optionConfigInfoService.getOptionList();
+        model.addAttribute("optionList", optionList);
         model.addAttribute("EmailAuthVerified", false); // 이메일 인증여부 false로 초기화
         return utils.tpl("member/join");
     }
@@ -51,15 +54,23 @@ public class MemberController implements ExceptionProcessor {
 
     @PostMapping("/join")
     public String joinPs(@Valid RequestJoin form, Errors errors, Model model, SessionStatus sessionStatus){
+
+        System.out.println("form.getOption()"+form.getOption());
         commonProcess("join", model);
         joinService.process(form, errors);
+
+        List<Options> optionList = optionConfigInfoService.getOptionList();
+        model.addAttribute("optionList", optionList);
+
         if(errors.hasErrors()){
             return utils.tpl("member/join");
         }
+
         /* EmailAuthVerified 세션값 비우기 */
         sessionStatus.setComplete();
         return "redirect:/member/login";
     }
+
     @GetMapping("/login")
     public String login(Model model){
         commonProcess("login", model);

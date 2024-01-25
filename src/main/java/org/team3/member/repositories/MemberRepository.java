@@ -8,7 +8,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.team3.member.entities.Member;
 import org.team3.member.entities.QMember;
@@ -24,6 +26,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     @EntityGraph(attributePaths = "authorities")
     Optional<Member> findByUserId(String userId);
 
+    @Query("SELECT m FROM Member m LEFT JOIN FETCH m.option WHERE m.userId = :userId")
+    Optional<Member> findByUserIdWithOption(@Param("userId") String userId);
     default boolean existsByEmail(String email) {
         QMember member = QMember.member;
 

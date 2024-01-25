@@ -17,15 +17,15 @@ public class ExcelUtilsTest {
     @Test
     @DisplayName("엑셀 파일 -> List<String[]> 으로 변환 테스트")
     void test1() {
-        List<String[]> data = utils.getData("data/option.xlsx", new int[] {0, 1, 2}, 0);
+        List<String[]> data = utils.getData("data/option.xlsx", new int[] {0, 1}, 0);
         data.forEach(s -> System.out.println(Arrays.toString(s)));
     }
 
     @Test
     @DisplayName("엑셀파일 -> List<String[]> -> SQL 목록 변환 테스트")
     void test2() {
-        String[] fields = { "category", "optionname", "details" };
-        List<String> sqlData = utils.makeSql("data/option.xlsx", new int[] {0, 1, 2}, 0, "OPTIONS", fields).toList();
+        String[] fields = { "optionname", "category" };
+        List<String> sqlData = utils.makeSql("data/option.xlsx", new int[] {0, 1}, 0, "OPTIONS", fields).toList();
         sqlData.forEach(System.out::println);
     }
 
@@ -33,8 +33,8 @@ public class ExcelUtilsTest {
     @DisplayName("엑셀파일 -> List<String[]> -> SQL 파일 변환 테스트")
     void test3() {
         String destPath = "data/option.sql";
-        String[] fields = { "category", "optionname", "details" };
-        utils.makeSql("data/option.xlsx", new int[] {0, 1, 2}, 0, "OPTIONS", fields).toFile(destPath);
+        String[] fields = { "optionname", "category" };
+        utils.makeSql("data/option.xlsx", new int[] {0, 1}, 0, "OPTIONS", fields).toFile(destPath);
         File file = new File(destPath);
 
         assert(file.exists());
@@ -43,7 +43,7 @@ public class ExcelUtilsTest {
     @Test
     @DisplayName("엑셀파일 -> delimiter 문자열을 결합한 List<String> 변환 테스트")
     void test4() {
-        List<String> data = utils.getData("data/option.xlsx", new int[] {0, 1,2}, 0,"_");
+        List<String> data = utils.getData("data/option.xlsx", new int[] {0, 1}, 0,"_");
         data.forEach(System.out::println);
     }
 }
