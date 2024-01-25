@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="form" th:object="${requestOptionConfig}">
+    <div class="error global" th:each="err : ${#fields.globalErrors()}"
+         th:text="${err}"></div>
+
+    <input type="hidden" name="gid" th:field="*{gid}">
+
+    <h2>기본 설정</h2>
+    <table class="table_cols mb30">
+        <tr>
+            <th width="180">사용여부</th>
+            <td>
+                <input type="radio" name="active" value="true" id="active_true"
+                       th:field="*{active}">
+                <label for="active_true">사용</label>
+
+                <input type="radio" name="active" value="false" id="active_false"
+                       th:field="*{active}">
+                <label for="active_false">미사용</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>보조지표 이름</th>
+            <td th:if="*{mode != 'edit'}">
+                <input type="text" name="optionname" th:field="*{optionname}">
+                <div class="error" th:each="err : ${#fields.errors('optionname')}"
+                     th:text="${err}"></div>
+            </td>
+            <td th:if="*{mode == 'edit'}"> <!-- 수정 -->
+                <input type="hidden" name="optionname" th:field="*{optionname}">
+                <th:block th:text="*{optionname}"></th:block>
+            </td>
+        </tr>
+
+        <tr>
+            <th>진열가중치</th>
+            <td>
+                <input type="number" name="listOrder" th:field="*{listOrder}">
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>댓글 사용</th>
+            <td>
+                <input type="radio" name="useComment" value="true" id="useComment_true"
+                       th:field="*{useComment}">
+                <label for="useComment_true">사용</label>
+
+                <input type="radio" name="useComment" value="false" id="useComment_false"
+                       th:field="*{useComment}">
+                <label for="useComment_false">미사용</label>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>글작성 후 이동</th>
+            <td>
+                <input type="radio" name="locationAfterWriting" value="list" id="locationAfterWriting_list"
+                       th:field="*{locationAfterWriting}">
+                <label for="locationAfterWriting_list">글목록</label>
+
+                <input type="radio" name="locationAfterWriting" value="view" id="locationAfterWriting_view"
+                       th:field="*{locationAfterWriting}">
+                <label for="locationAfterWriting_view">글보기</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>글보기 하단 목록 노출</th>
+            <td>
+                <input type="radio" name="showListBelowView" value="true"
+                       id="showListBelowView_true" th:field="*{showListBelowView}">
+                <label for="showListBelowView_true">노출</label>
+
+                <input type="radio" name="showListBelowView" value="false"
+                       id="showListBelowView_false" th:field="*{showListBelowView}">
+                <label for="showListBelowView_false">미노출</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>스킨</th>
+            <td>
+                <input type="radio" name="category" value="trend" id="category_trend"
+                       th:field="*{category}">
+                <label for="category_trend">추세지표</label>
+
+                <input type="radio" name="category" value="momentum" id="category_momentum"
+                       th:field="*{category}">
+                <label for="category_momentum">모멘텀지표</label>
+
+                <input type="radio" name="category" value="volatility" id="category_volatility"
+                       th:field="*{category}">
+                <label for="category_volatility">변동성지표</label>
+
+                <input type="radio" name="category" value="moneyflow" id="category_moneyflow"
+                       th:field="*{category}">
+                <label for="category_moneyflow">시장강도지표</label>
+
+                <input type="radio" name="category" value="etc" id="category_etc"
+                       th:field="*{category}">
+                <label for="category_etc">기타</label>
+            </td>
+        </tr>
+    </table>
+
+
+    <h2>권한 설정</h2>
+    <table class="table_cols mb30">
+        <tr>
+            <th width="180">글목록</th>
+            <td>
+                <input type="radio" name="listAccessType" value="ALL" id="listAccessType_All"
+                       th:field="*{listAccessType}">
+                <label for="listAccessType_All">비회원+회원+관리자</label>
+
+                <input type="radio" name="listAccessType" value="USER" id="listAccessType_MEMBER"
+                       th:field="*{listAccessType}">
+                <label for="listAccessType_MEMBER">회원+관리자</label>
+
+                <input type="radio" name="listAccessType" value="ADMIN" id="listAccessType_ADMIN"
+                       th:field="*{listAccessType}">
+                <label for="listAccessType_ADMIN">관리자</label>
+            </td>
+        </tr>
+        <tr>
+            <th>글보기</th>
+            <td>
+                <input type="radio" name="viewAccessType" value="ALL" id="viewAccessType_All"
+                       th:field="*{viewAccessType}">
+                <label for="viewAccessType_All">비회원+회원+관리자</label>
+
+                <input type="radio" name="viewAccessType" value="USER" id="viewAccessType_MEMBER"
+                       th:field="*{viewAccessType}">
+                <label for="viewAccessType_MEMBER">회원+관리자</label>
+
+                <input type="radio" name="viewAccessType" value="ADMIN" id="viewAccessType_ADMIN"
+                       th:field="*{viewAccessType}">
+                <label for="viewAccessType_ADMIN">관리자</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>댓글</th>
+            <td>
+                <input type="radio" name="commentAccessType" value="ALL" id="commentAccessType_All"
+                       th:field="*{commentAccessType}">
+                <label for="commentAccessType_All">비회원+회원+관리자</label>
+
+                <input type="radio" name="commentAccessType" value="USER" id="commentAccessType_MEMBER"
+                       th:field="*{commentAccessType}">
+                <label for="commentAccessType_MEMBER">회원+관리자</label>
+
+                <input type="radio" name="commentAccessType" value="ADMIN" id="commentAccessType_ADMIN"
+                       th:field="*{commentAccessType}">
+                <label for="commentAccessType_ADMIN">관리자</label>
+            </td>
+        </tr>
+    </table>
+
+    <h2>게시판 상단</h2>
+    <table class="table_cols mb30">
+        <tr>
+            <th width="180">내용</th>
+            <td>
+                <textarea id="html_top" name="htmlTop" th:field="*{htmlTop}"></textarea>
+                <button type="button" class="upload_files sbtn"
+                        data-location="html_top" data-image-only="true"
+                >
+                    <i class="xi-image"></i>
+                    이미지 추가
+                </button>
+                <div class="uploaded_files" id="uploaded_files_html_top">
+                    <th:block th:each="item : ${htmlTopImages}">
+                        <span th:replace="~{common/_editor_file::item}"></span>
+                    </th:block>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script th:replace="~{common/_file_tpl::editor_tpl}"></script>
+</th:block>
+</html>

@@ -11,14 +11,14 @@ import java.util.List;
  * 보조지표와 주식은 M:M관계라서 StockWithOptions로 매핑 해둠...
  * 이다은 - 1월 9일
  */
-@Entity
-@Data
-public class Options {
-    @Id @GeneratedValue
-    private Long id;
-
-    private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StockWithOptions> stockWithOptions=new ArrayList<>();
-}
+//@Entity
+//@Data
+//public class Options {
+//    @Id @GeneratedValue
+//    private Long id;
+//
+//    private String name;
+//
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<StockWithOptions> stockWithOptions=new ArrayList<>();
+//}
