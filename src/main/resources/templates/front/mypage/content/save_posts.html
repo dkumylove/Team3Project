@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content" >
 
-    <h2 class="save_post" th:text="#{찜_게시글}"></h2>
-
-    <div class="save_post_page">
+    <div class="save_post_page board_list layout_width">
+        <h2 class="save_post"></h2> <!-- th:text="#{찜_게시글}" -->
         <ul class="items">
             <li th:if="${items == null || items.isEmpty()}" class="no_data" th:text="#{찜_게시글이_없습니다.}"></li>
             <li th:unless="${items == null || items.isEmpty()}"
@@ -39,16 +38,16 @@
                         </div>
                         <th:block th:utext="*{content}"></th:block>
 
-                        <div class="btns">
+                        <div class="btns save_btn_div">
                             <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>
-                            <button class="save_post on" data-refresh="true" th:data-seq="*{seq}" th:text="#{찜_해제}"></button>
+                            <button class="on undo_btn" data-refresh="true" th:data-seq="*{seq}" th:text="#{찜_해제}"></button>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
 
-    </div>
+
 
     <div class="list_search">
         <form name="frmSearch" method="get" th:action="@{/mypage/myBoard/save_posts}" autocomplete="off" th:object="${boardDataSearch}">
@@ -64,5 +63,6 @@
         </form>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+    </div>
 </th:block>
 </html>
