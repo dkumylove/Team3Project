@@ -2,34 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content" >
 
-    <div class="save_post_page board_list layout_width">
+    <div class="save_post_page layout_width">
         <h2 class="save_post"></h2> <!-- th:text="#{찜_게시글}" -->
         <ul class="items">
             <li th:if="${items == null || items.isEmpty()}" class="no_data" th:text="#{찜_게시글이_없습니다.}"></li>
             <li th:unless="${items == null || items.isEmpty()}"
-                th:each="item : ${items}" th:object="${item}">
+                th:each="item : ${items}" th:object="${item}" class="item">
                 <!--<div class="subject" th:text="*{subject}"></div>-->
-                <div class="post_info">
-                    <div class="board_seq">
-                        <div class="board_seq1" th:text="#{게시판}"></div>
-                        <div class="board_seq2" th:text="*{board.bid}"></div>
-                    </div>
-                    <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
-                </div>
+<!--                <div class="post_info">-->
+<!--                    <div class="board_seq">-->
+<!--                        <div class="board_no" th:text="${item.board.bName}"></div>-->
+<!--                    </div>-->
+<!--                    <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>-->
+<!--                </div>-->
+
+<!--                <div class="subject">-->
+<!--                    <div class="subject_">-->
+<!--                        <div class="subject1" th:text="#{제목_1}"></div>-->
+<!--                        <div class="subject2" th:text="*{subject}"></div>-->
+<!--                    </div>-->
+<!--                    <div class="toggle-icons">-->
+<!--                        <i class="xi-angle-down"></i>-->
+<!--                        <i class="xi-angle-up" style="display:none;"></i>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
                 <div class="subject">
-                    <div class="subject_">
-                        <div class="subject1" th:text="#{제목_1}"></div>
-                        <div class="subject2" th:text="*{subject}"></div>
-                    </div>
-                    <div class="toggle-icons">
-                        <i class="xi-angle-down"></i>
-                        <i class="xi-angle-up" style="display:none;"></i>
+                    <div class="post_info_1">
+                        <div class="board_no" th:text="${item.board.bName}"></div>
+
+                        <div class="subject_1" th:text="*{subject}"></div>
+
+                        <div class="subject_2">
+                            <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
+
+                            <div class="toggle-icons">
+                                <i class="xi-angle-down"></i>
+                                <i class="xi-angle-up" style="display:none;"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+
                 <div class="content hide">
                     <div>
-                        <div class="post_info">
+                        <div class="post_info_2">
                             <div>
                                 <th:block th:text="#{작성자}"></th:block> :
                                 <th:block th:text="*{poster}"></th:block>

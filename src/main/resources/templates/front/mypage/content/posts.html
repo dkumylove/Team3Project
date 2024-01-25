@@ -1,47 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
+    <h2 class="posts"></h2>
+    <div class="posts_page">
+        <div class="total">
+            Total : <th:block th:text="${pagination.total >= 1000 ? #numbers.formatInteger(pagination.total, 3, 'COMMA') : pagination.total}"></th:block>
+        </div>
 
-    <div class="total">
-        Total : <th:block th:text="${pagination.total >= 1000 ? #numbers.formatInteger(pagination.total, 3, 'COMMA') : pagination.total}"></th:block>
-    </div>
+        <ul class="items">
+            <li th:if="${items == null || items.isEmpty()}" class="no_data"
+                th:text="#{조회된_게시글이_없습니다.}"></li>
 
-    <ul class="items">
-        <li th:if="${items == null || items.isEmpty()}" class="no_data"
-            th:text="#{조회된_게시글이_없습니다.}"></li>
+            <li th:unless="${items == null || items.isEmpty()}"
+                th:each="item : ${items}" th:object="${item}" class="item">
 
-        <li th:unless="${items == null || items.isEmpty()}"
-            th:each="item : ${items}" th:object="${item}" class="item">
-            <div class="board_no" th:text="${item.board.bName}"></div>
-            <a th:href="@{/board/view/{seq}(seq=*{seq})}" class="subject" th:classappend="*{depth > 0 ? 'depth_' + depth : ''}">
+                <div class="board_no" th:text="${item.board.bName}"></div>
+
+                <a th:href="@{/board/view/{seq}(seq=*{seq})}" class="subject" th:classappend="*{depth > 0 ? 'depth_' + depth : ''}">
                     <span class="notice" th:if="*{notice}">
                         [<th:block th:text="#{공지}"></th:block>]
                     </span>
-                <th:block th:if="*{parentSeq != null}">
-                    <i class="xi-subdirectory-arrow"></i> RE :
-                </th:block>
-                <span class="category" th:if="*{category}" th:text="*{'[' + category + ']'}"></span>
-                <th:block th:text="*{subject}"></th:block>
-            </a>
+                    <th:block th:if="*{parentSeq != null}">
+                        <i class="xi-subdirectory-arrow"></i> RE :
+                    </th:block>
+                    <span class="category" th:if="*{category}" th:text="*{'[' + category + ']'}"></span>
+                    <th:block th:text="*{subject}"></th:block>
+                </a>
 
-            <div class="post_info">
-                    <span class="poster">
-                        <th:block th:text="*{poster}"></th:block>
-                        <th:block th:if="*{member != null}"
-                                  th:text="*{'(' + member.userId + ')'}"></th:block>
-                    </span>
-                <span class="view_count">
+                <div class="post_info">
+
+                <span class="poster">
+                    <th:block th:text="*{poster}"></th:block>
+                    <th:block th:if="*{member != null}"
+                              th:text="*{'(' + member.userId + ')'}"></th:block>
+                </span>
+
+                    <span class="view_count">
                         조회수 :
                         <th:block th:text="*{viewCount >= 1000 ? #numbers.formatInteger
                         (viewCount, 3, 'COMMA') : viewCount}"></th:block>
-                    </span>
+                </span>
 
-                <span class="post_date"
-                      th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></span>
-            </div>
-            <!--// post_info -->
-        </li>
-    </ul>
+                    <span class="post_date"
+                          th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></span>
+                </div>
+                <!--// post_info -->
+            </li>
+        </ul>
+    </div>
+
 
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </th:block>
