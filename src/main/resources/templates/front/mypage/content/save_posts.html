@@ -34,6 +34,14 @@
 
                         <div class="subject_1" th:text="*{subject}"></div>
 
+                        <div class="poster">
+                            <div>
+                                <th:block th:text="#{작성자}"></th:block> :
+                                <th:block th:text="*{poster}"></th:block>
+                                <th:block th:if="*{member != null}" th:text="*{'(' + member.userId + ')'}"></th:block>
+                            </div>
+                        </div>
+
                         <div class="subject_2">
                             <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
 
@@ -48,17 +56,10 @@
 
                 <div class="content hide">
                     <div>
-                        <div class="post_info_2">
-                            <div>
-                                <th:block th:text="#{작성자}"></th:block> :
-                                <th:block th:text="*{poster}"></th:block>
-                                <th:block th:if="*{member != null}" th:text="*{'(' + member.userId + ')'}"></th:block>
-                            </div>
-                        </div>
                         <th:block th:utext="*{content}"></th:block>
 
                         <div class="btns save_btn_div">
-                            <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>
+                            <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}" ></a>
                             <button class="on undo_btn" data-refresh="true" th:data-seq="*{seq}" th:text="#{찜_해제}"></button>
                         </div>
                     </div>
@@ -81,6 +82,7 @@
             <button type="submit" th:text="#{검색하기}"></button>
         </form>
     </div>
+
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </div>
 </th:block>

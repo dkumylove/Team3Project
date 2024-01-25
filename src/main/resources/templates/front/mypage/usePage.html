@@ -8,31 +8,72 @@
     <ul class="items">
         <li class="no_data" th:if="${items == null || items.isEmpty()}" th:text="#{조회된_게시글이_없습니다.}"></li>
         <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
-            <div class="post_info">
-                <div class="board_seq">
-                    <div class="board_seq1" th:text="#{게시판}"></div>
-                    <div class="board_seq2" th:text="*{board.bid}"></div>
-                </div>
-                <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
-            </div>
+
+<!--            <div class="post_info">-->
+<!--                <div class="board_seq">-->
+<!--                    <div class="board_seq1" th:text="#{게시판}"></div>-->
+<!--                    <div class="board_seq2" th:text="*{board.bid}"></div>-->
+<!--                </div>-->
+<!--                <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>-->
+<!--            </div>-->
+<!--            <div class="subject">-->
+<!--                <div class="subject_">-->
+<!--                    <div class="subject1" th:text="#{제목_1}"></div>-->
+<!--                    <div class="subject2" th:text="*{subject}"></div>-->
+<!--                </div>-->
+<!--                <div class="toggle-icons">-->
+<!--                    <i class="xi-angle-down"></i>-->
+<!--                    <i class="xi-angle-up" style="display:none;"></i>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="content hide">-->
+<!--                <div class="content" th:utext="*{content}"></div>-->
+<!--                <div class="btns">-->
+<!--                    <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--    </ul>-->
+
+
             <div class="subject">
-                <div class="subject_">
-                    <div class="subject1" th:text="#{제목_1}"></div>
-                    <div class="subject2" th:text="*{subject}"></div>
-                </div>
-                <div class="toggle-icons">
-                    <i class="xi-angle-down"></i>
-                    <i class="xi-angle-up" style="display:none;"></i>
+                <div class="post_info_1">
+                    <div class="board_no" th:text="${item.board.bName}"></div>
+
+                    <div class="subject_1" th:text="*{subject}"></div>
+
+                    <div class="poster">
+                        <div>
+                            <th:block th:text="#{작성자}"></th:block> :
+                            <th:block th:text="*{poster}"></th:block>
+                            <th:block th:if="*{member != null}" th:text="*{'(' + member.userId + ')'}"></th:block>
+                        </div>
+                    </div>
+
+                    <div class="subject_2">
+                        <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>
+
+                        <div class="toggle-icons">
+                            <i class="xi-angle-down"></i>
+                            <i class="xi-angle-up" style="display:none;"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
             <div class="content hide">
-                <div class="content" th:utext="*{content}"></div>
-                <div class="btns">
-                    <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}"></a>
+                <div>
+                    <th:block th:utext="*{content}"></th:block>
+
+                    <div class="btns save_btn_div">
+                        <a th:href="@{/board/view/{seq}(seq=*{seq})}" th:text="#{게시글로_이동}" ></a>
+                    </div>
                 </div>
             </div>
         </li>
     </ul>
+
 
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </section>

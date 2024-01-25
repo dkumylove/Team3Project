@@ -197,7 +197,7 @@ public class BoardController implements ExceptionProcessor {
         commonProcess(parentSeq, "reply", model);
 
         String content = boardData.getContent();
-        content = String.format("<br><br><br><br><br>===================================================<br>%s", content);
+        content = String.format("<br><br><br>===================================================<br>원본글<br>%s", content);
 
         form.setBid(board.getBid());
         form.setContent(content);

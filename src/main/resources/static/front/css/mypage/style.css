@@ -20,6 +20,24 @@
 .follow_page .items .user_email { font-size: 1.15rem; color: #555; }
 
 /*!* 팔로우 또는 팔로잉한 회원 게시글 보기 *!*/
+.follow_board_page .save_post { padding: 20px; }
+.follow_board_page .items > .item { border-bottom: 1px solid #d5d5d5; align-items: center; }
+.follow_board_page .items > .item:first-of-type { border-top: 1px solid #d5d5d5; }
+
+.follow_board_page .items .board_no { padding: 0 20px}
+.follow_board_page .items .subject .post_info_1 { display:flex; justify-content: space-between; padding: 10px; }
+.follow_board_page .items .subject_1 { margin-left: 10px; flex-grow: 1;}
+.follow_board_page .items .poster { text-align: right; margin-right: 15px; flex-grow: 1;}
+.follow_board_page .items .subject_2 {display:flex;}
+.follow_board_page .items .toggle-icons {padding: 0 20px}
+
+.follow_board_page .items .content { background: #f8f8f8; transition: all 0.5s; padding: 10px; border-radius: 3px; }
+.follow_board_page .content .hide { transition: all 0.5s; }
+
+.follow_board_page .save_btn_div { padding-top: 10px; display:flex; justify-content: space-between; border-top: 1px solid #d5d5d5;}
+.follow_board_page .save_btn_div > a { padding-top: 10px; width: 120px; height: 40px; text-align: center; align-items: center;}
+
+
 /*.follow_board_page .item { border: 1px solid #d5d5d5; padding: 15px; border-radius: 5px; }*/
 /*.follow_board_page .item + .item { margin-top: 10px; }*/
 /*.follow_board_page .subject { display: flex; justify-content: space-between; border-bottom: 1px; margin: 10px 0;}*/
@@ -70,18 +88,22 @@
 .save_post_page .save_post { padding: 20px; }
 .save_post_page .items > .item { border-bottom: 1px solid #d5d5d5; align-items: center; }
 .save_post_page .items > .item:first-of-type { border-top: 1px solid #d5d5d5; }
-.save_post_page .items > .item:nth-of-type(2n) { background: #f8f8f8; }
+
 
 .save_post_page .items .board_no { padding: 0 20px}
 .save_post_page .items .subject .post_info_1 { display:flex; justify-content: space-between; padding: 10px; }
+.save_post_page .items .subject_1 { margin-left: 10px; flex-grow: 1;}
+.save_post_page .items .poster { text-align: right; margin-right: 15px; flex-grow: 1;}
 .save_post_page .items .subject_2 {display:flex;}
 .save_post_page .items .toggle-icons {padding: 0 20px}
 
 .save_post_page .items .content { background: #f8f8f8; transition: all 0.5s; padding: 10px; border-radius: 3px; }
 .save_post_page .content .hide { transition: all 0.5s; }
 
-.undo_btn { width: 70px; height: 40px; background: var(--sub-color2); border:1px solid var(--sub-color2) ; border-radius:5px; }
-.undo_btn:hover { background: var(--main-color); color: var(--font-color); }
+.save_post_page .save_btn_div { padding-top: 10px; display:flex; justify-content: space-between; border-top: 1px solid #d5d5d5;}
+.save_post_page .save_btn_div > a { padding-top: 10px; width: 120px; height: 40px; text-align: center; align-items: center; }
+.save_post_page .undo_btn { width: 70px; height: 40px; background: var(--sub-color2); border:1px solid var(--sub-color2) ; border-radius:5px; }
+.save_post_page .undo_btn:hover { background: var(--main-color); color: var(--font-color); }
 
 /*.save_btn_div { display:flex; justify-content: space-between; }
 .undo_btn { background: var(--sub-color2); border:1px solid var(--sub-color2) ; border-radius:5px; }
