@@ -13,8 +13,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
+import org.team3.board.entities.CommentData;
 import org.team3.board.service.BoardInfoService;
 import org.team3.board.service.SaveBoardDataService;
+import org.team3.board.service.comment.CommentInfoService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.RequestPaging;
@@ -44,6 +46,7 @@ public class MypageController implements ExceptionProcessor {
     private final ChangeEmailValidator changeEmailValidator;
     private final MemberDeleteService memberDeleteService;
 
+    private final CommentInfoService commentInfoService;
     private final BoardInfoService boardInfoService;
     private final SaveBoardDataService saveBoardDataService;
     private final FollowBoardService followBoardService;
@@ -197,11 +200,12 @@ public class MypageController implements ExceptionProcessor {
 
 
 
-        if (tab.equals("save_posts")) {
+        if (tab.equals("save_posts")) { // 찜한게시물
             ListData<BoardData> data = saveBoardDataService.getList(search);
 
             model.addAttribute("items", data.getItems());
             model.addAttribute("pagination", data.getPagination());
+
         } else if (tab.equals("posts")) { // 게시글
             search.setUserId(memberUtil.getMember().getUserId());
             ListData<BoardData> data = boardInfoService.getList(search);
@@ -210,9 +214,14 @@ public class MypageController implements ExceptionProcessor {
             model.addAttribute("pagination", data.getPagination());
 
 //            System.out.println("data = " + data);
-            System.out.println("items = " + data.getItems());
+//            System.out.println("items = " + data.getItems());
 
         } else if (tab.equals("comments")) { // 코멘트
+//            search.setUserId(memberUtil.getMember().getUserId());
+//            ListData<CommentData> data = (ListData<CommentData>) commentInfoService.getUserComments(search.getUserId());
+//
+//            model.addAttribute("items", data.getItems());
+//            model.addAttribute("pagination", data.getPagination());
 
         } else if (tab.equals("latest")) { // 최근 게시글
 

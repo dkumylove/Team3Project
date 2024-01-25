@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.controllers.comment.RequestComment;
 import org.team3.board.entities.BoardData;
 import org.team3.board.entities.CommentData;
@@ -70,6 +71,29 @@ public class CommentInfoService {
 
         return items;
     }
+
+
+//    /**
+//     * 사용자별 댓글 목록 조회
+//     * 1/26 이지은
+//     * @param userId
+//     * @return
+//     */
+//    public List<CommentData> getUserComments(String userId) {
+//
+//        QCommentData commentData = QCommentData.commentData;
+//        BooleanBuilder andBuilder = new BooleanBuilder();
+//
+//        // 유저 아이디로 댓글 필터링
+//        andBuilder.and(commentData.member.userId.eq(userId));
+//
+//        List<CommentData> items = (List<CommentData>) commentDataRepository.findAll(andBuilder, Sort.by(desc("createdAt")));
+//
+//        // 각 댓글에 대한 추가 정보 처리
+//        items.forEach(this::addCommentInfo);
+//
+//        return items;
+//    }
 
 
     /**
