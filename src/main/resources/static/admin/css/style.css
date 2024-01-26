@@ -52,6 +52,8 @@ nav.submenus {box-shadow: 1px 1px 5px var(--main-color); height:60px; background
  margin-bottom:50px; display: flex; align-items:center;}
 nav.submenus a {height:60px; line-height:60px; padding: 0 40px; font-size:1.385rem; color: black;}
 nav.submenus a.on {background: var(--main-color); color: var(--font-color); font-weight: 500;}
+
+.layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
 /* 내용 영역 E */
 
 
@@ -78,7 +80,7 @@ h2 {margin:0 0 10px 0; font-size:1.385rem; line-height: 1;}
 input[type='text'],
 input[type='number'],
 input[type='email'],
-input[type='password'] { border: 1px solid #d5d5d5; height: 35px; padding: 0 10px; width: 100%; margin-left: 35px;}
+input[type='password'] { border: 1px solid #d5d5d5; height: 35px; padding: 0 10px; width: 100%; /*margin-left: 35px;*/}
 textarea { border: 1px solid #d5d5d5; min-height: 200px; padding: 10px; resize: none;  width: 100%;}
 select { border: 1px solid #d5d5d5; height: 35px; }
 /* 입력 공통 E */
