@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.team3.admin.option.entities.Options;
 import org.team3.commons.ListData;
 import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
@@ -25,6 +26,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 조회
@@ -138,6 +140,10 @@ public class MemberInfoService implements UserDetailsService {
 
     }
 
+    public List<Options> getOptions(String userId){
+        List<Options> byUserIdWithOption = memberRepository.findByUserIdWithOption(userId);
+        return byUserIdWithOption;
+    }
 }
 
 

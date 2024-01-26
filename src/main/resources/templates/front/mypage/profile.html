@@ -120,13 +120,11 @@
                     </tr>
                     <tr>
                         <th th:text="#{보조지표}" class="profile_col"></th>
-<!--                        <td>-->
-<!--                            <div th:if="${session.member.option != null}">-->
-<!--                                <div th:each="option : ${session.member.option}" class="profile_option">-->
-<!--                                    <span th:text="${option.optionName}"></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </td>-->
+                        <td>
+                            <div th:each="option : ${options}" class="profile_option">
+                                <span th:text="${option.optionname}"></span>
+                            </div>
+                        </td>
                         <td class="last_col">
                             <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}" class="profile_edit_btn"></a>
                         </td>

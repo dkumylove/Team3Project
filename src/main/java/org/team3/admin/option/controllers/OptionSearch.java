@@ -11,8 +11,11 @@ public class OptionSearch extends RequestPaging {
     private String optionname;
     private List<String> optionnames;
 
-    private boolean active;
+    private String[] category;
 
+    private List<String> categories;
+
+    private String active; // 사용여부
     private String sopt; // 검색옵션
     private String skey; // 검색 키워드
 }

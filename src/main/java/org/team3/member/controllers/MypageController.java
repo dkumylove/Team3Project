@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.team3.admin.option.entities.Options;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
 import org.team3.board.entities.CommentData;
@@ -61,17 +62,17 @@ public class MypageController implements ExceptionProcessor {
 
         ListData<Member> data = memberInfoService.getList(search);
         System.out.println(data.getItems());
-
+        
         model.addAttribute("memberList", data.getItems()); // 목록
-
-
         return utils.tpl("mypage/profile");
     }
 
     @GetMapping("/profile")
     public String profileForm(Model model) {
         commonProcess("profile", model);
-        System.out.println("memberUtil.getMember()" + memberUtil.getMember());
+        Member member = memberUtil.getMember();
+        List<Options> options = memberInfoService.getOptions(member.getUserId());
+        model.addAttribute("options", options);
         return utils.tpl("mypage/profile");
     }
 
@@ -176,6 +177,11 @@ public class MypageController implements ExceptionProcessor {
     @GetMapping("changeIndicator")
     public String changeIndicator(Model model) {
         commonProcess("changeIndicator", model);
+
+        Member member = memberUtil.getMember();
+        List<Options> options = memberInfoService.getOptions(member.getUserId());
+        model.addAttribute("options", options);
+
         /* 보조지표수정페이지로 전환 */
         return utils.tpl("mypage/changeIndicator");
     }
