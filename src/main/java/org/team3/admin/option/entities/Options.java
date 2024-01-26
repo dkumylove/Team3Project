@@ -17,17 +17,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Options extends Base {
 
-    @Id @GeneratedValue
-    private String seq;
+//    @Id @GeneratedValue
+//    private String seq;
 
-    @Column(length = 65, nullable = false)
-    private String gid = UUID.randomUUID().toString();
+//    @Column(length = 65, nullable = false)
+//    private String gid = UUID.randomUUID().toString();
 
-    @Column(length = 280, nullable = false)
+    @Id
     private String optionname;
 
-    @Lob
-    private String details;
+//    @Lob
+//    private String details;
 
     private String category;
 

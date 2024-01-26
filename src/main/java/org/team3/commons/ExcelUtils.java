@@ -114,7 +114,7 @@ public class ExcelUtils {
             sb.append(" (");
             sb.append(Arrays.stream(fields).collect(Collectors.joining(",")));
             sb.append(" ) VALUES (");
-            sb.append(Arrays.stream(line).map(s -> "\"" + s + "\"").collect(Collectors.joining(",")));
+            sb.append(Arrays.stream(line).map(s -> "\'" + s + "\'").collect(Collectors.joining(",")));
             sb.append(");\n");
             sqlData.add(sb.toString());
         });

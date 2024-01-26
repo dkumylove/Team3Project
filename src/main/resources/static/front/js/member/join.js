@@ -6,6 +6,8 @@ window.addEventListener("DOMContentLoaded", function() {
     const authNumEl = document.getElementById("auth_num"); // 인증코드
     const userIdVerifyEl = document.getElementById("button-addon2"); // 아이디 중복체크
 
+
+
     if(userIdVerifyEl){
         userIdVerifyEl.addEventListener("click", function() {
                 const { ajaxLoad, userIdVerify } = commonLib;

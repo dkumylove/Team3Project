@@ -42,7 +42,6 @@ public class MemberUtil {
      */
     public Member getMember() {
         Member member = (Member) session.getAttribute("member");
-
         return member;
     }
 
@@ -60,12 +59,9 @@ public class MemberUtil {
         if (!isLogin()) {
             return;
         }
-
         MemberInfo memberInfo = (MemberInfo)memberInfoService.loadUserByUsername(getMember().getUserId());
         Member member = memberInfo.getMember();
         session.setAttribute("member", member);
-
     }
-
 }
 

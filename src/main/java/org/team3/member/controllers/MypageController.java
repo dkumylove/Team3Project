@@ -54,6 +54,7 @@ public class MypageController implements ExceptionProcessor {
 
     private final HttpServletRequest request;
 
+
     // 마이페이지
     @GetMapping
     public String mypage(@ModelAttribute MemberSearch search, Model model) {
@@ -70,7 +71,7 @@ public class MypageController implements ExceptionProcessor {
     @GetMapping("/profile")
     public String profileForm(Model model) {
         commonProcess("profile", model);
-
+        System.out.println("memberUtil.getMember()" + memberUtil.getMember());
         return utils.tpl("mypage/profile");
     }
 

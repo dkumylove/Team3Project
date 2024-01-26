@@ -81,12 +81,20 @@
             </th:block>
         </div>
 
-        <select class="form-select form-select-sm" >
-            <option selected th:text="#{보조지표}">Open this select menu</option>
-            <option value="1">지표1</option>
-            <option value="2">지표2</option>
-            <option value="3">지표3</option>
-        </select>
+        <div th:text="#{보조지표}"></div>
+        <div th:if="${optionList != null}">
+            <div th:each="opt, iterStat : ${optionList}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="${requestJoin.option}" th:value="${opt.optionname}"
+                       class="form-check-input" th:id="${'optionCheckbox_' + iterStat.index}" th:data-index="${iterStat.index}">
+                <label th:for="${'optionCheckbox_' + iterStat.index}"
+                       th:text="${opt.optionname}" class="form-check-label"></label>
+            </div>
+        </div>
+<!--        <select class="form-select form-select-sm" th:field="${optionList}" >-->
+<!--            <option th:each="optionlist : ${optionList}" th:value="${optionlist.optionname}" th:text="${optionlist.optionname}">-->
+<!--            </option>-->
+<!--        </select>-->
+
 
         <div th:text="#{회원가입_약관}">
         </div>

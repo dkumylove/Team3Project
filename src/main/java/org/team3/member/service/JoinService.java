@@ -1,11 +1,13 @@
 package org.team3.member.service;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
+import org.team3.admin.option.service.OptionConfigInfoService;
 import org.team3.file.service.FileUploadService;
 import org.team3.member.Authority;
 import org.team3.member.controllers.JoinValidator;
@@ -15,6 +17,11 @@ import org.team3.member.entities.Member;
 import org.team3.member.entities.Profile;
 import org.team3.member.repositories.AuthoritiesRepository;
 import org.team3.member.repositories.MemberRepository;
+import org.team3.admin.option.entities.Options;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +33,7 @@ public class JoinService {
     private final JoinValidator validator;
     private final PasswordEncoder encoder;
     private final FileUploadService uploadService;
+    private final OptionConfigInfoService optionConfigInfoService;
 
     public void process(RequestJoin form, Errors errors) {
 
@@ -43,7 +51,29 @@ public class JoinService {
         Member member = new ModelMapper().map(form, Member.class);
         String password = encoder.encode(form.getPassword());
         member.setPassword(password);
+        List<Options> optionsList = new ArrayList<>();
 
+        Set<String> options = form.getOption();
+
+        for (String option : options) {
+            Options option1 = optionConfigInfoService.getOption(option);
+            optionsList.add(option1);
+        }
+
+        member.setOption(optionsList);
+
+
+//        System.out.println("option.length" + option.length);
+
+//        for(int i=0; i<option.length; i++){
+//            Options option1 = optionConfigInfoService.getOption(option[i]);
+//            System.out.println("option1" + option1.getOptionname());
+//            if(option1!=null) {
+//                optionsList.add(option1);
+//            }
+//        }
+
+//        member.setOption(optionsList);
 
         /*
         Member member = new Member();

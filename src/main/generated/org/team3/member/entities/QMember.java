@@ -46,6 +46,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath nickName = createString("nickName");
 
+    public final ListPath<org.team3.admin.option.entities.Options, org.team3.admin.option.entities.QOptions> option = this.<org.team3.admin.option.entities.Options, org.team3.admin.option.entities.QOptions>createList("option", org.team3.admin.option.entities.Options.class, org.team3.admin.option.entities.QOptions.class, PathInits.DIRECT2);
+
     public final StringPath password = createString("password");
 
     public final NumberPath<Long> seq = createNumber("seq", Long.class);

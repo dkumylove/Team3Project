@@ -1,11 +1,9 @@
 package org.team3.member.controllers;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -36,4 +34,7 @@ public class RequestJoin {
 
     @AssertTrue
     private boolean agree;
+
+    @NotEmpty
+    private Set<String> option;
 }
