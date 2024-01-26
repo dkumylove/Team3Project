@@ -27,7 +27,7 @@ public class OptionConfigSaveService {
 //    }
 
     public final OptionRepository optionRepository;
-    public void save(String options){
+    public void save(String options, boolean active){
 //        Options option = new Options();
 
         String[] optionlist = options.split("\\n");
@@ -47,6 +47,7 @@ public class OptionConfigSaveService {
                 Options options1 = new Options();
                 options1.setCategory(category);
                 options1.setOptionname(optionname);
+                options1.setActive(active);
 
                 // 생성된 옵션 객체를 저장합니다.
                 optionRepository.saveAndFlush(options1);

@@ -16,4 +16,5 @@ public class RequestOptionConfig {
     @NotBlank
     private String options; // 옵션 name
 
+    private boolean active=true;
 }

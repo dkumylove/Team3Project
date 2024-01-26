@@ -86,7 +86,13 @@
                 <td th:text="${option.category}" align="center"></td>
                 <td th:text="${option.optionname}" align="center"></td>
                 <td>
-                    <!-- 사용 여부 표시 또는 수정 -->
+                    <input type="radio" th:name="${'active_' + status.index}"
+                           value="true" th:checked="*{active}" th:id="${'active_true_' + status.index}">
+                    <label th:for="${'active_true' + status.index}">사용</label>
+
+                    <input type="radio" th:name="${'active_' + status.index}"
+                           value="false" th:checked="*{!active}" th:id="${'active_false_' + status.index}">
+                    <label th:for="${'active_false_' + status.index}">미사용</label>
                 </td>
                 <td>
                     <!-- 진열 가중치 표시 또는 수정 -->

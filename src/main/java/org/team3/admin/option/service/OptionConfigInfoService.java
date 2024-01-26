@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -27,9 +28,7 @@ import org.team3.member.entities.QMember;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.springframework.data.domain.Sort.Order.desc;
 
@@ -68,11 +67,11 @@ public class OptionConfigInfoService {
     }
 
     /**
-     * 전체 리스트 불러오기
+     * 사용중인 리스트 불러오기
      * @return
      */
     public List<Options> getOptionList(){
-        List<Options> all = optionRepository.findAll();
+        List<Options> all = optionRepository.findByActiveTrue();
         return all;
     }
 
@@ -92,6 +91,13 @@ public class OptionConfigInfoService {
 
         /* 카테고리 조회 S */
         String[] category = search.getCategory();
+        if (category != null && category.length > 0) {
+            BooleanExpression[] categoryExpressions = new BooleanExpression[category.length];
+            for (int i = 0; i < category.length; i++) {
+                categoryExpressions[i] = options.category.contains(category[i]);
+            }
+            andBuilder.andAnyOf(categoryExpressions);
+        }
         /* 카테고리 조회 E */
 
 
