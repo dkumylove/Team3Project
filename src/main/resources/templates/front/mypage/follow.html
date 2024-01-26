@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{front/layouts/myMain}">
-<section layout:fragment="content" class="follow_page">
+<section layout:fragment="content" class="follow_page layout_width">
     <h1>Follow</h1>
     <ul class="items">
         <h2 th:if="${mode == 'follower'}">
