@@ -4,5 +4,11 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>지표변경</h1>
+    <th th:text="#{보조지표}" class="profile_col"></th>
+    <td>
+        <div th:each="option : ${options}" class="profile_option">
+            <span th:text="${option.optionname}"></span>
+        </div>
+    </td>
 </section>
 </html>

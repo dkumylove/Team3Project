@@ -2,6 +2,7 @@ package org.team3.member.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.team3.admin.option.entities.Options;
 import org.team3.board.entities.BoardData;
 import org.team3.commons.entities.Base;
@@ -53,8 +54,7 @@ public class Member extends Base {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "option_name")
+    @OneToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Options> option = new ArrayList<>();
 

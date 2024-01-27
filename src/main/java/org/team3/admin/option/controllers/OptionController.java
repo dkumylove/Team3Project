@@ -6,12 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.team3.admin.board.controllers.BoardConfigValidator;
 import org.team3.admin.board.controllers.BoardSearch;
 import org.team3.admin.member.controllers.RequestMemberConfig;
 import org.team3.admin.menus.Menu;
 import org.team3.admin.menus.MenuDetail;
+import org.team3.admin.option.entities.Options;
+import org.team3.admin.option.service.OptionConfigInfoService;
+import org.team3.admin.option.service.OptionConfigSaveService;
 import org.team3.board.entities.Board;
 import org.team3.board.service.config.BoardConfigDeleteService;
 import org.team3.board.service.config.BoardConfigInfoService;
@@ -29,6 +33,9 @@ import java.util.List;
 @RequestMapping("/admin/option")
 @RequiredArgsConstructor
 public class OptionController implements ExceptionProcessor {
+
+    private final OptionConfigSaveService optionConfigSaveService;
+    private final OptionConfigInfoService optionConfigInfoService;
 
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
@@ -48,8 +55,14 @@ public class OptionController implements ExceptionProcessor {
      * @return
      */
     @GetMapping
-    public String list(Model model){
+    public String list(@ModelAttribute OptionSearch optionSearch, Model model){
         commonProcess("list", model);
+        ListData<Options> data = optionConfigInfoService.getList(optionSearch, true);
+        List<Options> option = data.getItems();
+        Pagination pagination = data.getPagination();
+
+        model.addAttribute("optionList", option);
+        model.addAttribute("pagination", pagination); // 페이징
         return "admin/option/list";
     }
 
@@ -59,10 +72,17 @@ public class OptionController implements ExceptionProcessor {
      * @return
      */
     @GetMapping("/add")
-    public String add(@ModelAttribute RequestOptionConfig config, Model model) {
+    public String save(@ModelAttribute RequestOptionConfig config, Model model) {
         commonProcess("add", model);
 
         return "admin/option/add";
+    }
+
+    @PostMapping("/save")
+    public String add(@ModelAttribute RequestOptionConfig config, Model model) {
+        commonProcess("add", model);
+        optionConfigSaveService.save(config.getOptions(), config.isActive());
+        return "redirect:/admin/option";
     }
 
 

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.team3.commons.entities.Base;
 import org.team3.member.Authority;
+import org.team3.member.entities.Member;
 
 import java.util.UUID;
 
@@ -30,5 +31,7 @@ public class Options extends Base {
 //    private String details;
 
     private String category;
+
+    private boolean active=true;
 
 }

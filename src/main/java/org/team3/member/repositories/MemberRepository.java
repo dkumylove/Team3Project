@@ -12,9 +12,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.team3.admin.option.entities.Options;
 import org.team3.member.entities.Member;
 import org.team3.member.entities.QMember;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.team3.member.entities.QMember.member;
@@ -26,8 +28,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     @EntityGraph(attributePaths = "authorities")
     Optional<Member> findByUserId(String userId);
 
-    @Query("SELECT m FROM Member m LEFT JOIN FETCH m.option WHERE m.userId = :userId")
-    Optional<Member> findByUserIdWithOption(@Param("userId") String userId);
+    @Query("SELECT m.option FROM Member m WHERE m.userId = :userId")
+    List<Options> findByUserIdWithOption(@Param("userId") String userId);
+
     default boolean existsByEmail(String email) {
         QMember member = QMember.member;
 

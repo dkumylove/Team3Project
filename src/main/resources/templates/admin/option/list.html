@@ -6,94 +6,117 @@
     <h1>보조지표 목록</h1>
 
     <h2>보조지표 조회</h2>
-<!--    <form name="frmSearch" method="get" th:action="@{/admin/option}" autocomplete="off"-->
-<!--          th:object="${optionSearch}">-->
-<!--        <table class="table_cols mb30">-->
-<!--            <tr>-->
-<!--                <th>키워드</th>-->
-<!--                <td>-->
-<!--                    <div class="input_grp">-->
-<!--                        <select name="sopt" th:field="*{sopt}">-->
-<!--                            <option value="All">통합검색</option>-->
-<!--                            <option value="bid">게시판 ID</option>-->
-<!--                            <option value="bName">게시판명</option>-->
-<!--                        </select>-->
-<!--                        <input type="text" name="skey" th:field="*{skey}">-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--        <div class="search_btn">-->
-<!--            <button type="submit" class="btn">검색하기</button>-->
-<!--        </div>-->
-<!--    </form>-->
+    <form name="frmSearch" method="get" th:action="@{/admin/option}" autocomplete="off"
+          th:object="${optionSearch}">
+        <table class="table_cols mb30">
+            <tr>
+                <th>카테고리</th>
+                <td width="500">
+                    <input type="checkbox" name="category" value="trend" id="category_trend">
+                    <label for="category_trend">trend</label>
+                    <input type="checkbox" name="category" value="momentum" id="category_momentum">
+                    <label for="category_momentum">momentum</label>
+                    <input type="checkbox" name="category" value="volatility" id="category_volatility">
+                    <label for="category_volatility">volatility</label>
+                    <input type="checkbox" name="category" value="moneyflow" id="category_moneyflow">
+                    <label for="category_moneyflow">moneyflow</label>
+                    <input type="checkbox" name="category" value="etc" id="category_etc">
+                    <label for="category_etc">etc</label>
+                </td>
+                <th>사용여부</th>
+                <td>
+                    <input type="checkbox" name="active" value="act" id="act">
+                    <label for="act">사용</label>
+                    <input type="checkbox" name="active" value="not" id="not">
+                    <label for="not">미사용</label>
+                </td>
+            </tr>
+            <tr>
+                <th>키워드</th>
+                <td>
+                    <div class="input_grp">
+                        <select name="sopt" th:field="*{sopt}">
+                            <option value="All">통합검색</option>
+                            <option value="name">보조지표이름</option>
+                            <option value="cate">카테고리</option>
+                        </select>
+                        <input type="text" name="skey" th:field="*{skey}">
+                    </div>
+                </td>
 
-<!--    <h2>게시판 목록</h2>-->
-<!--    <form name="frmList" method="post" th:action="@{/admin/option}" target="ifrmProcess"-->
-<!--          autocomplete="off">-->
-<!--        <input type="hidden" name="_method" value="PATCH">-->
+            </tr>
+        </table>
+        <div class="search_btn">
+            <button type="submit" class="btn">검색하기</button>
+        </div>
+    </form>
 
-<!--        <table class="table_rows">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th width="40">-->
-<!--                    <input type="checkbox" class="checkall" data-target-name="chk"-->
-<!--                           id="checkall">-->
-<!--                    <label for="checkall"></label>-->
-<!--                </th>-->
-<!--                <th width="150">게시판 ID</th>-->
-<!--                <th width="250">게시판 이름</th>-->
-<!--                <th width="250">사용여부</th>-->
-<!--                <th width="150">진열가중치</th>-->
-<!--                <th></th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:if="${items == null || items.isEmpty()}">-->
-<!--                <td colspan="6">조회된 게시판이 없습니다.</td>-->
-<!--            </tr>-->
-<!--            <tr th:unless="${items == null || items.isEmpty()}"-->
-<!--                th:each="item,status : ${items}" th:object="${item}">-->
-<!--                <td>-->
-<!--                    <input type="hidden" th:name="${'seq_' + status.index}"-->
-<!--                           th:value="*{seq}">-->
-<!--                    <input type="checkbox" name="chk" th:value="${status.index}"-->
-<!--                           th:id="${'chk_' + status.index}">-->
-<!--                    <label th:for="${'chk_' + status.index}"></label>-->
-<!--                </td>-->
-<!--                <td th:text="*{bid}" align="center"></td>-->
-<!--                <td th:text="*{bName}" align="center"></td>-->
-<!--                <td>-->
-<!--                    <input type="radio" th:name="${'active_' + status.index}"-->
-<!--                           value="true" th:checked="*{active}" th:id="${'active_true_' + status.index}">-->
-<!--                    <label th:for="${'active_true' + status.index}">사용</label>-->
+    <h2>게시판 목록</h2>
+    <form name="frmList" method="post" th:action="@{/admin/option}" target="ifrmProcess"
+          autocomplete="off">
+        <input type="hidden" name="_method" value="PATCH">
 
-<!--                    <input type="radio" th:name="${'active_' + status.index}"-->
-<!--                           value="false" th:checked="*{!active}" th:id="${'active_false_' + status.index}">-->
-<!--                    <label th:for="${'active_false_' + status.index}">미사용</label>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="number" th:name="${'listOrder_' + status.index}" th:value="*{listOrder}">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <a th:href="@{/board/list/{bid}(bid=*{bid})}" class="sbtn" target="_blank">-->
-<!--                        <i class="xi-list"></i> 미리보기-->
-<!--                    </a>-->
-<!--                    <a th:href="@{/admin/board/edit/{bid}(bid=*{bid})}" class="sbtn on">-->
-<!--                        <i class="xi-pen"></i> 수정하기-->
-<!--                    </a>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
+        <table class="table_rows">
+            <thead>
+            <tr>
+                <th width="40">
+                    <input type="checkbox" class="checkall" data-target-name="chk"
+                           id="checkall">
+                    <label for="checkall"></label>
+                </th>
+                <th width="150">카테고리</th>
+                <th width="250">보조지표이름</th>
+                <th width="250">사용여부</th>
+                <th width="150">진열가중치</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${optionList == null or optionList.size() == 0}">
+                <td colspan="6">조회된 게시판이 없습니다.</td>
+            </tr>
+            <tr th:each="option, status : ${optionList}" th:object="${option}">
+                <td>
+                    <input type="hidden" th:name="${'optionname_' + status.index}"
+                           th:value="${option.optionname}">
+                    <input type="checkbox" name="chk" th:value="${status.index}"
+                           th:id="${'chk_' + status.index}">
+                    <label th:for="${'chk_' + status.index}"></label>
+                </td>
+                <td th:text="${option.category}" align="center"></td>
+                <td th:text="${option.optionname}" align="center"></td>
+                <td>
+                    <input type="radio" th:name="${'active_' + status.index}"
+                           value="true" th:checked="*{active}" th:id="${'active_true_' + status.index}">
+                    <label th:for="${'active_true' + status.index}">사용</label>
 
-<!--        <div class="table_actions">-->
-<!--            <button type="button" class="sbtn form_action" data-mode="delete"-->
-<!--                    data-form-name="frmList">선택 게시판 삭제</button>-->
-<!--            <button type="button" class="sbtn on form_action" data-mode="edit"-->
-<!--                    data-form-name="frmList">선택 게시판 수정</button>-->
-<!--        </div>-->
-<!--    </form>-->
+                    <input type="radio" th:name="${'active_' + status.index}"
+                           value="false" th:checked="*{!active}" th:id="${'active_false_' + status.index}">
+                    <label th:for="${'active_false_' + status.index}">미사용</label>
+                </td>
+                <td>
+                    <!-- 진열 가중치 표시 또는 수정 -->
+                </td>
+                <td>
+                    <!-- 미리보기 및 수정 링크 추가 -->
+                    <a th:href="@{/board/list/{optionname}(optionname=${option.optionname})}" class="sbtn" target="_blank">
+                        <i class="xi-list"></i> 미리보기
+                    </a>
+                    <a th:href="@{/admin/board/edit/{optionname}(optionname=${option.optionname})}" class="sbtn on">
+                        <i class="xi-pen"></i> 수정하기
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="table_actions">
+            <button type="button" class="sbtn form_action" data-mode="delete"
+                    data-form-name="frmList">선택 게시판 삭제</button>
+            <button type="button" class="sbtn on form_action" data-mode="edit"
+                    data-form-name="frmList">선택 게시판 수정</button>
+        </div>
+    </form>
 
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </section>
