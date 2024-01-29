@@ -200,11 +200,10 @@ public class MypageController implements ExceptionProcessor {
     }
 
     @GetMapping("/myBoard/{tab}")
-    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, Model model) {
+    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, String userId, Model model) {
         commonProcess("myBoard", model);
 
         model.addAttribute("tab", tab);
-
 
 
         if (tab.equals("save_posts")) { // 찜한게시물
@@ -225,10 +224,13 @@ public class MypageController implements ExceptionProcessor {
 
         } else if (tab.equals("comments")) { // 코멘트
 //            search.setUserId(memberUtil.getMember().getUserId());
-//            ListData<CommentData> data = (ListData<CommentData>) commentInfoService.getUserComments(search.getUserId());
+//            ListData<CommentData> data = (ListData<CommentData>) commentInfoService.getMyList(boardDataSeq);
 //
 //            model.addAttribute("items", data.getItems());
 //            model.addAttribute("pagination", data.getPagination());
+//
+//            System.out.println("data = " + data);
+//            System.out.println("items = " + data.getItems());
 
         } else if (tab.equals("latest")) { // 최근 게시글
 

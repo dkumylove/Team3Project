@@ -18,4 +18,6 @@ public class RequestComment {
 
     @NotBlank
     private String content; // 댓글 내용
+
+    private String userId;
 }

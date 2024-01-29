@@ -64,4 +64,6 @@ INSERT INTO OPTIONS (optionname,category ) VALUES ('EOM','moneyflow');
 
 INSERT INTO OPTIONS (optionname,category ) VALUES ('PVT','moneyflow');
 
+) VALUES ('PVT','moneyflow');
+
 commit;
