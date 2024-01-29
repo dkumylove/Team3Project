@@ -58,6 +58,13 @@ public class Member extends Base {
     @ToString.Exclude
     private List<Options> option = new ArrayList<>();
 
+    // 탈퇴를 위한 엔티티
+    // 사용자 활성화 상태
+    private boolean enabled = true;  // false 인 경우 탈퇴 처리
+
+    @Column(name = "_lock")  // lock = 예약어
+    private boolean lock = false;
+
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @Column(name = "option_name")
 //    private List<Options> optionsList = new ArrayList<>();
@@ -105,9 +112,5 @@ public class Member extends Base {
     private String updateMemberNickname;
     private String updateMemberPassword;
     private String deleteMember;
-
-    // 김현교 1/19
-    // 사용자 활성화 상태
-    private boolean enabled = true;
 
 }

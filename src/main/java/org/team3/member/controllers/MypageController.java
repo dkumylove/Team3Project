@@ -22,12 +22,16 @@ import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.RequestPaging;
 import org.team3.commons.Utils;
+import org.team3.email.service.EmailVerifyService;
 import org.team3.member.MemberUtil;
+import org.team3.member.controllers.resign.RequestResign;
+import org.team3.member.controllers.resign.ResignValidator;
 import org.team3.member.entities.Member;
 import org.team3.member.repositories.MemberRepository;
 import org.team3.member.service.*;
 import org.team3.member.service.follow.FollowBoardService;
 import org.team3.member.service.follow.FollowService;
+import org.team3.member.service.resign.ResignService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,11 @@ public class MypageController implements ExceptionProcessor {
     private final SaveBoardDataService saveBoardDataService;
     private final FollowBoardService followBoardService;
     private final FollowService followService;
+
+    private final ResignValidator resignValidator;
+    private final EmailVerifyService emailVerifyService;
+    private final ResignService resignService;
+
 
     private final HttpServletRequest request;
 
@@ -302,11 +311,78 @@ public class MypageController implements ExceptionProcessor {
 
     /* 타입리프 페이지전화확인은위해 url매핑처림 e */
 
-    // 회원 탈퇴
-    @GetMapping("/deleteMember")
-    public String deleteMemberForm(Model model) {
-        commonProcess("delete",  model);
-        return utils.tpl("mypage/deleteMember");
+//    // 회원 탈퇴
+//    @GetMapping("/deleteMember")
+//    public String deleteMemberForm(Model model) {
+//        commonProcess("delete",  model);
+//        return utils.tpl("mypage/deleteMember");
+//    }
+
+
+    /**
+     * 탈퇴 페이지 -> 비밀번호 확인
+     *          -> 이메일 인증 코드
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/resign")
+    public String resignStep1(@ModelAttribute RequestResign form, Model model) {
+        commonProcess("resign", model);
+
+
+        return utils.tpl("mypage/resign");
+    }
+
+    // 이메일로 전송된 코드 확인
+    @PostMapping("/resign")
+    public String resignStep2(RequestResign form, Errors errors, Model model) {
+        commonProcess("resign", model);  // 비밀번호, 비밀번호 확인 -
+
+        form.setMode("step1");
+        resignValidator.validate(form, errors);
+
+        if (errors.hasErrors()) {
+            return utils.tpl("mypage/resign");
+        }
+
+        // 메일로 인증 코드 발송
+        emailVerifyService.sendCode1(memberUtil.getMember().getEmail());
+
+        return utils.tpl("mypage/resign_auth");
+    }
+
+    /**
+     * 회원탈퇴 완료
+     *          enable -> false, 로그아웃 -> 비회원도 접근 가능
+     * @param model
+     * @return
+     */
+    @PostMapping("/resign_done")
+    @PreAuthorize("permitAll()")
+    public String resignProcess(RequestResign form, Errors errors, Model model) {
+        commonProcess("resign", model); // 인증번호 여부
+
+        form.setMode("step2");
+        resignValidator.validate(form, errors);
+
+        if (errors.hasErrors()) { // 인증 코드 실패시
+            return utils.tpl("mypage/resign_auth");
+        }
+
+        // 회원 탈퇴 처리
+        resignService.resign();
+
+        return "redirect:/mypage/resign_done";
+    }
+
+    @GetMapping("/resign_done")
+    @PreAuthorize("permitAll()")
+    public String resignDone(Model model) {
+        commonProcess("resign", model);
+
+
+        return utils.tpl("mypage/resign_done");
     }
 
     /* 잠시 닫아 둘게요 - 이다은 1월 13일
@@ -388,6 +464,8 @@ public class MypageController implements ExceptionProcessor {
             pageTitle = Utils.getMessage("usePage", "commons");
             addCommonScript.add("follow");
             addScript.add("mypage/save_post");
+        } else if (mode.equals("resign")) {
+            pageTitle = Utils.getMessage("회원_탈퇴", "commons");
         }
 
         if (mode.equals("follow") || mode.equals("myBoard") || mode.equals("usePage")) {

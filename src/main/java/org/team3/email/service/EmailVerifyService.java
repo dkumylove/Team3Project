@@ -28,6 +28,22 @@ public class EmailVerifyService {
      * @param email
      * @return
      */
+    public boolean sendCode1(String email) {
+        int authNum = (int)(Math.random() * 99999);
+
+        session.setAttribute("EmailAuthNum", authNum);
+        session.setAttribute("EmailAuthStart", System.currentTimeMillis());
+
+        EmailMessage emailMessage = new EmailMessage(
+                email,
+                Utils.getMessage("Email.verification.subject", "commons"),
+                Utils.getMessage("Email.verification.message", "commons"));
+        Map<String, Object> tplData = new HashMap<>();
+        tplData.put("authNum", authNum);
+
+        return sendService.sendMail(emailMessage, "auth", tplData);
+    }
+
 
     public boolean sendCode(String email, HttpServletRequest request) {
         return sendCodeAndCheck(email, null, request);
