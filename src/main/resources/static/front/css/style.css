@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Diphylleia&family=East+Sea+Dokdo&family=Song+Myung&display=swap');
 
 :root { /* 색깔 변수 */
     --main-color : #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
+    --backcolor : #E0ECF8; /* 옅은 하늘색 : 회원가입 배경색 */
     --on-color : #3c4e7a; /*잿빛 파랑 : --main-color에 잿빛 섞인 색깔 */
     --sub-color : #08298A; /* 파랑 */
     --sub-color2 : lightsteelblue; /*하늘색*/
@@ -11,10 +12,12 @@
     --pale: rgba(11,11,59,0.2); /*흐린 딥블루*/
 }
 
+
+
 * { font-family: 'Noto Sans KR', sans-serif; color: #000; box-sizing: border-box; outline: none; }
 html { font-size: 13px; }
 body { margin: 0; }
-a { text-decoration: none; }
+a { text-decoration: none; color: black;}
 a:hover { font-weight : bolder; }
 ul, ol { list-style: none; margin: 0; padding: 0; }
 dl, dt, dd { margin: 0; padding: 0; }
@@ -48,7 +51,7 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; display: flex;}
 
-#outer_box { width: 100%; min-width: 1200px; border:1px solid; padding: 100px 20px 0 20px; position:absolute; }
+#outer_box { width: 100%; min-width: 1200px;  padding: 100px 20px 0 20px; position:absolute; } /* border:1px solid; */
 
 #index_first_row { height: 400px; padding: 20px;
                     display: flex; justify-content: space-between;}
