@@ -1,0 +1,66 @@
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{front/layouts/myMain}">
+    <section layout:fragment="content">
+
+        <h1 th:text="#{비밀번호_변경}"></h1>
+
+        <form name="frmChangePw" method="post" th:action="@{/mypage/changePw}" autocomplete="off" th:object="${requestChangePw}"
+              target="ifrmProcess">
+            <input type="hidden" name="mode" value="changePw">
+            <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
+            <div class="verified"></div>
+            <div class="input-group mb-3">
+                <span th:text="#{현재_비밀번호}" class="input-group-text"></span>
+                <input type="password" name="cntpwd" th:field="*{cntpwd}" class="form-control">
+                <div class="error" th:each="err : ${#fields.errors('cntpwd')}" th:text="${err}"></div>
+                <button type="button" id="verifiedCntPw" th:text="#{확인}" class="btn btn-outline-secondary"></button>
+            </div>
+
+            <div class="error" th:each="err : ${#fields.errors('newpwd')}" th:text="${err}"></div>
+            <div id="password-error1" class="error"></div>
+            <div class="input-group mb-3">
+                <span th:text="#{새_비밀번호}" class="input-group-text"></span>
+                <input type="password" name="newpwd" th:field="*{newpwd}" class="form-control">
+            </div>
+
+            <div class="error" th:each="err : ${#fields.errors('checkpwd')}" th:text="${err}"></div>
+            <div id="password-error2" class="error"></div>
+            <div class="input-group mb-3">
+                <span th:text="#{새_비밀번호_확인}" class="input-group-text"></span>
+                <input type="password" name="checkpwd" th:field="*{checkpwd}" class="form-control">
+                <button type="submit" id="changePw" th:text="#{비밀번호_변경}" disabled class="btn btn-outline-secondary"></button>
+            </div>
+
+        </form>
+
+        <!--
+
+        <h1 th:text="#{비밀번호_변경}"></h1>
+
+        <form name="frmChangePw" method="post" th:action="@{/mypage/changePw}" autocomplete="off" th:object="${requestChangePw}"
+        target="ifrmProcess">
+            <input type="hidden" name="mode" value="changePw">
+            <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+            <input type="password" name="cntpwd" th:field="*{cntpwd}" th:text="#{현재_비밀번호}">
+            <div class="error" th:each="err : ${#fields.errors('cntpwd')}" th:text="${err}"></div>
+            <button type="button" id="verifiedCntPw" th:text="#{확인}"></button>
+            <div class="verified"></div>
+
+            <input type="password" name="newpwd" th:field="*{newpwd}" th:text="#{새_비밀번호}">
+            <div class="error" th:each="err : ${#fields.errors('newpwd')}" th:text="${err}"></div>
+            <div id="password-error1" class="error"></div>
+
+
+            <input type="password" name="checkpwd" th:field="*{checkpwd}" th:text="#{새_비밀번호_확인}">
+            <div class="error" th:each="err : ${#fields.errors('checkpwd')}" th:text="${err}"></div>
+            <div id="password-error2" class="error"></div>
+
+            <button type="submit" id="changePw" th:text="#{비밀번호_변경}" disabled></button>
+        </form>
+
+        -->
+    </section>
+    </html>

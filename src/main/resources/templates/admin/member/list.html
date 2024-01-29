@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/main}">
+
+<section layout:fragment="content">
+
+    <form name="frmSearch" method="get" th:action="@{/admin/member}" autocomplete="off"
+          th:object="${memberSearch}">
+        <h2>검색 조건</h2>
+        <table class="table_cols mb30">
+            <tbody>
+            <tr>
+                <th>가입일</th>
+                <td colspan="5">
+                    <input type="date" name="createSdate" > ~
+                    <input type="date" name="createEdate" >
+                </td>
+            </tr>
+
+            <tr>
+                <th>가입구분</th>
+                <td width="250">
+                    <input type="checkbox" name="managerType" value="admin" id="managerType_admin">
+                    <label for="managerType_admin">관리자</label>
+                    <input type="checkbox" name="managerType" value="user" id="managerType_associate">
+                    <label for="managerType_associate">회원</label>
+                </td>
+                <th>탈퇴/제한</th>
+                <td>
+                    <input type="checkbox" name="resign" value="resign" id="resign">
+                    <label for="resign">탈퇴회원</label>
+                    <input type="checkbox" name="resign" value="sign" id="sign">
+                    <label for="sign">활동회원</label>
+                </td>
+            </tr>
+            <tr>
+                <th>검색어</th>
+                <td>
+                <div class="input_grp">
+                        <select name="sopt">
+                            <option value="All">통합검색</option>
+                            <option value="userId">회원 ID</option>
+                            <option value="username">회원명</option>
+                            <option value="nickname">닉네임명</option>
+                        </select>
+                        <input type="text" name="skey">
+                    </div>
+                </td>
+
+                <th>활동/정지</th>
+                <td>
+                    <input type="checkbox" name="act" value="stop" id="isactfalse">
+                    <label for="isactfalse">정지</label>
+                    <input type="checkbox" name="act" value="act" id="isacttrue">
+                    <label for="isacttrue">활동</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="submit_btns">
+        <button type="submit" th:text="#{검색}" class="btn"></button>
+        </div>
+    </form>
+
+
+    <h1>회원 목록</h1>
+    <form name="frmList" method="post" th:action="@{/admin/member}" target="ifrmProcess"
+          autocomplete="off">
+        <input type="hidden" name="_method" value="PATCH">
+        <table class="table_rows">
+            <thead>
+            <tr>
+                <th width="40">
+                    <input type="checkbox" class="checkall" data-target-name="chk"
+                           id="checkall">
+                    <label for="checkall"></label>
+                </th>
+                <th>활동여부</th>
+                <th>name</th>
+                <th>userId</th>
+                <th>gid</th>
+                <th>email</th>
+                <th>nickName</th>
+                <th>createdAt</th>
+                <th>modifiedAt</th>
+                <th>권한</th>
+                <th>탈퇴 여부</th>
+                <th>수정/삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${MemberList == null || MemberList.isEmpty()}">
+                <td colspan="11">조회된 회원이 없습니다.</td>
+            </tr>
+            <tr th:unless="${MemberList == null }"
+                th:each="MemberList, status : ${MemberList}" th:object="${MemberList}">
+
+                <td>
+                    <input type="hidden" th:name="${'seq_' + status.index}"
+                           th:value="*{userId}">
+                    <input type="checkbox" name="chk" th:value="${status.index}"
+                           th:id="${'chk_' + status.index}">
+                    <label th:for="${'chk_' + status.index}"></label>
+                </td>
+
+                <td>
+                    <input type="radio" th:name="${'act_' + status.index}"
+                           value="true" th:checked="*{act}" th:id="${'act_true_' + status.index}">
+                    <label th:for="${'act_true' + status.index}">활동</label>
+
+                    <input type="radio" th:name="${'act_' + status.index}"
+                           value="false" th:checked="*{!act}" th:id="${'act_false_' + status.index}">
+                    <label th:for="${'act_false_' + status.index}">정지</label>
+                </td>
+
+                <td th:text="*{name}" align="center"></td>
+                <td th:text="*{userId}" align="center"></td>
+                <td th:text="*{gid}" align="center"></td>
+                <td th:text="*{email}" align="center"></td>
+                <td th:text="*{nickName}" align="center"></td>
+                <td th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
+                <td th:text="*{#temporals.format(modifiedAt, 'yyyy.MM.dd HH:mm')}" align="center"></td>
+                <td>
+                    <span th:each="aut : ${MemberList.authorities}" th:text="${aut.authority}" th:if="${not #lists.isEmpty(MemberList.authorities)}"></span>
+                    <span th:if="${#lists.isEmpty(MemberList.authorities)}">
+                        <th:block th:if="${MemberList.Authority}" th:text="${MemberList.Authority}"></th:block>
+                    </span>
+                </td>
+                <td th:text="false" align="center"></td>
+
+
+                <td>
+                    <a th:href="@{/admin/member/edit/{userId}(userId=*{userId})}" class="sbtn">
+                        <i class="xi-pen"></i> 수정
+                    </a>
+                    <a th:href="@{/admin/member/edit/{userId}(userId=*{userId})}" class="sbtn">
+                        <i class="xi-pen"></i> 삭제
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="table_actions">
+            <button type="button" class="sbtn form_action" data-mode="delete"
+                    data-form-name="frmList">선택 회원 삭제</button>
+            <button type="button" class="sbtn on form_action" data-mode="edit"
+                    data-form-name="frmList">선택 회원 수정</button>
+        </div>
+    </form>
+
+    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+
+</section>
+</html>

@@ -1,0 +1,20 @@
+:root { /* 색깔 변수 */
+    --main-color: rgb(0,83,169); /*딥블루 : 로고 색깔과 통일*/
+    --sub-color : rgb(36,162,228); /*하늘색*/
+    --back-color : rgb(244,245,248); /*옅은 회색*/
+}
+
+.widget_tab .tabs { list-style: none; padding: 0; margin: 0; display: flex; height: 30px; align-items: center; }
+.widget_tab .tabs input[type='radio'] {  display: none; }
+.widget_tab .tabs input[type='radio']+label { padding: 8px 20px; background: lightsteelblue; border-radius: 5px; }
+.widget_tab .tabs input[type='radio']:checked+label { background: var(--main-color); color: #fff; }
+.widget_tab .tabs li+li { margin-left: 5px; }
+
+.widget_tab .tab_content { min-height: 600px; border: 1px solid #222; margin-top: 20px; }
+
+
+/*.tabs { list-style: none; padding: 0; margin: 0; display: flex; height: 30px; align-items: center; }*/
+.tabs a { padding: 8px 20px; background: lightsteelblue; border-radius: 5px; }
+.tabs a.on, .tabs a:hover { background: var(--main-color); color: #fff; }
+
+.tab_content { min-height: 600px; border: 1px solid #222; margin-top: 20px; }

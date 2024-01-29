@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<aside th:fragment="menus">
+    <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
+        <div class="circle"></div>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
+        <!--이미지 클릭하면 이미지 수정가능-->
+        <div class="circle upload_files aside_photo" data-image-only="true" data-single-file="true" data-done="true" id="profile_image2"
+                 th:style="${@utils.backgroundStyle(member.profileImage)}"></div>
+    </th:block>
+
+    <div class="profile_box" sec:authorize="isAuthenticated()">
+        <h2><div class="user_info" th:text="${member.userId + '(' + member.name + ')'}"></div></h2>
+        <h2><div class="user_info" th:text="${member.nickName}"></div></h2>
+        <h2><div class="user_info" th:text="${member.email}"></div></h2>
+
+        <div class="follow_info">
+            <a th:href="@{/mypage/follow?mode=follower}">
+                <span class='num' th:text="${@followService.totalFollowers}"></span> <span class="txt">followers</span>
+            </a>
+
+            <a th:href="@{/mypage/follow?mode=following}">
+                <span class='num' th:text="${@followService.totalFollowings}"></span> <span class="txt">following</span>
+            </a>
+        </div>
+    </div>
+
+</aside>
+</html>

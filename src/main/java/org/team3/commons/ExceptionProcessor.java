@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.team3.commons.exceptions.AlertBackException;
+import org.team3.commons.exceptions.AlertException;
 import org.team3.commons.exceptions.CommonException;
 
 /**
@@ -25,6 +27,17 @@ public interface ExceptionProcessor {
         response.setStatus(status.value());
 
         e.printStackTrace();
+
+        if (e instanceof AlertException) { // 자바스크립트 Alert형태로 응답
+            String script = String.format("alert('%s');", e.getMessage());
+
+            if (e instanceof AlertBackException) { // history.back(); 실행
+                script += "history.back();";
+            }
+
+            model.addAttribute("script", script);
+            return "common/_execute_script";
+        }
 
         model.addAttribute("status", status.value());
         model.addAttribute("path", request.getRequestURI());

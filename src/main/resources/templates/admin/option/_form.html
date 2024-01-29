@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="form" th:object="${requestOptionConfig}">
+    <div class="error global" th:each="err : ${#fields.globalErrors()}"
+         th:text="${err}"></div>
+
+    <h2>보조지표 등록</h2>
+    <table class="table_cols">
+        <tr>
+            <th width="180">사용여부</th>
+            <td>
+                <input type="radio" name="active" value="true" id="active_true"
+                       th:field="*{active}">
+                <label for="active_true">사용</label>
+
+                <input type="radio" name="active" value="false" id="active_false"
+                       th:field="*{active}">
+                <label for="active_false">미사용</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th width="180">보조지표등록</th>
+            <td>
+                <textarea name="saveoption" th:field="*{options}" placeholder="이름_카테고리를 입력해주세요. 다른 지표 등록시 줄개행 해주세요. ex)MACD_trend"></textarea>
+            </td>
+        </tr>
+    </table>
+
+</th:block>
+</html>

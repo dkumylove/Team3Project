@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -21,19 +22,41 @@ public class QMember extends EntityPathBase<Member> {
 
     public final org.team3.commons.entities.QBase _super = new org.team3.commons.entities.QBase(this);
 
+    public final BooleanPath act = createBoolean("act");
+
+    public final ListPath<Authorities, QAuthorities> authorities = this.<Authorities, QAuthorities>createList("authorities", Authorities.class, QAuthorities.class, PathInits.DIRECT2);
+
+    public final EnumPath<org.team3.member.Authority> authority = createEnum("authority", org.team3.member.Authority.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final StringPath deleteMember = createString("deleteMember");
+
     public final StringPath email = createString("email");
+
+    public final BooleanPath enabled = createBoolean("enabled");
+
+    public final StringPath gid = createString("gid");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final StringPath name = createString("name");
 
+    public final StringPath nickName = createString("nickName");
+
+    public final ListPath<org.team3.admin.option.entities.Options, org.team3.admin.option.entities.QOptions> option = this.<org.team3.admin.option.entities.Options, org.team3.admin.option.entities.QOptions>createList("option", org.team3.admin.option.entities.Options.class, org.team3.admin.option.entities.QOptions.class, PathInits.DIRECT2);
+
     public final StringPath password = createString("password");
 
     public final NumberPath<Long> seq = createNumber("seq", Long.class);
+
+    public final StringPath updateMemberMail = createString("updateMemberMail");
+
+    public final StringPath updateMemberNickname = createString("updateMemberNickname");
+
+    public final StringPath updateMemberPassword = createString("updateMemberPassword");
 
     public final StringPath userId = createString("userId");
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/myMain}">
+<section layout:fragment="content">
+
+    <h1>이메일변경</h1>
+
+    <form name="frmEmail" method="post" th:action="@{/mypage/changeEmail}" autocomplete="off"
+          th:object="${requestChangeEmail}">
+
+        <div class="input-group mb-3">
+            <span th:text="#{현재_이메일}" class="input-group-text"></span>
+            <input th:value="${session.member.email}" readonly class="form-control"></input>
+            <input type="hidden" name="mode" value="changeEmail">
+        </div>
+
+        <div class="input-group mb-3">
+            <span th:text="#{이메일}" class="input-group-text"></span>
+            <input type="text" name="newEmail" th:field="*{newEmail}"
+                   th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}" class="form-control">
+            <button th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}" type="button"
+                    id="email_verify" th:text="#{인증코드전송}" class="btn btn-outline-secondary"></button>
+        </div>
+
+
+        <div class="auth_box">
+            <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                <input class="form-control" type="text" id="auth_num" th:placeholder="#{인증코드_입력}">
+                <span id="auth_count">03:00</span>
+                <button type="button" id="email_confirm" th:text="#{확인}" disabled
+                        class="btn btn-outline-secondary"></button>
+                <button type="button" id="email_re_verify" th:text="#{재전송}" disabled
+                        class="btn btn-outline-secondary"></button>
+            </th:block>
+            <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                [[${session.EmailAuthVerified}]]
+                <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
+            </th:block>
+        </div>
+
+
+        <div class="error" th:each="err : ${#fields.errors('newEmail')}" th:text="${err}"></div>
+
+        <div class="d-grid" style="padding-top: 10px">
+            <button class="btn btn-outline-secondary" type="submit" th:text="#{변경하기}" id="changeEmail_btn"
+                    disabled></button>
+        </div>
+    </form>
+
+<!--
+
+    <form name="frmEmail" method="post" th:action="@{/mypage/changeEmail}" autocomplete="off" th:object="${requestChangeEmail}">
+        <h1>이메일변경</h1>
+
+        <dt th:text="#{현재_이메일}"></dt>
+        <dd th:text="${session.member.email}"></dd>
+        <input type="hidden" name="mode" value="changeEmail">
+        <dl>
+            <dt th:text="#{이메일}"></dt>
+            <dd>
+                <div>
+                    <input type="text" name="newEmail" th:field="*{newEmail}" th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}">
+                    <button th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}" type="button" id="email_verify" th:text="#{인증코드전송}"></button>
+                </div>
+                <div class="auth_box">
+                    <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                        <input type="text" id="auth_num" th:placeholder="#{인증코드_입력}">
+                        <span id="auth_count">03:00</span>
+                        <button type="button" id="email_confirm" th:text="#{확인}" disabled></button>
+                        <button type="button" id="email_re_verify" th:text="#{재전송}" disabled></button>
+                    </th:block>
+                    <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                        [[${session.EmailAuthVerified}]]
+                        <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
+                    </th:block>
+                </div>
+                <div class="error" th:each="err : ${#fields.errors('newEmail')}" th:text="${err}"></div>
+
+            </dd>
+        </dl>
+        <button class="btn btn-outline-secondary" type="submit" th:text="#{변경하기}" id="changeEmail_btn" disabled></button>
+    </form>
+
+-->
+
+</section>
+</html>
+

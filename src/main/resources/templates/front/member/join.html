@@ -1,63 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{front/layouts/main}">
+      layout:decorate="~{front/layouts/loginmain}">
 <main layout:fragment="content">
     <h1 th:text="#{회원가입}"></h1>
 
-    <form name="frmJoin" method="post" th:action="@{/member/join}" autocapitalize="off"
-          th:object="${requestJoin}">
+    <!--autocomplete="off" : 자동완성-->
+    <form name="frmJoin" method="post" th:action="@{/member/join}" autocomplete="off" th:object="${requestJoin}">
+        <input type="hidden" name="gid" th:field="*{gid}">
         <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
 
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" th:text="#{프로필_이미지}"></span>
+            <div class="circle" id="profile_image"></div>
+            <button class="btn btn-outline-secondary upload_files" type="button" id="button-addon1" th:text="#{이미지_업로드}"
+                    data-image-only="true" data-single-file="true"></button>
+
+            <script th:replace="~{common/_file_tpl::image1_tpl}"></script>
+        </div>
+        <!--
         <dl>
-            <dt th:text="#{이메일}"></dt>
+            <dt th:text="#{이메일_확인}"></dt>
             <dd>
-                <input type="text" name="email" th:field="*{email}">
-                <div class="error" th:each="err: ${#fields.errors('email')}" th:text="${err}"></div>
+                <input type="text" name="confirmEmail" th:field="*{email}">
+                <div class="error" th:each ="err : ${#fields.errors('email')}" th:text="${err}"></div>
             </dd>
         </dl>
+        -->
+        <div class="error" th:each ="err : ${#fields.errors('userId')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2" th:text="#{아이디}"></span>
+            <input type="text" name="userId" th:field="*{userId}"
+                   class="form-control" placeholder="6자리 이상 입력">
+            <!--th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified-->
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:text="#{중복확인}" ><!-- id="userId_verify" --> </button>
+        </div>
 
-        <dl>
-            <dt th:text="#{아이디}"></dt>
-            <dd>
-                <input type="text" name="userId" th:field="*{userId}">
-                <div class="error" th:each="err: ${#fields.errors('userId')}" th:text="${err}"></div>
-            </dd>
-        </dl>
+        <div class="error" th:each ="err : ${#fields.errors('nickName')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3" th:text="#{닉네임}"></span>
+            <input type="text" name="nickName" th:field="*{nickName}" class="form-control" placeholder="">
+        </div>
 
-        <dl>
-            <dt th:text="#{비밀번호}"></dt>
-            <dd>
-                <input type="password" name="password" th:field="*{password}">
-                <div class="error" th:each="err: ${#fields.errors('password')}" th:text="${err}"></div>
-            </dd>
-        </dl>
+        <div class="error" th:each ="err : ${#fields.errors('password')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon4" th:text="#{비밀번호}"></span>
+            <input type="password" name="password" th:field="*{password}" class="form-control" placeholder="8자리 이상 입력">
+        </div>
 
-        <dl>
-            <dt th:text="#{비밀번호_확인}"></dt>
-            <dd>
-                <input type="password" name="confirmPassword" th:field="*{confirmPassword}">
-                <div class="error" th:each="err: ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
-            </dd>
-        </dl>
+        <div class="error" th:each ="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon5" th:text="#{비밀번호_확인}"></span>
+            <input type="password" name="confirmPassword" th:field="*{confirmPassword}" class="form-control">
+        </div>
 
-        <dl>
-            <dt th:text="#{회원명}"></dt>
-            <dd>
-                <input type="text" name="name" th:field="*{name}">
-                <div class="error" th:each="err: ${#fields.errors('name')}" th:text="${err}"></div>
-            </dd>
-        </dl>
+        <div class="error" th:each ="err : ${#fields.errors('name')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon6" th:text="#{회원명}"></span>
+            <input type="text" name="name" th:field="*{name}" class="form-control">
+        </div>
 
-        <div th:text="#{회원가입_약관}"></div>
-        <div class="terms">약관</div>
+        <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon7" th:text="#{이메일}"></span>
+            <input type="text" name="email" th:field="*{email}" class="form-control" th:placeholder="#{이메일}"
+                   th:readonly="${session.EmailAuthVerified != null && session.EmailAuthVerified}">
+            <button type="button" id="email_verify" th:text="#{인증코드전송}"
+                    th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}"
+                    class="btn btn-outline-secondary"> </button>
+        </div>
+        <div class="auth_box">
+            <th:block th:if="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                <input type="text" id="auth_num" class="form-control" th:placeholder="#{인증코드_입력}">
+                <span id="auth_count">03:00</span>
+                <button type="button" id="email_confirm" th:text="#{확인}" disabled class="btn btn-outline-secondary"></button>
+                <button type="button" id="email_re_verify" th:text="#{재전송}" disabled class="btn btn-outline-secondary"></button>
+            </th:block>
+            <th:block th:unless="${session.EmailAuthVerified == null || !session.EmailAuthVerified}">
+                <span class='confirmed' th:text="#{확인된_이메일_입니다.}"></span>
+            </th:block>
+        </div>
+
+        <div th:text="#{보조지표}"></div>
+        <div th:if="${optionList != null}">
+            <div th:each="opt, iterStat : ${optionList}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="${requestJoin.option}" th:value="${opt.optionname}"
+                       class="form-check-input" th:id="${'optionCheckbox_' + iterStat.index}" th:data-index="${iterStat.index}">
+                <label th:for="${'optionCheckbox_' + iterStat.index}"
+                       th:text="${opt.optionname}" class="form-check-label"></label>
+            </div>
+        </div>
+<!--        <select class="form-select form-select-sm" th:field="${optionList}" >-->
+<!--            <option th:each="optionlist : ${optionList}" th:value="${optionlist.optionname}" th:text="${optionlist.optionname}">-->
+<!--            </option>-->
+<!--        </select>-->
+
+
+        <div th:text="#{회원가입_약관}">
+        </div>
+        <div class="overflow-auto terms" th:if="${siteConfig.joinTerms != null}" th:utext="${@utils.nl2br(siteConfig.joinTerms)}">약관...</div>
+
         <div class="terms_agree">
-            <input type="checkbox" name="agree" value="true" id="agree">
-            <label for="agree" th:text="#{회원가입_약관에_동의합니다}"></label>
-
+            <input type="checkbox" name="agree" value="true" id="agree" th:field="*{agree}">
+            <label for="agree" th:text="#{회원가입_약관에_동의합니다.}"></label>
             <div class="error" th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
         </div>
-        <button type="submit" th:text="#{가입하기}"></button>
+
+        <div class="d-grid" style="padding-top: 10px">
+            <button class="btn btn-outline-secondary" type="submit" th:text="#{가입하기}" id="join_btn"></button>
+        </div>
     </form>
+
 </main>
 </html>

@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root { /* 색깔 변수 */
+    --main-color : #0B0B3B; /*딥블루 : 로고 색깔과 통일*/
+    --on-color : #3c4e7a; /*잿빛 파랑 : --main-color에 잿빛 섞인 색깔 */
+    --sub-color : #08298A; /* 파랑 */
+    --sub-color2 : lightsteelblue; /*하늘색*/
+    --font-color : #fff; /*흰색 글씨*/
+    --background : #fff; /*흰색 배경*/
+    --back-color : rgb(244,245,248); /*옅은 회색*/
+    --pale: rgba(11,11,59,0.2); /*흐린 딥블루*/
+}
+
+* { font-family: 'Noto Sans KR', sans-serif; color: #000; box-sizing: border-box; outline: none; }
+html { font-size: 13px; }
+body { margin: 0; }
+a { text-decoration: none; }
+a:hover { font-weight : bolder; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+dl, dt, dd { margin: 0; padding: 0; }
+img { border: 0; }
+
+
+/* 헤더 영역 s */
+header { position: fixed; z-index: 1 ;top: 0; left: 0; width: 100%; display: flex;
+justify-content: space-between; height: 80px; align-items: center; background: var(--background); }
+header > section { width: 210px; text-align: center; font-size: 14px; flex-wrap:nowrap;}
+header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; flex-wrap:nowrap; }
+header .btn_area a {display: inline-block; width: 90px; height: 28px;
+border: 1px solid var(--main-color); color: var(--main-color); border-radius: 5px;
+line-height: 26px; text-align: center; font-weight: 500; margin-bottom:25px; flex-wrap:nowrap;}
+header .btn_area a:last-of-type { background: var(--main-color); ; color: var(--back-color); flex-wrap:nowrap;}
+.circle2 { background-color: black; width: 40px; height: 40px; border-radius: 50%;
+            display: inline-block; justify-content:flex-end; flex-wrap:nowrap;}
+/* 헤더 영역 e */
+
+/* 푸터 영역 s */
+footer { position: relative; z-index: 3; bottom: 0; left: 0; width: 100%; height: 150px; align-items: center; background: #fff; font-size: 14px; }
+footer { display: flex; justify-content: space-around; }
+footer > div:first-of-type { width: 210px; }
+footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
+#customer_center { color : var(--sub-color); }
+.footer_margin_0 {margin: 0;}
+/* 푸터 영역 s */
+
+
+/* 내용영역 s */
+
+main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; display: flex;}
+
+#outer_box { width: 100%; min-width: 1200px; border:1px solid; padding: 100px 20px 0 20px; position:absolute; }
+
+#index_first_row { height: 400px; padding: 20px;
+                    display: flex; justify-content: space-between;}
+.inner_box { border:1px solid; } /* 구간보기 위해 div에 테두리 넣어둠. 나중에 삭제 */
+
+#chart_box { width:50%; border:1px solid;}
+#stock_list { width:23%; border:1px solid;}
+#si_list { width:23%; border:1px solid;}
+
+#index_h1 { width: 100%;  }
+
+/* aside */
+main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color); }
+main > section { margin-left: 208px; flex-grow: 1; padding: 50px;}
+
+main > aside > a { display: block; height: 71px; color: var(--font-color); font-size: 1.385rem;
+    text-align: center; line-height: 71px; position: relative;}
+
+main > aside > a + a { border-top: 1px solid var(--font-color) }
+main > aside > a i { color: var(--font-color); font-size: 1.385rem; }
+main > aside > a.on, main > aside > a:hover { background: #3c4e7a; font-weight: 500; }
+main > aside > a.on:after, main > aside > a:hover:after { content:''; display:block; width: 8px;
+height: 100%; right: 0; top: 0; background: var(--sub-color2) ; position: absolute;}
+
+
+nav.submenus { box-shadow: 1px 1px 5px #cdced5; height: 60px; background: #fff; border-radius: 5px; margin-bottom: 50px; display: flex; align-items: center; }
+nav.submenus a { height: 60px; line-height: 60px; padding: 0 40px; font-size: 1.385rem; color: #222; }
+nav.submenus a.on { background: var(--sub-color) ; color: #fff; font-weight: 500; }
+
+/* 내용영역 e */
+
+/* 제목 공통 s */
+h1 { margin: 0; padding: 0 0 20px 10px; line-height: 1; font-size: 2rem; border-bottom: 2px solid #222; margin-bottom: 30px;}
+h2 { margin: 0 0 10px 0; font-size: 1.385rem; line-height: 1; }
+/* 제목 공통 e */
+
+/* admin/board의 h1 */
+
+
+/* 테이블 공통 s */
+.table_cols { border-spacing: 0; width: 100%; border-top: 2px solid #222; background: #ffffff }
+.table_cols th, .table_cols td {padding: 10px; border-bottom: 1px solid #d5d5d5;}
+.table_cols th { background: #38A5EE   ; font-weight: normal;}
+.profile_column { text-align: right; }
+/* 테이블 공통 e */
+
+/* 입력 공통 s */
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='password'] { border: 1px solid #d5d5d5; height: 35px; padding: 0 10px; width: 100%; }
+textarea { border: 1px solid #d5d5d5; min-height: 100px; padding: 10px; resize: none; width: 100%; }
+select { border: 1px solid #d5d5d5; height: 35px;}
+/* 입력 공통 e */
+
+/* 버튼 공통 s */
+.submit_btns {text-align: center; margin: 30px 0;}
+.submit_btns .btn { display: inline-block; min-width: 200px; height: 45px; padding: 0 15px; border: 1px solid #222; background: #fff; font-size: 1.3rem; font-weight: 500; color: #222222; border-radius: 3px; cursor: pointer; line-height: 43px; }
+.submit_btns .btn:last-of-type { background: #2D3A4A ; color: lavender }
+.btn:hover { background: #222; color: #fff; }
+/* 버튼 공통 e */
+
+/* 메시지 공통 */
+.message_box {box-shadow: 1px 1px 5px lightslategray ; padding: 15px; border-radius: 5px; font-size: 1.384rem; font-weight: 500; text-align: center; background: #ffffff; margin-bottom: 30px; color: steelblue }
+
+/* 마이페이지 회원정보 칸 */
+.profile_box { display: block; color: var(--font-color); font-size: 1.385rem;
+               text-align: center; position: relative; }
+
+/* 마이페이지 사진*/
+.circle { border-radius: 50%; overflow: hidden; }
+.aside_photo { display: block; position: relative; justify-content: center; margin:14%}
+.layout_width1 { width: 100%; margin: 0 0 150px 0; }
+.layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
+
+/* 마이페이지 내 프로필 */
+.profile_col { min-width:150px; height: 50px; text-align: left;  }
+.profile_edit_btn { width:150px; line-height: 15px; background: var(--main-color); border-radius: 5px; color:var(--font-color); padding: 0 10px; }
+.profile_padding_left_30 { padding-left: 30px; }
+.width_100 { min-width:100px; }
+.last_col { min-width:70px; width:80%; text-align: right; }
+
+
+/* 페이징 공통 S */
+.pagination { text-align: center; margin: 30px 0; }
+.pagination .page { border: 1px solid var(--main-color); color: var(--main-color); display: inline-block;
+padding: 5px 10px; border-radius: 3px; background: #fff; }
+.pagination .page .on { background: var(--main-color); color: #fff; }
+.pagination .page + .page { margin-left: 3px; }
+/* 페이징 공통 E */
+
+/* 헤더 공통 S */
+header .header_search > div { display: flex; align-items: center; justify-content: space-between; height: 100px; }
+header .header_search .search { display: flex; }
+/* 헤더 공통 S */
+
+/* 마이페이지 내활동 s */
+section nav { background: var(--sub-color); z-index: 5}
+section nav > .inner a { display: inline-block; height: 45px; line-height: 45px; padding: 0 25px; min-width: 120px; text-align: center; color: #fff; font-size: 1.35rem; }
+section nav > .inner a:hover { background:var(--main-color); }
+/* 마이페이지 내활동 e */
+
+/* 마이페이지 팔로우*/
+.follow_page h2 span {padding: 8px 20px; background: lightsteelblue; border-radius: 5px;}
+.follow_mode.on {background: var(--main-color); color: #fff;}
+
+
+/* 마이페이지 aside */
+aside .follow_info a > span { text-align: center; }
+aside .follow_info a > span { color: var(--font-color); font-size: 1rem; }
+aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.3rem;}
+
+
+/* 유저페이지 aside */
+aside .user_info { padding: 0 25px; margin-bottom: 15px; color: var(--font-color); font-size: 1.1rem;}
+
+
+/* 검색 */
+.board_list .list_search { padding: 10px; border-bottom: 1px solid var(--main-color); }
+.board_list .list_search > form { display: flex; }
+.board_list .list_search > form > * + * { margin-left: 5px; }
+.board_list .list_search button { width: 180px; background: var(--main-color);color: #fff;}
+.board_list .total { text-align: right; margin: 10px 10px 5px; }
+.board_list .depth_1 { text-indent: 0px; }
+.board_list .depth_2 { text-indent: 20px; }
+.board_list .depth_3 { text-indent: 40px; }
+.board_list .depth_4 { text-indent: 60px; }
+.board_list .depth_5 { text-indent: 80px; }
+.board_list .depth_6 { text-indent: 100px; }
+.board_list .depth_7 { text-indent: 120px; }
+.board_list .depth_8 { text-indent: 140px; }
+

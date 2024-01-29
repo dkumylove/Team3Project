@@ -1,24 +1,26 @@
 package org.team3.member.controllers;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.Set;
+import java.util.UUID;
+
+/**
+ * 커맨드 객체는 보통 controller 패키지에 있음
+ */
 @Data
 public class RequestJoin {
 
-    @NotBlank
-    @Email
+    private String gid = UUID.randomUUID().toString();
+
+    @NotBlank @Email
     private String email;
 
-    @NotBlank
-    @Size(min=6)
+    @NotBlank @Size(min=6)
     private String userId;
 
-    @NotBlank
-    @Size(min=8)
+    @NotBlank @Size(min = 8)
     private String password;
 
     @NotBlank
@@ -27,7 +29,12 @@ public class RequestJoin {
     @NotBlank
     private String name;
 
-    @AssertTrue // 참값 확인
+    @NotBlank
+    private String nickName;
+
+    @AssertTrue
     private boolean agree;
 
+    @NotEmpty
+    private Set<String> option;
 }
