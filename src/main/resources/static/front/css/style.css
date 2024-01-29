@@ -121,7 +121,7 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 /* 마이페이지 사진*/
 .circle { border-radius: 50%; overflow: hidden; }
 .aside_photo { display: block; position: relative; justify-content: center; margin:14%}
-.layout_width1 { width: 100%; margin: 0; }
+.layout_width1 { width: 100%; margin: 0 0 150px 0; }
 .layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
 
 /* 마이페이지 내 프로필 */
@@ -163,7 +163,7 @@ aside .user_nm { padding: 0 25px; margin-bottom: 10px; color: var(--font-color);
 
 
 /* 유저페이지 aside */
-aside .user_info { padding: 0 25px; margin-bottom: 10px; color: var(--font-color); font-size: 1.1rem;}
+aside .user_info { padding: 0 25px; margin-bottom: 15px; color: var(--font-color); font-size: 1.1rem;}
 
 
 /* 검색 */
