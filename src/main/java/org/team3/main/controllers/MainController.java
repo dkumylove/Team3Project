@@ -42,7 +42,7 @@ public class MainController implements ExceptionProcessor {
 //        model.addAttribute("upBitTickerSearch", upBitTickerSearch);
 //
 //        // markets와 openingPrices를 별도로 모델에 추가
-//        model.addAttribute("markets", markets);
+//        model.addAttribute("markets", markets);ㅌㅌ`
 //        model.addAttribute("openingPrices", openingPrices);
 
 
