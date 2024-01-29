@@ -33,8 +33,8 @@ public class ExcelUtilsTest {
     @DisplayName("엑셀파일 -> List<String[]> -> SQL 파일 변환 테스트")
     void test3() {
         String destPath = "data/option.sql";
-        String[] fields = { "optionname", "category" };
-        utils.makeSql("data/option.xlsx", new int[] {0, 1}, 0, "OPTIONS", fields).toFile(destPath);
+        String[] fields = { "optionname", "category", "active" };
+        utils.makeSql("data/option.xlsx", new int[] {0, 1, 2}, 0, "OPTIONS", fields).toFile(destPath);
         File file = new File(destPath);
 
         assert(file.exists());
