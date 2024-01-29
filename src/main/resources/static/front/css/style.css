@@ -51,14 +51,14 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; display: flex;}
 
-#outer_box { width: 100%; min-width: 1200px;  padding: 100px 20px 0 20px; position:absolute; } /* border:1px solid; */
+#outer_box { width: 100%; min-width: 1200px;  padding: 100px 20px 0 20px; display: flex} /* border:1px solid; */
 
-#index_first_row { height: 400px; padding: 20px;
+#index_first_row { height: 500px; padding: 20px;
                     display: flex; justify-content: space-between;}
 .inner_box { border:1px solid; } /* 구간보기 위해 div에 테두리 넣어둠. 나중에 삭제 */
 
-#chart_box { width:50%; border:1px solid;}
-#stock_list { width:23%; border:1px solid;}
+#chart_box { width:100%; border:1px solid;}
+#stock_list { height: 500px; width:23%; border:1px solid;}
 #si_list { width:23%; border:1px solid;}
 
 #index_h1 { width: 100%;  }

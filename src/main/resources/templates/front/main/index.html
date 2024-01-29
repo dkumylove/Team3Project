@@ -5,41 +5,38 @@
 <main layout:fragment="content" class="layout_width1">
 
     <div id="outer_box">
-        <div id="index_first_row" >
-            <div id="chart_box" class="inner_box">
-                차트 : 주식과 보조지표를 선택함에 따라서 동적으로 변하는 차트
-            </div>
-            <div id="stock_list" class="inner_box">
-                주식 목록
-            </div>
-            <div id="si_list" class="inner_box">
-                보조 지표
-            </div>
+        <div id="index_first_row">
+            차트
+            <th:block layout:fragment="addCommonScript">
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+            </th:block>
+
+            <canvas id="upbit_cart"></canvas>
         </div>
 
-        <!--<div id="index_h1">
-            <h1 th:text="#{최신_게시글}"></h1>
+        <div id="stock_list">
+            주식목록
+            <section layout:fragment="upbitList"></section>
+            <h2 th:text="UpBit_Markets"></h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Market</th>
+                    <th>Opening Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="upBitTicker : ${upBitTickers}">
+                    <td th:text="${upBitTicker.market}"></td>
+                    <td th:text="${upBitTicker.opening_price}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <ul class="board_latest">
-        <li th:each="b : ${boardMenus}">
-            <h2>
-                <a th:href="@{/board/list/{bid}(bid=${b.bid})}" th:text="${b.bName}"></a>
-            </h2>
-            <ul class="items">
-                <li th:each="item : ${@boardInfoService.getLatest(b.bid)}" th:object="${item}" class="item">
-                    <a th:href="@{/board/view/{seq}(seq=*{seq})}">
-                        <th:block th:if="*{notice}">
-                            [<th:block th:text="#{공지}"></th:block>]
-                        </th:block>
-                        <th:block th:text="*{subject}"></th:block>
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>-->
 
+    <div>
         <h1 th:text="#{최신_게시글}"></h1>
 
         <ul class="board_latest">
@@ -62,6 +59,7 @@
                 </ul>
             </li>
         </ul>
+    </div>
 
 </main>
 </html>
