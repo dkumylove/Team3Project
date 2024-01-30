@@ -16,6 +16,7 @@ import org.team3.admin.menus.MenuDetail;
 import org.team3.admin.option.entities.Options;
 import org.team3.admin.option.service.OptionConfigInfoService;
 import org.team3.admin.option.service.OptionConfigSaveService;
+import org.team3.admin.option.service.OptionRankSaveService;
 import org.team3.board.entities.Board;
 import org.team3.board.service.config.BoardConfigDeleteService;
 import org.team3.board.service.config.BoardConfigInfoService;
@@ -36,6 +37,9 @@ public class OptionController implements ExceptionProcessor {
 
     private final OptionConfigSaveService optionConfigSaveService;
     private final OptionConfigInfoService optionConfigInfoService;
+    private final OptionRankSaveService optionRankSaveService;
+
+
 
     @ModelAttribute("menuCode")
     public String getMenuCode() { // 주 메뉴 코드
@@ -78,14 +82,35 @@ public class OptionController implements ExceptionProcessor {
         return "admin/option/add";
     }
 
+    /**
+     * 보조지표 랭킹 등록
+     *
+     * @return
+     */
+    @GetMapping("/rank")
+    public String save(@ModelAttribute RequestRankOption rankOption, Model model) {
+        commonProcess("rank", model);
+        List<Options> optionList = optionConfigInfoService.getOptionList();
+        model.addAttribute("optionList", optionList);
+        // optionRankSaveService.save
+        return "admin/option/rank";
+    }
+
+
+
+    @PostMapping("/ranksave")
+    public String add(@ModelAttribute RequestRankOption rankOption, Model model) {
+        commonProcess("rank", model);
+        optionRankSaveService.save(rankOption.getOptionDetail(), rankOption.getOptionname(), rankOption.isActive());
+        return "redirect:/admin/option";
+    }
+
     @PostMapping("/save")
     public String add(@ModelAttribute RequestOptionConfig config, Model model) {
         commonProcess("add", model);
         optionConfigSaveService.save(config.getOptions(), config.isActive());
         return "redirect:/admin/option";
     }
-
-
     /**
      * 공통 처리
      *
@@ -100,12 +125,14 @@ public class OptionController implements ExceptionProcessor {
             pageTitle = "보조지표 등록";
         } else if (mode.equals("eidt")) {
             pageTitle = "보조지표 수정";
+        } else if(mode.equals("rank")){
+            pageTitle = "보조지표 랭킹등록";
         }
 
         List<String> addCommonScript = new ArrayList<>();
         List<String> addScript = new ArrayList<>();
 
-        if(mode.equals("add") || mode.equals("edit")) { // 게시판 등록 또는 수정
+        if(mode.equals("add") || mode.equals("edit") || mode.equals("rank")) { // 게시판 등록 또는 수정
             addCommonScript.add("ckeditor5/ckeditor");
             addCommonScript.add("fileManager");
             // addScript.add("board/form");

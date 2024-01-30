@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="default">
+    <div class="board_list layout_width">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Option Name</th>
+<!--                <th>Option Detail</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="option : ${optionList}">
+                <td th:text="${option.optionname}"></td>
+<!--                <td th:text="${option.optionDetail}"></td>-->
+            </tr>
+            </tbody>
+        </table>
+
+        <!--// list_search -->
+        <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+
+    </div>
+    <!--// board_list-->
+</th:block>
+</html>
