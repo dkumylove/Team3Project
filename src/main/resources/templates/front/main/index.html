@@ -4,6 +4,24 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" class="layout_width1">
 
+    <!-- 배너S -->
+    <div id="imageSlider">
+        <div class="slider-content">
+
+            <!--이미지1-->
+            <div class="slide" id="banner_back1">
+                <img src="/common/banner_img/001.png" alt="광고 배너">
+            </div>
+
+            <!--이미지2-->
+            <div class="slide" id="banner_back2">
+                <img src="/common/banner_img/002.png" alt="새해 인사">
+            </div>
+
+        </div>
+    </div>
+    <!-- 배너E -->
+
     <div class="outer_box up_box">
         <div id="index_first_row">
             <th:block layout:fragment="addCommonScript">
@@ -34,23 +52,7 @@
         </div>
     </div>
 
-    <!-- 배너S -->
-    <div id="imageSlider">
-        <div class="slider-content">
 
-            <!--이미지1-->
-            <div class="slide" id="banner_back1">
-                <img src="/common/banner_img/001.png" alt="광고 배너">
-            </div>
-
-            <!--이미지2-->
-            <div class="slide" id="banner_back2">
-                <img src="/common/banner_img/002.png" alt="새해 인사">
-            </div>
-
-        </div>
-    </div>
-    <!-- 배너E -->
 
     <div class="outer_box">
         <h1 th:text="#{최신_게시글}"></h1>
