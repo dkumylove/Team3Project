@@ -30,7 +30,8 @@ public class Menu {
 
         menus.put("option", Arrays.asList(
                 new MenuDetail("list", "보조지표목록", "/admin/option"),
-                new MenuDetail("add", "보조지표등록", "/admin/option/add")
+                new MenuDetail("add", "보조지표등록", "/admin/option/add"),
+                new MenuDetail("rank", "보조지표 랭킹등록", "/admin/option/rank")
         ));
     }
 
