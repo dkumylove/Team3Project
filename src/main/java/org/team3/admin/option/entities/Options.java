@@ -34,4 +34,7 @@ public class Options extends Base {
 
     private boolean active=true;
 
+//    @OneToOne
+//    private OptionRank optionRank;
+
 }
