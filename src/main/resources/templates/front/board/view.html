@@ -14,9 +14,10 @@
         <th:block th:replace="~{front/board/skins/qna/view::qna}"></th:block>
     </th:block>
 
+    <div class="margin_top50">
     <th:block th:if="${board.showListBelowView}">
         <th:block th:replace="~{front/board/_list_items::items}"></th:block>
     </th:block>
-
+    </div>
 </section>
 </html>
