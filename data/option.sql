@@ -63,4 +63,3 @@ INSERT INTO OPTIONS (optionname,category,active ) VALUES ('AD Line','moneyflow',
 INSERT INTO OPTIONS (optionname,category,active ) VALUES ('EOM','moneyflow','1');
 
 INSERT INTO OPTIONS (optionname,category,active ) VALUES ('PVT','moneyflow','1');
-
