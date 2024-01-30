@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/rankMain}">
+<main layout:fragment="content">
+    <h1>랭킹페이지</h1>
+    <th:block th:replace="~{front/rank/_form_list::default}"></th:block>
+</main>
+</html>
