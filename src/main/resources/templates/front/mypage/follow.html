@@ -24,7 +24,7 @@
         </h2>
         <li class="item" th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
 
-            <div class="profile">
+            <div class="profile margin_top20">
                 <!--<div class="profile_image" th:if="*{profileImage != null}" th:style="*{@utils.backgroundStyle(profileImage, 80, 80)}"></div>-->
                 <a class="user_info" th:href="@{/mypage/usePage/{userId}(userId=*{userId}, mode=${'usePage'})}">
                     <div class="user_nm" th:text="*{#strings.concat(name, '(', userId, ')')}"></div>

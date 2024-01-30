@@ -6,21 +6,20 @@
     <h1 th:text="#{회원탈퇴}"></h1>
     <form name="frmResign" method="post" th:action="@{/mypage/resign}" autocomplete="off" th:object="${requestResign}">
 
-        <dl>
-            <dt th:text="#{비밀번호}"></dt>
-            <dd>
-                <input type="password" name="password" th:field="*{password}">
-                <div class="error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></div>
-            </dd>
-        </dl>
-        <dl>
-            <dt th:text="#{비밀번호_확인}"></dt>
-            <dd>
-                <input type="password" name="confirmPassword" th:field="*{confirmPassword}">
-                <div class="error" th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
-            </dd>
-        </dl>
-        <button type="submit" th:text="#{확인하기}"></button>
+        <div class="error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" th:text="#{비밀번호}"></span>
+            <input type="password" name="password" th:field="*{password}" class="form-control">
+        </div>
+
+        <div class="error" th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2" th:text="#{비밀번호_확인}"></span>
+            <input type="password" name="confirmPassword" th:field="*{confirmPassword}" class="form-control" >
+            <button type="submit" th:text="#{확인하기}" class="btn btn-outline-secondary" id="button-addon1" ></button>
+        </div>
+
+
     </form>
 </section>
 </html>

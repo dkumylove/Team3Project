@@ -43,8 +43,10 @@
 <main>
     <aside th:replace="~{front/outlines/_useSide::menus}"></aside>
     <section>
+        <div class="layout_width">
         <nav th:replace="~{front/outlines/_submenu::submenus}"></nav>
         <section layout:fragment="content"></section>
+        </div>
     </section>
 </main>
 
