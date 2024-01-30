@@ -209,7 +209,7 @@ public class MypageController implements ExceptionProcessor {
     }
 
     @GetMapping("/myBoard/{tab}")
-    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, String userId, Model model) {
+    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, Model model) {
         commonProcess("myBoard", model);
 
         model.addAttribute("tab", tab);

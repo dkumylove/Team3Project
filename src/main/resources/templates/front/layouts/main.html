@@ -33,7 +33,7 @@
     <script th:src="@{/front/js/common.js?v={v}(v=${siteConfig.cssJsVersion})}"></script>
     <script th:each="jsFile : ${addScript}"
             th:src="@{/front/js/{file}.js?v={v}(file=${jsFile}, v=${siteConfig.cssJsVersion})}"></script>
-
+    <script th:src="@{/common/js/banner.js}"></script>
     <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
@@ -45,5 +45,27 @@
 <iframe name="ifrmProcess" class="dn"></iframe>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+<script>
+    const slider = document.getElementById('imageSlider');
+    const sliderContent = document.querySelector('.slider-content');
+
+    const slideHeight = document.querySelector('.slide').clientHeight;
+
+    function nextSlide() {
+        sliderContent.style.transform = `translateY(-${slideHeight}px)`;
+        setTimeout(() => {
+            sliderContent.appendChild(sliderContent.firstElementChild);
+            sliderContent.style.transition = 'none';
+            sliderContent.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                sliderContent.style.transition = 'transform 1s ease-in-out';
+            });
+        }, 1000);
+    }
+
+    setInterval(nextSlide, 2000);
+</script>
+
 </body>
 </html>
