@@ -13,7 +13,7 @@
 }
 
 * { font-family: 'Noto Sans KR', sans-serif; color:#000; box-sizing :  border-box; outline: none;}
-html { font-size: 15px; }
+html { font-size: 13px; }
 body { margin:0; }
 a { text-decoration: none; color: black;}
 a:hover { font-weight : bolder; }
