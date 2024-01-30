@@ -4,9 +4,8 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" class="layout_width1">
 
-    <div id="outer_box">
+    <div class="outer_box up_box">
         <div id="index_first_row">
-            차트
             <th:block layout:fragment="addCommonScript">
                 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
             </th:block>
@@ -36,11 +35,11 @@
     </div>
 
     <div class="banner"> <!-- style='position: relative; width: 100%; height: 0; padding-top: 18%; overflow: hidden; will-change: transform;' -->
-        <img src="/common/banner1.png" alt="광고 배너" style="height: 100px;">
+        <img src="/common/banner_img/banner1.png" alt="광고 배너" style="height: 100px; width:100%">
     </div>
 
 
-    <div>
+    <div class="outer_box">
         <h1 th:text="#{최신_게시글}"></h1>
 
         <ul class="board_latest">
