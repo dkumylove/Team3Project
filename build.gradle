@@ -64,12 +64,14 @@ dependencies {
 	/* 채팅 */
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+	/* 엑셀 파일 읽어오기 */
+	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
 	/* test */
 	testRuntimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	implementation 'org.apache.poi:poi-ooxml:5.2.5'
 }
 
 tasks.named('test') {
