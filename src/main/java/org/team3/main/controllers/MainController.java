@@ -31,19 +31,7 @@ public class MainController implements ExceptionProcessor {
     @GetMapping("/")
     public String index(Model model) {
 
-//        // UpBitTickerSearch 객체 생성
-//        UpBitTickerSearch upBitTickerSearch = new UpBitTickerSearch();
-//
-//        // markets와 openingPrices 필드를 샘플 데이터로 채움 (실제 데이터로 대체 필요)
-//        List<String> markets = Arrays.asList("BTC", "ETH", "XRP");
-//        List<Long> openingPrices = Arrays.asList(50000L, 3000L, 2L);
-//
-//        // UpBitTickerSearch 객체를 모델에 추가
-//        model.addAttribute("upBitTickerSearch", upBitTickerSearch);
-//
-//        // markets와 openingPrices를 별도로 모델에 추가
-//        model.addAttribute("markets", markets);ㅌㅌ`
-//        model.addAttribute("openingPrices", openingPrices);
+
 
 
         model.addAttribute("addCommonScript", new String[] {"upbit"});
