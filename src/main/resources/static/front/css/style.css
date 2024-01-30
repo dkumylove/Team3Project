@@ -55,7 +55,7 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; } /* display: flex; */
 
-.outer_box { width: 100%; min-width: 1200px;  padding: 100px 150px 50px 150px; } /* border:1px solid; */
+.outer_box { width: 100%; min-width: 1200px;  padding: 150px 150px 50px 150px; } /* border:1px solid; */
 .up_box { display: flex; justify-content: space-between; }
 
 #index_first_row { height: 500px; padding: 20px;
