@@ -49,9 +49,9 @@ footer > p:last-of-type { padding: 20px; font-size: 14px; text-align: center; }
 
 /* 내용영역 s */
 
-main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; display: flex;}
+main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; } /* display: flex; */
 
-#outer_box { width: 100%; min-width: 1200px;  padding: 100px 20px 0 20px; display: flex} /* border:1px solid; */
+#outer_box { width: 100%; min-width: 1200px;  padding: 100px 20px 50px 20px; display: flex} /* border:1px solid; */
 
 #index_first_row { height: 500px; padding: 20px;
                     display: flex; justify-content: space-between;}
@@ -62,6 +62,8 @@ main { width: 100%; margin-top: 80px; margin-left: 0; min-height: 1000px; displa
 #si_list { width:23%; border:1px solid;}
 
 #index_h1 { width: 100%;  }
+
+.banner {padding: 50px 0 50px 0;}
 
 /* aside */
 main > aside { position: fixed; z-index: 2 ;top: 80; left: 0; height: 100%; width: 208px; background: var(--main-color); }
