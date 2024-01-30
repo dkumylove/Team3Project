@@ -2,69 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
 
-    <h2 class="comments"></h2>
-    <div class="comments_page">
-        <div class="total">
-            Total : <th:block th:text="${pagination.total >= 1000 ? #numbers.formatInteger(pagination.total, 3, 'COMMA') : pagination.total}"></th:block>
-        </div>
-
-        <ul class="items">
-            <li th:if="${items == null || items.isEmpty()}" class="no_data"
-                th:text="#{조회된_게시글이_없습니다.}"></li>
-
-            <li th:unless="${items == null || items.isEmpty()}"
-                th:each="item : ${items}" th:object="${item}" class="item">
-
-                <div class="board_no" th:text="${item.board.bName}"></div>
-
-                <a th:href="@{/board/view/{seq}(seq=*{seq})}" class="subject" th:classappend="*{depth > 0 ? 'depth_' + depth : ''}">
-                    <span class="notice" th:if="*{notice}">
-                        [<th:block th:text="#{공지}"></th:block>]
-                    </span>
-                    <th:block th:if="*{parentSeq != null}">
-                        <i class="xi-subdirectory-arrow"></i> RE :
-                    </th:block>
-                    <span class="category" th:if="*{category}" th:text="*{'[' + category + ']'}"></span>
-                    <th:block th:text="*{subject}"></th:block>
-                </a>
-
-                <div class="post_info">
-
-                <span class="poster">
-                    <th:block th:text="*{poster}"></th:block>
-                    <th:block th:if="*{member != null}"
-                              th:text="*{'(' + member.userId + ')'}"></th:block>
-                </span>
-
-                    <span class="view_count">
-                        조회수 :
-                        <th:block th:text="*{viewCount >= 1000 ? #numbers.formatInteger
-                        (viewCount, 3, 'COMMA') : viewCount}"></th:block>
-                </span>
-
-                    <span class="post_date"
-                          th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></span>
-                </div>
-                <!--// post_info -->
-            </li>
-        </ul>
-    </div>
-
-    <div class="list_search">
-        <form name="frmSearch" method="get" th:action="@{/mypage/myBoard/posts}" autocomplete="off" th:object="${boardDataSearch}">
-            <select name="sopt" th:field="*{sopt}">
-                <option value="ALL" th:text="#{통합검색}"></option>
-                <option value="SUBJECT" th:text="#{제목}"></option>
-                <option value="CONTENT" th:text="#{내용}"></option>
-                <option value="SUBJECT_CONTENT" th:text="#{제목_내용}"></option>
-                <option value="POSTER" th:text="#{작성자}"></option>
-            </select>
-            <input type="text" name="skey" th:field="*{skey}">
-            <button type="submit" th:text="#{검색하기}"></button>
-        </form>
-    </div>
+    <h2 class="comments">comments</h2>
 
 
-    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+<!--    <div class="comments_page">-->
+
+<!--        <th:block th:object="${RequestComment}" th:if="*{comments != null && !comments.isEmpty()}">-->
+<!--            <div class="total">-->
+<!--                Total : <th:block th:text="*{commentCount >= 1000 ? #numbers.formatInteger(commentCount, 3, 'COMMA') : commentCount}"></th:block>-->
+<!--            </div>-->
+
+<!--            <ul class="comment_items">-->
+<!--                <li class="item" th:each="comment : *{comments}" th:object="${comment}" th:id="*{'comment_' + seq}">-->
+<!--                    <div class="comment_top">-->
+<!--                        <div>-->
+<!--                            <th:block th:text="*{commenter}"></th:block>-->
+<!--                            <th:block th:if="*{member != null}" th:text="*{'(' + member.email + ')'}"></th:block>-->
+<!--                        </div>-->
+<!--                        <div th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;// comment_top &ndash;&gt;-->
+<!--                    <div class="comment" th:utext="*{@utils.nl2br(content)}"></div>-->
+<!--                    <div class="btns" th:if="*{showEditButton || showDeleteButton}">-->
+<!--                        <a th:if="*{showDeleteButton}" th:href="@{/comment/delete/{seq}(seq=*{seq})}" th:data-deletable="*{deletable}" class="delete_comment" th:text="#{삭제}" onclick="return confirm('정말 삭제하겠습니까?');"></a>-->
+
+
+<!--                        <button th:if="*{showEditButton}" type="button" class="edit_comment" th:data-seq="*{seq}" th:data-editable="*{editable}" th:text="#{수정}"></button>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </th:block>-->
+
+
+
+<!--    <div class="list_search">-->
+<!--        <form name="frmSearch" method="get" th:action="@{/mypage/myBoard/posts}" autocomplete="off" th:object="${boardDataSearch}">-->
+<!--            <select name="sopt" th:field="*{sopt}">-->
+<!--                <option value="ALL" th:text="#{통합검색}"></option>-->
+<!--                <option value="SUBJECT" th:text="#{제목}"></option>-->
+<!--                <option value="CONTENT" th:text="#{내용}"></option>-->
+<!--                <option value="SUBJECT_CONTENT" th:text="#{제목_내용}"></option>-->
+<!--                <option value="POSTER" th:text="#{작성자}"></option>-->
+<!--            </select>-->
+<!--            <input type="text" name="skey" th:field="*{skey}">-->
+<!--            <button type="submit" th:text="#{검색하기}"></button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+<!--    <th:block th:replace="~{common/_pagination::pagination}"></th:block>-->
 </th:block>
 </html>
