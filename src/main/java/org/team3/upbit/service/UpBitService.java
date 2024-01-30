@@ -29,7 +29,7 @@ public class UpBitService {
 
     private final UpBitTickerRepository repository;
 
-    @Scheduled(fixedDelay=1, timeUnit = TimeUnit.MINUTES)
+    //@Scheduled(fixedDelay=1, timeUnit = TimeUnit.MINUTES)
     public void updateData() {
         RestTemplate restTemplate = new RestTemplate();
         String apiMarketUrl = "https://api.upbit.com/v1/market/all";
