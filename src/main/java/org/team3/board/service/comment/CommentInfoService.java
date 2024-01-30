@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.controllers.comment.RequestComment;
 import org.team3.board.entities.BoardData;
@@ -60,10 +61,15 @@ public class CommentInfoService {
      * @param boardDataSeq
      * @return
      */
-    public List<CommentData> getList(Long boardDataSeq) {
+    public List<CommentData> getList(Long boardDataSeq,  String userId) {
         QCommentData commentData = QCommentData.commentData;
         BooleanBuilder andBuilder = new BooleanBuilder();
         andBuilder.and(commentData.boardData.seq.eq(boardDataSeq));
+
+        // 사용자별 댓글 목록 조회
+        if (StringUtils.hasText(userId)) {
+            andBuilder.and(commentData.member.userId.eq(userId));
+        }
 
         List<CommentData> items = (List<CommentData>)commentDataRepository.findAll(andBuilder, Sort.by(desc("listOrder"), asc("createdAt")));
 
@@ -72,28 +78,17 @@ public class CommentInfoService {
         return items;
     }
 
+    public List<CommentData> getList(Long boardDataSeq) {
+        return getList(boardDataSeq, null);
+    }
 
-//    /**
-//     * 사용자별 댓글 목록 조회
-//     * 1/26 이지은
-//     * @param userId
-//     * @return
-//     */
-//    public List<CommentData> getUserComments(String userId) {
-//
-//        QCommentData commentData = QCommentData.commentData;
-//        BooleanBuilder andBuilder = new BooleanBuilder();
-//
-//        // 유저 아이디로 댓글 필터링
-//        andBuilder.and(commentData.member.userId.eq(userId));
-//
-//        List<CommentData> items = (List<CommentData>) commentDataRepository.findAll(andBuilder, Sort.by(desc("createdAt")));
-//
-//        // 각 댓글에 대한 추가 정보 처리
-//        items.forEach(this::addCommentInfo);
-//
-//        return items;
-//    }
+    public List<CommentData> getMyList(Long boardDataSeq) {
+        if (memberUtil.isLogin()) {
+            return getList(boardDataSeq, memberUtil.getMember().getUserId());
+        }
+        return null;
+    }
+
 
 
     /**

@@ -1,66 +1,67 @@
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('MACD','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('MACD','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('DMI','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('DMI','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('ADX','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('ADX','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('ROC','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('ROC','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Pivot Line','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Pivot Line','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Parabolic Sar','trend','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Parabolic Sar','trend');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Iichimoku Cloud','etc','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Iichimoku Cloud','etc');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Elliott Wave','etc','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Elliott Wave','etc');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('RSI','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('RSI','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Stochastic','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Stochastic','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('CCI','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('CCI','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Disparity','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Disparity','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Psychological Line','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Psychological Line','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('SONAR','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('SONAR','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Williams %R','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Williams %R','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('TRIX','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('TRIX','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Three Line Break Charts','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Three Line Break Charts','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('AB Ratio','momentum','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('AB Ratio','momentum');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Bollinge band','volatility','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Bollinge band','volatility');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('ATR','volatility','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('ATR','volatility');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Envelope','volatility','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Envelope','volatility');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Keltner Channels','volatility','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Keltner Channels','volatility');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Trading Volume','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Trading Volume','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('VMA','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('VMA','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Trading Value','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Trading Value','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Volume Profile','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Volume Profile','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('OBV','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('OBV','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('MFI','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('MFI','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Volume Oscillator','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Volume Oscillator','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('Volume Ratio','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('Volume Ratio','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('AD Line','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('AD Line','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('EOM','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('EOM','moneyflow');
 
-INSERT INTO OPTIONS (optionname,category,active ) VALUES ('PVT','moneyflow','1');
+INSERT INTO OPTIONS (optionname,category ) VALUES ('PVT','moneyflow');
 
+commit;
