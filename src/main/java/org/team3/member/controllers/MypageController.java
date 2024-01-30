@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.team3.admin.option.entities.Options;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
-import org.team3.board.entities.CommentData;
 import org.team3.board.service.BoardInfoService;
 import org.team3.board.service.SaveBoardDataService;
 import org.team3.board.service.comment.CommentInfoService;
@@ -27,8 +26,10 @@ import org.team3.member.MemberUtil;
 import org.team3.member.controllers.resign.RequestResign;
 import org.team3.member.controllers.resign.ResignValidator;
 import org.team3.member.entities.Member;
-import org.team3.member.repositories.MemberRepository;
-import org.team3.member.service.*;
+import org.team3.member.service.ChangeEmailService;
+import org.team3.member.service.MemberDeleteService;
+import org.team3.member.service.MemberInfoService;
+import org.team3.member.service.MemberService;
 import org.team3.member.service.follow.FollowBoardService;
 import org.team3.member.service.follow.FollowService;
 import org.team3.member.service.resign.ResignService;
@@ -209,11 +210,10 @@ public class MypageController implements ExceptionProcessor {
     }
 
     @GetMapping("/myBoard/{tab}")
-    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, String userId, Model model) {
+    public String myBoard(@PathVariable("tab") String tab, @ModelAttribute BoardDataSearch search, Model model) {
         commonProcess("myBoard", model);
 
         model.addAttribute("tab", tab);
-
 
         if (tab.equals("save_posts")) { // 찜한게시물
             ListData<BoardData> data = saveBoardDataService.getList(search);
@@ -222,6 +222,7 @@ public class MypageController implements ExceptionProcessor {
             model.addAttribute("pagination", data.getPagination());
 
         } else if (tab.equals("posts")) { // 게시글
+
             search.setUserId(memberUtil.getMember().getUserId());
             ListData<BoardData> data = boardInfoService.getList(search);
 
