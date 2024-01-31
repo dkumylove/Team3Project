@@ -238,15 +238,8 @@ public class MypageController implements ExceptionProcessor {
             List<CommentData> items = commentInfoService.getMyList();
 
             model.addAttribute("items", items);
-            items.stream().forEach(System.out::println);
-//            search.setUserId(memberUtil.getMember().getUserId());
-//            ListData<CommentData> data = (ListData<CommentData>) commentInfoService.getMyList(boardDataSeq);
-//
-//            model.addAttribute("items", data.getItems());
-//            model.addAttribute("pagination", data.getPagination());
-//
-//            System.out.println("data = " + data);
-//            System.out.println("items = " + data.getItems());
+           // items.stream().forEach(System.out::println);
+
 
         } else if (tab.equals("latest")) { // 최근 게시글
 
@@ -258,7 +251,7 @@ public class MypageController implements ExceptionProcessor {
 
 
     /**
-     * 팔로우
+     * follow
      * 1월 22일 수정 이지은
      * @return
      */
@@ -274,6 +267,24 @@ public class MypageController implements ExceptionProcessor {
 
         return utils.tpl("mypage/follow");
     }
+
+//    /**
+//     * useFollow
+//     * 1월 22일 수정 이지은
+//     * @return
+//     */
+//    @GetMapping("/useFollow")
+//    public String useFollowList(@RequestParam(name="mode", defaultValue = "follower") String mode, String userId, RequestPaging paging, Model model) {
+//        commonProcess("follow", model);
+//
+//        ListData<Member> data = followService.getList(mode,userId, paging);
+//
+//        model.addAttribute("items", data.getItems());
+//        model.addAttribute("pagination", data.getPagination());
+//        model.addAttribute("mode", mode);
+//
+//        return utils.tpl("mypage/useFollow");
+//    }
 
     /**
      * follow 게시글

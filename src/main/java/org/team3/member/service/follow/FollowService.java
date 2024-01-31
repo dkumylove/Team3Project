@@ -127,6 +127,22 @@ public class FollowService {
         return followRepository.getFollowers(memberUtil.getMember(), paging, request);
     }
 
+//    /**
+//     *
+//     *
+//     * user을 Followers한 회원 목록
+//     * @return
+//     */
+//    public ListData<Member> getFollowers(String userId, RequestPaging paging) {
+//
+//        Member member = memberRepository.findByUserId(userId).orElse(null);
+//        if (member != null) {
+//            return followRepository.getFollowers(member, paging, request);
+//        }
+//
+//        return null;
+//    }
+
     /**
      * 로그인 회원이 follow한 회원목록
      *
@@ -139,6 +155,23 @@ public class FollowService {
 
         return followRepository.getFollowings(memberUtil.getMember(), paging, request);
     }
+
+//    /**
+//     *
+//     *
+//     * user가 Following한 회원목록
+//     *
+//     * @return
+//     */
+//    public ListData<Member> getFollowings(String userId, RequestPaging paging) {
+//
+//        Member member = memberRepository.findByUserId(userId).orElse(null);
+//        if (member != null) {
+//            return followRepository.getFollowings(member, paging, request);
+//        }
+//
+//        return null;
+//    }
 
     /**
      * 로그인 회원을 follow 한 회원 목록
@@ -165,7 +198,10 @@ public class FollowService {
         return followRepository.getFollowings(memberUtil.getMember());
     }
 
-
+    /**
+     * 로그인회원 follower Total
+     * @return
+     */
     public long getTotalFollowers() {
 
         if (memberUtil.isLogin()) {
@@ -175,6 +211,10 @@ public class FollowService {
         return 0L;
     }
 
+    /**
+     * 로그인 회원 following Total
+     * @return
+     */
     public long getTotalFollowings() {
 
         if (memberUtil.isLogin()) {
@@ -198,6 +238,21 @@ public class FollowService {
 
         return data;
     }
+
+//    /**
+//     * user Following한 회원목록
+//     *
+//     * @return
+//     */
+//    public ListData<Member> getFollowings(String userId, RequestPaging paging) {
+//
+//        Member member = memberRepository.findByUserId(userId).orElse(null);
+//        if (member != null) {
+//            return followRepository.getFollowings(member, paging, request);
+//        }
+//
+//        return null;
+//    }
 
     /**
      * 팔로잉 상태인지 체크
