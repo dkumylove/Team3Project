@@ -14,9 +14,9 @@ window.addEventListener("DOMContentLoaded", function(){
 
     const domParser = new DOMParser();
     ajaxLoad('GET', `/api/board/view_post?${qs}`, null, 'json')
-        .then(res =>
+        .then(res => {
             if (!res.success || !res.data) return;
-            const item = res.data;
+            const items = res.data;
 
             for (const item of items) {
                 let html = tpl;
