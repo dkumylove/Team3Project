@@ -463,6 +463,7 @@ public class MypageController implements ExceptionProcessor {
             pageTitle = Utils.getMessage("myBoard", "commons");
             addScript.add("board/common");
             addScript.add("mypage/save_post");
+            addScript.add("board/view_posts");
 
         } else if (mode.equals("follow")) { // 팔로우
             pageTitle = Utils.getMessage("follow", "commons");

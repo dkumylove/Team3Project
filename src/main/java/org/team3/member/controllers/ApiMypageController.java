@@ -1,24 +1,18 @@
 package org.team3.member.controllers;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.MemberUtils;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.team3.board.service.BoardInfoService;
 import org.team3.commons.rests.JSONData;
 import org.team3.member.MemberUtil;
 import org.team3.member.service.ChangeNicknameService;
 import org.team3.member.service.ChangePasswordService;
 import org.team3.member.service.MemberInfo;
-
-import java.util.Map;
 
 @RestController("apimypagecontroller")
 @RequestMapping("/api/mypage")
@@ -26,8 +20,18 @@ import java.util.Map;
 public class ApiMypageController {
     private final ChangePasswordService changePasswordService;
     private final ChangeNicknameService changeNicknameService;
+    private final BoardInfoService boardInfoService;
 
     private final MemberUtil memberUtil;
+
+
+//    @RequestMapping("/recentlyview")
+//    public JSONData<List<BoardView>> recentlyview(@RequestParam("seq") List<Long> seqs) {
+//
+//        BoardView boardView = new BoardView();
+//        boardView.setSeq(seqs);
+//
+//    }
 
 
     /**
@@ -79,7 +83,6 @@ public class ApiMypageController {
         MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
         return memberInfo;
     }
-
 
     /**
      * 현재 비밀번호 일치여부
