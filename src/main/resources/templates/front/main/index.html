@@ -59,7 +59,7 @@
 
         <ul class="board_latest">
             <!-- 반복문 -->
-            <li th:each="b : ${boardMenus}">
+            <li th:each="b : ${boardMenus}" class="board_latest_li">
                 <h2>
                     <!-- 제목을 클릭하면 해당 리스트로 이동-->
                     <a th:href="@{/board/list/{bid}(bid=${b.bid})}" th:text="${b.bName}"></a>
