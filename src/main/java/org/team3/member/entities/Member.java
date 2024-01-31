@@ -54,8 +54,12 @@ public class Member extends Base {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @ToString.Exclude
+    @ManyToMany
+    @JoinTable(
+            name = "member_options",
+            joinColumns = @JoinColumn(name = "member_seq"),
+            inverseJoinColumns = @JoinColumn(name = "option_name")
+    )
     private List<Options> option = new ArrayList<>();
 
     // 탈퇴를 위한 엔티티

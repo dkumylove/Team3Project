@@ -18,23 +18,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Options extends Base {
 
-//    @Id @GeneratedValue
-//    private String seq;
-
-//    @Column(length = 65, nullable = false)
-//    private String gid = UUID.randomUUID().toString();
-
     @Id
     private String optionname;
-
-//    @Lob
-//    private String details;
-
     private String category;
-
     private boolean active=true;
 
-//    @OneToOne
-//    private OptionRank optionRank;
 
 }
