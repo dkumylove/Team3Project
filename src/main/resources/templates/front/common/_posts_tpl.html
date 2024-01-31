@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <script th:fragment="tpl" type="text/html" id="posts_tpl">
-    <li>
-        <a href="[url]">[subject]</a>
+
+    <li class="item">
+        <div class="board_no">[bid]</div>
+        <a class="subject" href="[url]">[subject]</a>
+
+        <div class="post_info">
+            <span class="poster">[userId]</span>
+
+            <span class="view_count">조회수 : [visitcount]</span>
+
+            <span class="post_date">[createdAt]</span>
+        </div>
     </li>
 </script>
 </html>

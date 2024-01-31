@@ -20,8 +20,16 @@ window.addEventListener("DOMContentLoaded", function(){
 
             for (const item of items) {
                 let html = tpl;
+                const createdAtDate = new Date(item.createdAt);
+                const formattedDate = `${createdAtDate.getFullYear()}.${(createdAtDate.getMonth() + 1).toString().padStart(2, '0')}.${createdAtDate.getDate().toString().padStart(2, '0')} ${createdAtDate.getHours().toString().padStart(2, '0')}:${createdAtDate.getMinutes().toString().padStart(2, '0')}`;
+
+
                 html = html.replace(/\[url\]/g, `/board/view/${item.seq}`)
-                            .replace(/\[subject\]/g, item.subject);
+                            .replace(/\[subject\]/g, item.subject)
+                            .replace(/\[bid\]/g, item.board.bid)
+                            .replace(/\[userId\]/g,item.poster)
+                            .replace(/\[createdAt\]/g, formattedDate)
+                            .replace(/\[visitcount\]/g, item.viewCount);
 
                 const dom = domParser.parseFromString(html, "text/html");
                 const li = dom.querySelector("li");

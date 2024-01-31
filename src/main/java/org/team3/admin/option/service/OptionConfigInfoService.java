@@ -79,6 +79,7 @@ public class OptionConfigInfoService {
      * 보조지표 설정 목록
      *
      * @param search
+     * @param isAll : 미노출인 옵션 전부 출력
      * @return
      */
     public ListData<Options> getList(@Nullable OptionSearch search, boolean isAll) {
@@ -120,6 +121,9 @@ public class OptionConfigInfoService {
 
         if(categories != null && !categories.isEmpty()) {
             andBuilder.and(options.category.in(categories));
+        }
+        if(!isAll){
+            andBuilder.and(options.active.eq(true));
         }
 
         // 조건별 키워드 검색
