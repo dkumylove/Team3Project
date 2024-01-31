@@ -34,3 +34,31 @@
 .flex { display: flex; }
 .flex.sb { justify-content: space-between; }
 .flex.aic { align-items: center; }
+
+/* index.html - 주식 목록 */
+.LineArticle { width: 250px; border: 1px solid var(--back-color); margin-bottom: 10px; background: #fff; box-shadow: 2px 2px 4px #dee1e7; }
+.scrollBar { overflow-y: scroll; height: 430px; overflow-x: hidden; }
+.LineArticle__Head { position: relative; border-bottom: 1px solid #ddd; min-width: 250px;
+            background:var(--backcolor); border-radius: 20px 0 0 0;}
+.LineArticle__Title{ display: flex; align-items: center; padding: 11px 15px; font-size: 16px; font-weight: 700; }
+.LineArticle__List { padding: 25px 15px; }
+.LineArticle__Date { position: absolute; top: 12px; right: 15px; }
+ul { list-style: none; }
+li { list-style: none; }
+
+.LineArticle__Item { display: flex; margin-top: 25px; font-size: 14px; }
+.LineArticle__Item:first-child { margin-top: 0; }
+.LineArticle__ItemOrder { flex-basis: 20px; margin-right: 10px; color: #666; text-align: center; }
+.LineArticle__ItemTitle { flex: 1; overflow: hidden; margin-right: 10px; text-overflow: ellipsis; white-space: nowrap; }
+
+.scrollBar::-webkit-scrollbar { width: 10px;  /* 스크롤바의 너비 */}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: var(--on-color); /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track { background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/ }
+
+
