@@ -12,4 +12,6 @@ public class RequestRankOption {
 
     private String optionname;
 
+    private int rank;
+
 }
