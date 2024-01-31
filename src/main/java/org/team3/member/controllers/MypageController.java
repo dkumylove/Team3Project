@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.team3.admin.option.entities.Options;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
+import org.team3.board.entities.CommentData;
 import org.team3.board.service.BoardInfoService;
 import org.team3.board.service.SaveBoardDataService;
 import org.team3.board.service.comment.CommentInfoService;
@@ -233,6 +234,11 @@ public class MypageController implements ExceptionProcessor {
 //            System.out.println("items = " + data.getItems());
 
         } else if (tab.equals("comments")) { // 코멘트
+
+            List<CommentData> items = commentInfoService.getMyList();
+
+            model.addAttribute("items", items);
+            items.stream().forEach(System.out::println);
 //            search.setUserId(memberUtil.getMember().getUserId());
 //            ListData<CommentData> data = (ListData<CommentData>) commentInfoService.getMyList(boardDataSeq);
 //
