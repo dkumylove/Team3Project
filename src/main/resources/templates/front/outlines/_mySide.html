@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <aside th:fragment="menus">
     <th:block sec:authorize="isAnonymous()"> <!-- 미 로그인 상태 -->
-        <div class="circle"></div>
+        <div class="circle aside_photo resigned_circle"></div>
     </th:block>
     <th:block sec:authorize="isAuthenticated()"> <!-- 로그인 상태 -->
         <!--이미지 클릭하면 이미지 수정가능-->

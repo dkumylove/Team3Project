@@ -4,8 +4,15 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1 th:text="#{회원_탈퇴}"></h1>
-
     <form name="frmResign" method="post" th:action="@{/mypage/resign_done}" autocomplete="off" th:object="${requestResign}">
+
+        <div class="error" th:each="err : ${#fields.errors('authCode')}" th:text="${err}"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1" th:text="#{인증코드}"></span>
+            <input type="text" name="authCode" th:field="*{authCode}" class="form-control">
+            <button type="submit" th:text="#{탈퇴하기}" onclick="return confirm('정말 탈퇴하시겠습니까?');" class="btn btn-outline-secondary" id="button-addon1"></button>
+        </div>
+        <!--
         <dl>
             <dt th:text="#{인증코드}"></dt>
             <dd>
@@ -14,6 +21,8 @@
             </dd>
         </dl>
         <button type="submit" th:text="#{탈퇴하기}" onclick="return confirm('정말 탈퇴하시겠습니까?');"></button>
+-->
+
     </form>
 </section>
 </html>

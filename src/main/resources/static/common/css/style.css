@@ -15,6 +15,7 @@
 /* 여백 공통 */
 .mb30 { margin-bottom: 30px; }
 .circle { background-color: black; width: 150px; height: 150px; border-radius: 50%;  }
+.resigned_circle { background-color: var(--main-color); }
 .margin_top50 { margin-top: 50px; }
 .margin_top20 { margin-top: 20px; }
 

@@ -7,12 +7,42 @@
         <ul class="items">
             <li th:if="${items == null || items.isEmpty()}" class="no_data"
                 th:text="#{조회된_댓글이_없습니다.}"></li>
-
+<!--
             <li th:each="item : ${items}" th:object="${item}">
 
                 <a th:href="@{/board/view/{seq}#comment_{seq2}(seq=*{boardData.seq}, seq2=*{seq})}" th:text="*{@utils.nl2br(content)}"></a>
 
                 <span class="post_date" th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></span>
+            </li>
+-->
+
+            <li th:each="item : ${items}" th:object="${item}" class="item">
+
+                <!--<div class="board_no" th:text="${item.board.bName}"></div>-->
+
+                <a th:href="@{/board/view/{seq}#comment_{seq2}(seq=*{boardData.seq}, seq2=*{seq})}" class="subject" th:text="*{@utils.nl2br(content)}" > <!--th:classappend="*{depth > 0 ? 'depth_' + depth : ''}"-->
+                    <!--<span class="notice" th:if="*{notice}">
+                        [<th:block th:text="#{공지}"></th:block>]
+                    </span>
+                    <th:block th:if="*{parentSeq != null}">
+                        <i class="xi-subdirectory-arrow"></i> RE :
+                    </th:block>
+                    <span class="category" th:if="*{category}" th:text="*{'[' + category + ']'}"></span>
+                    <th:block th:text="*{subject}"></th:block>-->
+                </a>
+
+                <!--// post_info -->
+                <div class="post_info">
+<!--
+                    <span class="poster">
+                        <th:block th:text="*{poster}"></th:block>
+                        <th:block th:if="*{member != null}"
+                                  th:text="*{'(' + member.userId + ')'}"></th:block>
+                    </span>
+-->
+
+                    <span class="post_date" th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm')}"></span>
+                </div>
             </li>
         </ul>
     </div>
