@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<ul th:fragment="optionList2" class="LineArticle__List">
+
+    <li class="LineArticle__Item" th:each="option, status : ${optionList}" th:object="${option}">
+        <div th:if="${optionList == null or optionList.size() == 0}" th:text="#{조회된_보조지표가_없습니다.}"></div>
+        <div class="LineArticle__ItemOrder LineArticle__ItemOrder--High">
+            <span th:text="${status.index + 1}"></span>
+        </div>
+        <div class="LineArticle__ItemTitle"><a href="#"><span th:text="${option.optionname}"></span></a></div>
+    </li>
+</ul>
+
+</html>
