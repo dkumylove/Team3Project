@@ -150,3 +150,9 @@
 .save_post_page .board_seq { display: flex}
 .save_post_page .board_seq1 { font-size: 1.3rem; font-weight: 500; }
 .save_post_page .board_seq2 { font-size: 1.3rem; color: #555; margin-left: 10px}*/
+
+/* 탈퇴 페이지 */
+.resign_page_links a { display: inline-block; width: 90px; height: 28px; border: 1px solid var(--main-color);
+    color: var(--main-color); border-radius: 5px;  line-height: 26px; text-align: center;
+    font-weight: 500; margin-bottom: 25px; }
+.resign_page_links a:last-of-type { background: var(--main-color); color: var(--back-color);}
