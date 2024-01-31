@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.team3.admin.option.Repository.OptionRepository;
+import org.team3.admin.option.entities.Options;
 import org.team3.member.entities.Member;
 import org.team3.member.repositories.MemberRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @SpringBootTest
@@ -16,6 +21,9 @@ public class MemberListTest {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private OptionRepository optionRepository;
+
 
     /**
      * 회원목록 페이지 목록 페이징을 확인하기 위해 임의의 멤버 추가하는 테스트
@@ -27,8 +35,15 @@ public class MemberListTest {
     @WithMockUser
     void 회원추가(){
         for(int i=100; i<200; i++){
+            List<Options> all = optionRepository.findAll();
+            List<Options> select = new ArrayList<>();
+
+            Random random = new Random();
+            select.add(all.get(random.nextInt(1, 33)));
+
             Member member = Member.builder().name("사용자"+i).gid(UUID.randomUUID().toString())
-                    .email(i+"@gmail.com").nickName(i+"닉네임").userId(i+"아이디").password("123456").nickName("nick"+i).build();
+                    .email(i+"@gmail.com").nickName(i+"닉네임").userId(i+"아이디").password("123456").nickName("nick"+i)
+                    .option(select).build();
             memberRepository.saveAndFlush(member);
         }
     }

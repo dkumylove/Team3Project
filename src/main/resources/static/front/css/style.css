@@ -32,10 +32,10 @@ header > section { width: 210px; text-align: center; font-size: 14px; flex-wrap:
 header > section:last-of-type { flex-grow: 1; padding-right: 20px; text-align: right; flex-wrap:nowrap; }
 header .btn_area a {display: inline-block; width: 90px; height: 28px;
 border: 1px solid var(--main-color); color: var(--main-color); border-radius: 5px;
-line-height: 26px; text-align: center; font-weight: 500; margin-bottom:25px; flex-wrap:nowrap;}
+line-height: 26px; text-align: center; font-weight: 500; /*margin-bottom:25px;*/ margin-left: 5px; flex-wrap:nowrap;}
 header .btn_area a:last-of-type { background: var(--main-color); ; color: var(--back-color); flex-wrap:nowrap;}
 .circle2 { background-color: black; width: 40px; height: 40px; border-radius: 50%;
-            display: inline-block; justify-content:flex-end; flex-wrap:nowrap;}
+            display: inline-block; justify-content:flex-end; flex-wrap:nowrap; margin: 5px;}
 /* 헤더 영역 e */
 
 /* 푸터 영역 s */
