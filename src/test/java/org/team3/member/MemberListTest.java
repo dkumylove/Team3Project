@@ -33,16 +33,18 @@ public class MemberListTest {
      */
     @Test //@Disabled
     @WithMockUser
-    void 회원추가(){
-        for(int i=100; i<200; i++){
-            List<Options> all = optionRepository.findAll();
-            List<Options> select = new ArrayList<>();
+    void 회원추가() {
+        List<Options> all = optionRepository.findAll();
 
-            Random random = new Random();
-            select.add(all.get(random.nextInt(1, 33)));
+        for (int i = 50; i < 100; i++) {
+            List<Options> select = new ArrayList<>();  // 반복문 밖에서 초기화
 
-            Member member = Member.builder().name("사용자"+i).gid(UUID.randomUUID().toString())
-                    .email(i+"@gmail.com").nickName(i+"닉네임").userId(i+"아이디").password("123456").nickName("nick"+i)
+            Random random = new Random();  // 반복문 안에서 생성하지 않도록 변경
+            Options options = all.get(random.nextInt(1, 30));
+            select.add(options);
+
+            Member member = Member.builder().name("사용자" + i).gid(UUID.randomUUID().toString())
+                    .email(i + "@gmail.com").nickName(i + "닉네임").userId(i + "아이디").password("123456").nickName("nick" + i)
                     .option(select).build();
             memberRepository.saveAndFlush(member);
         }
