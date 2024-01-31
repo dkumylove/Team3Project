@@ -63,8 +63,11 @@ public class CommentInfoService {
      */
     public List<CommentData> getList(Long boardDataSeq,  String userId) {
         QCommentData commentData = QCommentData.commentData;
+
         BooleanBuilder andBuilder = new BooleanBuilder();
-        andBuilder.and(commentData.boardData.seq.eq(boardDataSeq));
+        if (boardDataSeq != null) {
+            andBuilder.and(commentData.boardData.seq.eq(boardDataSeq));
+        }
 
         // 사용자별 댓글 목록 조회
         if (StringUtils.hasText(userId)) {
@@ -82,9 +85,9 @@ public class CommentInfoService {
         return getList(boardDataSeq, null);
     }
 
-    public List<CommentData> getMyList(Long boardDataSeq) {
+    public List<CommentData> getMyList() {
         if (memberUtil.isLogin()) {
-            return getList(boardDataSeq, memberUtil.getMember().getUserId());
+            return getList(null, memberUtil.getMember().getUserId());
         }
         return null;
     }
