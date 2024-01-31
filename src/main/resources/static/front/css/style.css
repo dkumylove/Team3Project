@@ -59,7 +59,8 @@ main { width: 100%; margin-left: 0; min-height: 1000px; padding-top: 80px; } /* 
 .outer_box { width: 100%; min-width: 1200px;  padding: 100px 150px 0 150px; } /* border:1px solid; */
 .up_box { display: flex; justify-content: space-around; padding-top: 150px; }
 
-#index_first_row { height: 500px; padding: 20px; display: flex; justify-content: space-between;}
+#index_first_row { height: 500px; padding: 20px; display: flex; justify-content: space-between; box-shadow: rgba(48, 52, 65, 0.08) 0px 5px 23px -2px; border-radius: 8px;}
+.board_latest_li { box-shadow: rgba(48, 52, 65, 0.08) 0px 5px 23px -2px; border-radius: 8px;}
 
 .inner_box { border:1px solid; } /* 구간보기 위해 div에 테두리 넣어둠. 나중에 삭제 */
 
