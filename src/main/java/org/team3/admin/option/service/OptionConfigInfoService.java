@@ -147,7 +147,7 @@ public class OptionConfigInfoService {
         Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(desc("createdAt")));
         Page<Options> data = optionRepository.findAll(andBuilder, pageable);
 
-        Pagination pagination = new Pagination(page, (int)data.getTotalElements(), limit, 10, request);
+        Pagination pagination = new Pagination(page, (int)data.getTotalElements(), limit, 20, request);
 
         return new ListData<>(data.getContent(), pagination);
     }

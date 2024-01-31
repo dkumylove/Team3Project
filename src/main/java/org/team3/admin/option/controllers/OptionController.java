@@ -101,7 +101,7 @@ public class OptionController implements ExceptionProcessor {
     @PostMapping("/ranksave")
     public String add(@ModelAttribute RequestRankOption rankOption, Model model) {
         commonProcess("rank", model);
-        optionRankSaveService.save(rankOption.getOptionDetail(), rankOption.getOptionname(), rankOption.isActive());
+        optionRankSaveService.save(rankOption);
         return "redirect:/admin/option";
     }
 

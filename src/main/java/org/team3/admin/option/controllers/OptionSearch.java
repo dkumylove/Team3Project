@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+
 public class OptionSearch extends RequestPaging {
 
     private String optionname;

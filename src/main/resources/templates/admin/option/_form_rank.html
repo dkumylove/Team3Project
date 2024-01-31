@@ -7,6 +7,15 @@
     <h2>보조지표 게시판 등록</h2>
     <table class="table_cols">
         <tr>
+            <th>보조지표</th>
+            <td>
+                <select th:field="*{optionname}">
+                    <option th:each="option : ${optionList}" th:value="${option.optionname}" th:text="${option.optionname}"></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
             <th width="180">등록여부</th>
             <td>
                 <input type="radio" name="active" value="true" id="active_true"
@@ -17,13 +26,13 @@
                        th:field="*{active}">
                 <label for="active_false">미사용</label>
             </td>
+        </tr>
 
+        <tr>
+            <th width="180">랭킹 순서</th>
             <td>
-                <select th:field="*{optionname}">
-                    <option th:each="option : ${optionList}" th:value="${option.optionname}" th:text="${option.optionname}"></option>
-                </select>
+                <input type="number" name="rank" th:field="*{rank}" id="rank">
             </td>
-
         </tr>
 
         <tr>

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name="idx_rank_basic",
+        columnList = "rank ASC"))
 public class OptionRank {
 
     private boolean active; // 사용여부
@@ -18,4 +20,6 @@ public class OptionRank {
     
     @Id @Column(unique = true)
     private String optionname; // 옵션이름
+
+    private int rank;
 }
