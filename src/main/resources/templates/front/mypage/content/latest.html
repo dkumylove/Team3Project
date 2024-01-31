@@ -2,5 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="content">
     최근 게시글
+
+    <ul class="view_posts">
+
+    </ul>
+    <th:block th:replace="~{front/common/_posts_tpl::tpl}"></th:block>
 </th:block>
 </html>
