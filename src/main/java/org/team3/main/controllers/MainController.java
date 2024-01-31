@@ -11,11 +11,13 @@ import org.team3.admin.option.entities.Options;
 import org.team3.admin.option.service.OptionConfigInfoService;
 import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
+import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
 import org.team3.upbit.entities.UpBitTicker;
 import org.team3.upbit.service.UpBitService;
 import org.team3.upbit.service.UpBitTickerSearch;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,14 +35,15 @@ public class MainController implements ExceptionProcessor {
     }
 
     @GetMapping("/")
-    public String index( Model model) {
-//        @ModelAttribute OptionSearch search,
-//        ListData<Options> data = optionConfigInfoService.getList(search,false);
-//        List<String> names = data.getItems().stream().map(s -> s.getOptionname()).toList();
-//
-//        model.addAttribute("items", names);
+    public String index(@ModelAttribute OptionSearch optionSearch, Model model) {
+
+        ListData<Options> data = optionConfigInfoService.getList(optionSearch, true);
+        List<Options> option = data.getItems();
+
+        model.addAttribute("optionList", option);
 
         model.addAttribute("addCommonScript", new String[] {"upbit"});
+
 
 
         return utils.tpl("main/index");
