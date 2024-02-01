@@ -146,6 +146,12 @@ public class MemberInfoService implements UserDetailsService {
         List<Options> byUserIdWithOption = memberRepository.findByUserIdWithOption(userId);
         return byUserIdWithOption;
     }
+
+    public int allMember(){
+        List<Member> all = memberRepository.findAll();
+        return all.size();
+
+    }
 }
 
 

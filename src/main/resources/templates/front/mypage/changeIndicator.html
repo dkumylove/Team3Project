@@ -4,11 +4,16 @@
       layout:decorate="~{front/layouts/myMain}">
 <section layout:fragment="content">
     <h1>지표변경</h1>
-    <th th:text="#{보조지표}" class="profile_col"></th>
-    <td>
-        <div th:each="option : ${options}" class="profile_option">
-            <span th:text="${option.optionname}"></span>
+
+    <form th:action="@{/mypage/changeIndicator}" method="post">
+        <div th:each="option : ${allOptions}" class="profile_option">
+            <input type="checkbox" th:id="${'option_' + option.optionname}" th:value="${option.optionname}"
+                   th:checked="${#lists.contains(memberOptions, option)}"/>
+            <label th:for="${'option_' + option.optionname}" th:text="${option.optionname}"></label>
         </div>
-    </td>
+        <!-- 변경 사항 저장을 위한 제출 버튼 추가 -->
+        <button class="btn btn-outline-secondary" type="submit">저장</button>
+    </form>
+
 </section>
 </html>

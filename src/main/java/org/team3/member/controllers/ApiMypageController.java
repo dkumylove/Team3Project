@@ -10,18 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.team3.board.service.BoardInfoService;
 import org.team3.commons.rests.JSONData;
 import org.team3.member.MemberUtil;
-import org.team3.member.service.ChangeNicknameService;
-import org.team3.member.service.ChangePasswordService;
+import org.team3.member.service.ChangeMyService;
 import org.team3.member.service.MemberInfo;
 
 @RestController("apimypagecontroller")
 @RequestMapping("/api/mypage")
 @RequiredArgsConstructor
 public class ApiMypageController {
-    private final ChangePasswordService changePasswordService;
-    private final ChangeNicknameService changeNicknameService;
-    private final BoardInfoService boardInfoService;
 
+    private final ChangeMyService changeMyService;
     private final MemberUtil memberUtil;
 
 
@@ -46,7 +43,7 @@ public class ApiMypageController {
         MemberInfo memberInfo = getMemberInfo();
         // System.out.println(authentication);
 
-        boolean result = changePasswordService.checkPassword(memberInfo.getUserId(), cntpwd);
+        boolean result = changeMyService.checkPassword(memberInfo.getUserId(), cntpwd);
         System.out.println("******result" + result);
 
         if(result){
@@ -68,7 +65,7 @@ public class ApiMypageController {
 
         MemberInfo memberInfo = getMemberInfo();
 
-        boolean result = changePasswordService.changePassword(memberInfo.getUserId(), newPassword);
+        boolean result = changeMyService.changePassword(memberInfo.getUserId(), newPassword);
 
         if(result){
             data.setSuccess(result);
@@ -96,8 +93,7 @@ public class ApiMypageController {
         MemberInfo memberInfo = getMemberInfo();
         // System.out.println(authentication);
 
-
-        boolean result = changeNicknameService.changeNickname(memberInfo.getUserId(), newNickname);
+        boolean result = changeMyService.changeNickname(memberInfo.getUserId(), newNickname);
         memberUtil.update();
 
         if(result){

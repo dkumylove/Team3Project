@@ -204,3 +204,4 @@ commonLib.updateMemberInfo = function updateMemberInfo() {
     // 서버에 회원정보 업데이트 요청
     ajaxLoad("GET", "/api/mypage/update");
 }
+

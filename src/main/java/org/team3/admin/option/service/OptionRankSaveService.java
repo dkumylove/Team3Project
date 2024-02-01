@@ -22,6 +22,7 @@ public class OptionRankSaveService {
         optionRank.setActive(rankOption.isActive());
         optionRank.setOptionname(rankOption.getOptionname());
         optionRank.setRank(rankOption.getRank());
+        optionRank.setFavorite(rankOption.getFavorite());
         optionRankRepository.saveAndFlush(optionRank);
 
     }

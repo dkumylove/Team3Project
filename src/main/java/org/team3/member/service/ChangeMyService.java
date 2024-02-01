@@ -3,12 +3,16 @@ package org.team3.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.team3.member.controllers.ChangeEmailValidator;
+import org.team3.member.controllers.RequestChangeEmail;
 import org.team3.member.entities.Member;
 import org.team3.member.repositories.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
-public class ChangePasswordService {
+public class ChangeMyService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,5 +44,31 @@ public class ChangePasswordService {
         memberRepository.saveAndFlush(member);
         return true;
     }
-}
 
+    @Transactional
+    public boolean changeNickname(String userId, String newNickname) {
+
+        Member member1 = memberRepository.findByUserId(userId).orElse(null);
+        member1.setNickName(newNickname);
+        memberRepository.saveAndFlush(member1);
+        return true;
+    }
+
+
+    private final ChangeEmailValidator validator;
+
+    @Transactional
+    public void changeEmail(String email, String newemail) {
+        Member member1 = memberRepository.findByEmail(email).orElse(null);
+        member1.setEmail(newemail);
+        memberRepository.saveAndFlush(member1);
+    }
+
+    public void process(RequestChangeEmail form, Errors errors) {
+        validator.validate(form, errors);
+        if (errors.hasErrors()) {
+            return;
+        }
+    }
+
+}
