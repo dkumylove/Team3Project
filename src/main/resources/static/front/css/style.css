@@ -154,6 +154,9 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 .layout_width1 { width: 100%; margin: 0 0 150px 0; }
 .layout_width { max-width: 1300px; min-width: 1000px; margin: 0 auto; }
 
+/* 아이디 찾기 완료 페이지 */
+find_id_done_page { position:absolute; top: 180px; bottom: 150px; left:30% ; right: 30%; height: 700px; min-width:480px; }
+
 /* 마이페이지 내 프로필 */
 .profile_col { min-width:150px; height: 50px; text-align: left;  }
 .profile_edit_btn { width:150px; line-height: 15px; background: var(--main-color); border-radius: 5px; color:var(--font-color); padding: 0 10px; }

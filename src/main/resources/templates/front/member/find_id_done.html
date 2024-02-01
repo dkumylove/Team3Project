@@ -3,8 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-    아이디 : <div th:if="${member != null}" th:text="${member.userId}"></div>
-    <a th:href="@{/member/login}" th:text="#{로그인}"></a>
-    <a th:href="@{/member/findpw}" th:text="#{비밀번호_찾기}"></a>
+
+    <div class="layout_width find_id_done_page">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">아이디 : </span>
+        <input th:value="${member.userId}" readonly class="form-control">
+    </div>
+
+
+    <div th:if="${member != null}" ></div>
+
+    <div class="links resign_page_links">
+        <a th:href="@{/member/login}" th:text="#{로그인}"></a>
+        <a th:href="@{/member/findpw}" th:text="#{비밀번호_찾기}"></a>
+    </div>
+    </div>
 </main>
 </html>
