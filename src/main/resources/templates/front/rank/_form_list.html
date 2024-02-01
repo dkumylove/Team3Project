@@ -16,7 +16,7 @@
 
                 <td th:text="${index.count}"></td>
                 <td>
-                <a href="#">
+                <a th:href="@{/rank/{optionname}(optionname=${option.optionname})}">
 <!--                <a th:href="@{'/your-link-path/' + ${option.optionId}}">-->
                     <span th:text="${option.optionname}"></span>
                 </a>
