@@ -6,9 +6,7 @@
 
         <h1 th:replace="~{front/rank/_rank_title::title}"></h1>
 
-        <div class="subject">
-            <th:block th:text="*{rank}"></th:block>
-        </div>
+
         <div th:if="*{optionDetail}" class="content" th:utext="*{optionDetail}">
 
 <!--        <div class="post_info">-->

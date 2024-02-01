@@ -36,7 +36,7 @@ public class MemberListTest {
     void 회원추가() {
         List<Options> all = optionRepository.findAll();
 
-        for (int i = 50; i < 100; i++) {
+        for (int i = 100; i < 150; i++) {
             List<Options> select = new ArrayList<>();  // 반복문 밖에서 초기화
 
             Random random = new Random();  // 반복문 안에서 생성하지 않도록 변경
