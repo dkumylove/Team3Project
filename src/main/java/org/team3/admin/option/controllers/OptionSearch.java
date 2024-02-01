@@ -20,4 +20,6 @@ public class OptionSearch extends RequestPaging {
     private String active; // 사용여부
     private String sopt; // 검색옵션
     private String skey; // 검색 키워드
+
+    private int optsmem;
 }

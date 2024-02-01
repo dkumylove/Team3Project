@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.team3.admin.option.Repository.OptionRepository;
 import org.team3.admin.option.entities.Options;
+import org.team3.admin.option.service.OptionConfigInfoService;
 import org.team3.board.controllers.BoardDataSearch;
 import org.team3.board.entities.BoardData;
 import org.team3.board.entities.CommentData;
@@ -27,10 +29,7 @@ import org.team3.member.MemberUtil;
 import org.team3.member.controllers.resign.RequestResign;
 import org.team3.member.controllers.resign.ResignValidator;
 import org.team3.member.entities.Member;
-import org.team3.member.service.ChangeEmailService;
-import org.team3.member.service.MemberDeleteService;
-import org.team3.member.service.MemberInfoService;
-import org.team3.member.service.MemberService;
+import org.team3.member.service.*;
 import org.team3.member.service.follow.FollowBoardService;
 import org.team3.member.service.follow.FollowService;
 import org.team3.member.service.resign.ResignService;
@@ -49,8 +48,9 @@ public class MypageController implements ExceptionProcessor {
     private final MemberService memberService;
     private final MemberInfoService memberInfoService;
 
-    private final ChangeEmailService changeEmail;
+
     private final ChangeEmailValidator changeEmailValidator;
+    private final ChangeMyService changeMyService;
     private final MemberDeleteService memberDeleteService;
 
     private final CommentInfoService commentInfoService;
@@ -65,6 +65,7 @@ public class MypageController implements ExceptionProcessor {
 
 
     private final HttpServletRequest request;
+    private final OptionConfigInfoService optionConfigInfoService;
 
 
     // 마이페이지
@@ -173,7 +174,7 @@ public class MypageController implements ExceptionProcessor {
         }
 
         HttpSession session = request.getSession();
-        changeEmail.changeEmail(memberUtil.getMember().getEmail(), requestChangeEmail.getNewEmail());
+        changeMyService.changeEmail(memberUtil.getMember().getEmail(), requestChangeEmail.getNewEmail());
         memberUtil.update();
 
         session.removeAttribute("EmailAuthVerified");
@@ -190,12 +191,32 @@ public class MypageController implements ExceptionProcessor {
         commonProcess("changeIndicator", model);
 
         Member member = memberUtil.getMember();
-        List<Options> options = memberInfoService.getOptions(member.getUserId());
-        model.addAttribute("options", options);
+        List<Options> allOptions = optionConfigInfoService.getOptionList();
+        List<Options> memberOptions = memberInfoService.getOptions(member.getUserId());
+
+        model.addAttribute("allOptions", allOptions);
+        model.addAttribute("memberOptions", memberOptions);
 
         /* 보조지표수정페이지로 전환 */
         return utils.tpl("mypage/changeIndicator");
     }
+
+    @PostMapping("changeIndicator")
+    public String changeIndicatorPs(Model model) {
+        commonProcess("changeIndicator", model);
+
+        Member member = memberUtil.getMember();
+        List<Options> allOptions = optionConfigInfoService.getOptionList();
+        List<Options> memberOptions = memberInfoService.getOptions(member.getUserId());
+
+        model.addAttribute("allOptions", allOptions);
+        model.addAttribute("memberOptions", memberOptions);
+
+        /* 보조지표수정페이지로 전환 */
+        return utils.tpl("mypage/changeIndicator");
+    }
+
+
 
     /**
      * 내 활동

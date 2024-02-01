@@ -40,8 +40,12 @@ public class MemberListTest {
             List<Options> select = new ArrayList<>();  // 반복문 밖에서 초기화
 
             Random random = new Random();  // 반복문 안에서 생성하지 않도록 변경
-            Options options = all.get(random.nextInt(1, 30));
-            select.add(options);
+            Options options1 = all.get(random.nextInt(1, 33));
+            Options options2 = all.get(random.nextInt(1, 33));
+            Options options3 = all.get(random.nextInt(1, 33));
+            select.add(options1);
+            select.add(options2);
+            select.add(options3);
 
             Member member = Member.builder().name("사용자" + i).gid(UUID.randomUUID().toString())
                     .email(i + "@gmail.com").nickName(i + "닉네임").userId(i + "아이디").password("123456").nickName("nick" + i)

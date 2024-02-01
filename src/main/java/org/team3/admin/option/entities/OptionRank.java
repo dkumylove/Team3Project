@@ -22,4 +22,6 @@ public class OptionRank {
     private String optionname; // 옵션이름
 
     private int rank;
+
+    private int favorite; // 회원 수
 }

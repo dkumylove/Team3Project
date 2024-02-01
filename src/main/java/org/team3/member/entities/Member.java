@@ -55,6 +55,7 @@ public class Member extends Base {
     private Authority authority;
 
     @ManyToMany
+    @ToString.Exclude
     @JoinTable(
             name = "member_options",
             joinColumns = @JoinColumn(name = "member_seq"),

@@ -211,3 +211,118 @@ aside .user_info { padding: 0 25px; margin-bottom: 25px; color: var(--font-color
 .board_list .depth_7 { text-indent: 120px; }
 .board_list .depth_8 { text-indent: 140px; }
 
+
+
+/* 랭킹 테이블 S */
+.tr_css-1lc7l37 {
+
+    margin:  0px 20px;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+
+    background-color: rgb(249, 250, 252);
+    border-spacing: 0;
+}
+
+.tr_css-1lc7l37 th {
+    flex-grow: 1;
+     /* Adjust the value to control the amount of space */
+    box-sizing: border-box; /* Include padding in the total width of the element */
+    width: 33.33%;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table_css-593jom {
+    display: flex;
+    width: 70%;
+    height: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto;
+
+}
+
+
+.thead_css-1cdc2af {
+    background-color: rgb(249, 250, 252);
+    height: 30px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: row;
+    border-top: 1px solid rgb(223, 223, 223);
+    border-bottom: 1px solid rgb(223, 223, 223);
+}
+
+.tbody_rank .tbody_tr_css-1rr8gmf td:nth-child(3) {
+    color: blue;
+     font-weight: bold;
+}
+
+.tbody_tr_css-1rr8gmf {
+    padding: 0px 20px;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: row;
+    height: 84px;
+    width: 100%;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    background-color: rgb(255, 255, 255);
+    border-spacing: 0;
+}
+
+.tbody_tr_css-1rr8gmf td {
+       flex-grow: 1;
+      /* Adjust the value to control the amount of space */
+       box-sizing: border-box;
+       font-size: 20px;
+       line-height: 84px;
+       width: 33.33%;
+}
+
+.tbody_rank {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+}
+
+
+.css-71asmz {
+    padding-top: 90px;
+    padding-bottom: 70px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.css-ocxa3b {
+    color: rgb(51, 51, 51);
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 54px;
+}
+
+.css-180v0sl {
+    color: rgb(102, 102, 102);
+    font-size: 16px;
+    line-height: 24px;
+}
+/* 랭킹 테이블 E */
+
