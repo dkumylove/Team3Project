@@ -18,4 +18,8 @@ public class RequestOptionConfig {
 
     private boolean active=true;
 
+    private boolean optsboard = true;
+
+    private String details;
+
 }
