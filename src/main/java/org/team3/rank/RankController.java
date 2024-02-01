@@ -3,6 +3,7 @@ package org.team3.rank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.team3.commons.ListData;
 import org.team3.commons.Utils;
 import org.team3.member.service.MemberInfoService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,7 @@ public class RankController {
     @GetMapping
     public String index(Model model){
 
+        commonProcess(model);
         List<OptionRank> optionList = optionRankInfoService.getOptionAll();
         int member = memberInfoService.allMember();
         model.addAttribute("member", member);
@@ -49,4 +52,16 @@ public class RankController {
 
         return utils.tpl("rank/listpage");
     }
+
+
+
+    private void commonProcess(Model model){
+
+        List<String> addScript = new ArrayList<>(); // 프론트 자바스크립트
+        List<String> addCss = new ArrayList<>(); // cdd추가
+
+        addScript.add("rank/rank");
+        model.addAttribute("addScript", addScript);
+    }
+
 }
