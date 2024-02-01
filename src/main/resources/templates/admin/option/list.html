@@ -6,6 +6,7 @@
     <h1>보조지표 목록</h1>
 
     <h2>보조지표 조회</h2>
+
     <form name="frmSearch" method="get" th:action="@{/admin/option}" autocomplete="off"
           th:object="${optionSearch}">
         <table class="table_cols mb30">
@@ -56,7 +57,7 @@
           autocomplete="off">
         <input type="hidden" name="_method" value="PATCH">
 
-        <table class="table_rows">
+        <table class="table_rows" id="optionTable">
             <thead>
             <tr>
                 <th width="40">
@@ -67,7 +68,7 @@
                 <th width="150">카테고리</th>
                 <th width="250">보조지표이름</th>
                 <th width="250">사용여부</th>
-                <th width="150">진열가중치</th>
+                <th width="150">회원수</th>
                 <th></th>
             </tr>
             </thead>
@@ -94,9 +95,16 @@
                            value="false" th:checked="*{!active}" th:id="${'active_false_' + status.index}">
                     <label th:for="${'active_false_' + status.index}">미사용</label>
                 </td>
+
                 <td>
-                    <!-- 진열 가중치 표시 또는 수정 -->
+                    <!-- 해당 옵션을 선택한 회원 수 -->
+                    <span th:text="${#lists.size(option.members)}"></span>
+                    /
+                    <!-- 전체 회원 수 -->
+                    <span th:text="${totalMember}"></span>
                 </td>
+
+
                 <td>
                     <!-- 미리보기 및 수정 링크 추가 -->
                     <a th:href="@{/board/list/{optionname}(optionname=${option.optionname})}" class="sbtn" target="_blank">

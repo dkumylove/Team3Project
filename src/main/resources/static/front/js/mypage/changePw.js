@@ -4,7 +4,6 @@ window.addEventListener("DOMContentLoaded", function() {
     const changePw = document.getElementById("changePw"); // 비밀번호 변경 버튼
 
 
-
     if (verifiedCntPw) {
         verifiedCntPw.addEventListener("click", function() {
 

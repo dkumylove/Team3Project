@@ -12,6 +12,8 @@ public class RequestRankOption {
 
     private String optionname;
 
-    private int rank;
+    private int rank; //
+
+    private int favorite; // 선택한 회원
 
 }

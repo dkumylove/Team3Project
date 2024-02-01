@@ -12,4 +12,6 @@ import java.util.List;
 public interface OptionRepository extends JpaRepository<Options, String>, QuerydslPredicateExecutor<Options> {
 
     List<Options> findByActiveTrue();
+
+    List<Options> findByOptionnameStartingWith(String optionnamePrefix);
 }

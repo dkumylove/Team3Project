@@ -29,6 +29,7 @@ import org.team3.member.entities.QMember;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.domain.Sort.Order.desc;
 
@@ -50,6 +51,34 @@ public class OptionConfigInfoService {
         return options;
     }
 
+    /**
+     * 해당 옵션을 사용하는 멤버의 숫자를 가져오기
+     * @param optionname 옵션 이름
+     * @return 해당 옵션을 사용하는 멤버의 숫자
+     */
+    public int getOptionMemberCount(String optionname) {
+        Options option = optionRepository.findById(optionname).orElse(null);
+
+        if (option != null) {
+            List<Member> membersUsingOption = option.getMembers();
+            return membersUsingOption.size();
+        } else {
+            return 0;
+        }
+    }
+
+    public int getOptionpreMemberCount(String optionnamePrefix) {
+        List<Options> options = optionRepository.findByOptionnameStartingWith(optionnamePrefix);
+
+        if (!options.isEmpty()) {
+            // Assuming you want to count members from the first matching option
+            Options option = options.get(0);
+            List<Member> membersUsingOption = option.getMembers();
+            return membersUsingOption.size();
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * 옵션 이름만 가져오는 list
@@ -70,9 +99,15 @@ public class OptionConfigInfoService {
      * 사용중인 리스트 불러오기
      * @return
      */
-    public List<Options> getOptionList(){
-        List<Options> all = optionRepository.findByActiveTrue();
-        return all;
+    public List<Options> getOptionList() {
+        List<Options> allOptions = optionRepository.findByActiveTrue();
+
+        // Sort the options by the number of members in descending order
+        List<Options> sortedOptions = allOptions.stream()
+                .sorted(Comparator.comparingInt(Options::getMemberCount).reversed())
+                .collect(Collectors.toList());
+
+        return sortedOptions;
     }
 
     /**

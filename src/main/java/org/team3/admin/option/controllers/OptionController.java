@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.team3.admin.board.controllers.BoardConfigValidator;
 import org.team3.admin.board.controllers.BoardSearch;
 import org.team3.admin.member.controllers.RequestMemberConfig;
@@ -25,8 +22,11 @@ import org.team3.commons.ExceptionProcessor;
 import org.team3.commons.ListData;
 import org.team3.commons.Pagination;
 import org.team3.commons.Utils;
+import org.team3.member.entities.Member;
+import org.team3.member.service.MemberInfoService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -38,6 +38,8 @@ public class OptionController implements ExceptionProcessor {
     private final OptionConfigSaveService optionConfigSaveService;
     private final OptionConfigInfoService optionConfigInfoService;
     private final OptionRankSaveService optionRankSaveService;
+    private final MemberInfoService memberInfoService;
+
 
 
 
@@ -61,9 +63,13 @@ public class OptionController implements ExceptionProcessor {
     @GetMapping
     public String list(@ModelAttribute OptionSearch optionSearch, Model model){
         commonProcess("list", model);
+
         ListData<Options> data = optionConfigInfoService.getList(optionSearch, true);
+
         List<Options> option = data.getItems();
         Pagination pagination = data.getPagination();
+
+        model.addAttribute("totalMember", memberInfoService.allMember());
 
         model.addAttribute("optionList", option);
         model.addAttribute("pagination", pagination); // 페이징
@@ -135,6 +141,7 @@ public class OptionController implements ExceptionProcessor {
         if(mode.equals("add") || mode.equals("edit") || mode.equals("rank")) { // 게시판 등록 또는 수정
             addCommonScript.add("ckeditor5/ckeditor");
             addCommonScript.add("fileManager");
+            addScript.add("option/option");
             // addScript.add("board/form");
         }
 
