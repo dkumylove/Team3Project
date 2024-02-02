@@ -114,9 +114,10 @@ public class OptionController implements ExceptionProcessor {
     @PostMapping("/save")
     public String add(@ModelAttribute RequestOptionConfig config, Model model) {
         commonProcess("add", model);
-        optionConfigSaveService.save(config.getOptions(), config.isActive());
+        optionConfigSaveService.save(config);
         return "redirect:/admin/option";
     }
+
     /**
      * 공통 처리
      *

@@ -3,36 +3,31 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 
-   function sortByFavorite() {
-        var table, rows, switching, i, x, y, shouldSwitch;
-        table = document.getElementById("optionTable");
-        switching = true;
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[2]; // 선호도 열
-                y = rows[i + 1].getElementsByTagName("TD")[2]; // 다음 행의 선호도 열
-                if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
-        updateRank();
-    }
+const sortByFavorite = () => {
+    const table = document.getElementById("optionTable");
+    const rows = table.getElementsByTagName("tr");
+    let rank = 1;
+    let previousPreference = null;
+    let sameRankCount = 1;
 
-   function updateRank() {
-        var table = document.getElementById("optionTable");
-        var rows = table.rows;
-        for (var i = 1; i < rows.length; i++) {
-            rows[i].getElementsByTagName("TD")[0].innerHTML = i; // 순위 열 업데이트
-        }
-    }
+    for (let i = 1; i < rows.length; i++) {
+        const currentRow = rows[i];
+        const preferenceCell = currentRow.getElementsByTagName("td")[2]; // 선호도 열
+        const currentPreference = parseInt(preferenceCell.innerText);
 
+        if (previousPreference !== null && currentPreference === previousPreference) {
+            sameRankCount++;
+        } else {
+            if (sameRankCount > 1) {
+                rank += sameRankCount - 1; // 같은 순위가 여러 개일 때 순위를 증가시킵니다.
+                sameRankCount = 1;
+            }
+            rank = Math.max(rank, i); // 현재 순위와 현재 항목의 인덱스 중 큰 값을 선택하여 순위를 설정합니다.
+        }
+
+        const rankCell = currentRow.getElementsByClassName("rank")[0];
+        rankCell.innerText = rank;
+        previousPreference = currentPreference;
+    }
+};
 
