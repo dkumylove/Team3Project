@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.team3.admin.option.entities.Options;
 import org.team3.commons.entities.Base;
 import org.team3.member.entities.Member;
 
@@ -24,6 +25,10 @@ public class CommentData extends Base implements AuthCheck {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="boardData_seq")
     private BoardData boardData;  // 게시물정보
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Options options; // 옵션정보
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="userNo")

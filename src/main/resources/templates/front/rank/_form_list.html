@@ -14,13 +14,14 @@
             <tbody class="tbody_rank">
             <tr class="tbody_tr_css-1rr8gmf" th:each="option, index : ${optionList}">
 
-                <td th:text="${index.index + 1}"></td>
+                <td class="rank"></td>
                 <td>
                 <a th:href="@{/rank/{optionname}(optionname=${option.optionname})}">
 <!--                <a th:href="@{'/your-link-path/' + ${option.optionId}}">-->
                     <span th:text="${option.optionname}"></span>
                 </a>
-                <td th:text="${T(java.lang.Math).ceil(option.favorite * 100 / member) + '%'}"></td>
+                <td th:if="${member > 0}" th:text="${T(java.lang.Math).ceil(option.getMemberCount() * 100.0 / member) + '%'}"></td>
+                <td th:unless="${member > 0}">N/A</td>
             </tr>
             </tbody>
         </table>

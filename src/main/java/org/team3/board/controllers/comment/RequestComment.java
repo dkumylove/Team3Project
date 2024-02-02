@@ -11,6 +11,8 @@ public class RequestComment {
 
     private Long boardDataSeq; // 게시글 번호
 
+    private String optionname; // 옵션이름
+
     @NotBlank
     private String commenter; // 작성자
 

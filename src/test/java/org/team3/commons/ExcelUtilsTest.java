@@ -46,4 +46,13 @@ public class ExcelUtilsTest {
         List<String> data = utils.getData("data/option.xlsx", new int[] {0, 1}, 0,"_");
         data.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("엑셀파일 -> delimiter 문자열을 결합한 List<String> 변환 테스트")
+    void test5() {
+        List<String> data = utils.getData("data/option.xlsx", new int[] {0, 1}, 0,"_");
+        data.forEach(System.out::println);
+        List<String> data1 = utils.getColumnData("data/option.xlsx", 2, 0);
+        data1.forEach(System.out::println);
+    }
 }
