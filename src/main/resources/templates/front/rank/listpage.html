@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/rankMain}">
+<main layout:fragment="content">
+    <th:block th:object="${option}">
+    <div class="board_view layout_width">
+        <h1 th:replace="~{front/rank/_rank_title::title}"></h1>
+        <div th:if="*{details}" class="content" th:utext="*{details}">
+    </div>
+
+    <th:block th:replace="~{front/rank/_comment::comment}"></th:block>
+    </th:block>
+</main>
+</html>

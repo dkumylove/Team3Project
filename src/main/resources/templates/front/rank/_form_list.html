@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="default">
     <div class="board_list layout_width">
-        <table class="table_css-593jom">
+        <table id="optionTable" class="table_css-593jom">
             <thead class="thead_css-1cdc2af">
             <tr class="tr_css-1lc7l37">
                 <th>순위</th>
@@ -14,13 +14,14 @@
             <tbody class="tbody_rank">
             <tr class="tbody_tr_css-1rr8gmf" th:each="option, index : ${optionList}">
 
-                <td th:text="${index.count}"></td>
+                <td class="rank"></td>
                 <td>
-                <a href="#">
+                <a th:href="@{/rank/{optionname}(optionname=${option.optionname})}">
 <!--                <a th:href="@{'/your-link-path/' + ${option.optionId}}">-->
                     <span th:text="${option.optionname}"></span>
                 </a>
-                <td th:text="${T(java.lang.Math).ceil(option.favorite * 100 / member) + '%'}"></td>
+                <td th:if="${member > 0}" th:text="${T(java.lang.Math).ceil(option.getMemberCount() * 100.0 / member) + '%'}"></td>
+                <td th:unless="${member > 0}">N/A</td>
             </tr>
             </tbody>
         </table>

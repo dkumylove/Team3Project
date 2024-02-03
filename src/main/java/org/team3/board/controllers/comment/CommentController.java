@@ -28,6 +28,8 @@ public class CommentController implements ExceptionProcessor {
     private final CommentSaveService commentSaveService;
     private final CommentDeleteService commentDeleteService;
     private final BoardAuthService boardAuthService;
+    private final HttpServletRequest request;
+
 
     private final Utils utils;
 
@@ -39,7 +41,7 @@ public class CommentController implements ExceptionProcessor {
      */
     @PostMapping("/save")
     public String save(@Valid RequestComment form, Errors errors, Model model) {
-
+        System.out.println("=========================");
         commentFormValidator.validate(form, errors);
 
         if (errors.hasErrors()) {
@@ -48,11 +50,21 @@ public class CommentController implements ExceptionProcessor {
             throw new AlertException(Utils.getMessage(error.getCodes()[0]), HttpStatus.BAD_REQUEST);
         }
 
+//        String requestURI = request.getRequestURI();
+//        System.out.println("requestURI" + requestURI);
         CommentData commentData = commentSaveService.save(form); // 댓글 저장, 수정
+//        if(requestURI.contains("rank")){
+//
+//            String script = String.format("parent.location.replace('/rank/%s?comment_id=%d');", commentData.getOptions().getOptionname(), commentData.getSeq());
+//            model.addAttribute("script", script);
+//        } else{
 
-        String script = String.format("parent.location.replace('/board/view/%d?comment_id=%d');", commentData.getBoardData().getSeq(), commentData.getSeq());
+            String script = String.format("parent.location.replace('/board/view/%d?comment_id=%d');", commentData.getBoardData().getSeq(), commentData.getSeq());
+            model.addAttribute("script", script);
+//        }
 
-        model.addAttribute("script", script);
+
+
 
         return "common/_execute_script";
     }
