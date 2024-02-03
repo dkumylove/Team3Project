@@ -87,7 +87,7 @@
                             <span th:text="${session.member.nickName}" ></span>
 
                         </td>
-                        <td class="last_col">
+                        <td class="last_col2">
                             <a th:href="@{/mypage/changeNickname}" th:text="#{닉네임_수정}" class="profile_edit_btn"></a>
                         </td>
                     </tr>
@@ -98,7 +98,7 @@
                     <tr>
                         <th th:text="#{비밀번호}" class="profile_col "></th>
                         <td>
-                            <p th:text="${#messages.msg('PASSWORD_MSG', session.member.password)}"></p>
+<!--                            <p th:text="${#messages.msg('PASSWORD_MSG', session.member.password)}"></p>-->
                         </td>
                         <td class="last_col">
                             <th:block>
@@ -121,9 +121,12 @@
                     <tr>
                         <th th:text="#{보조지표}" class="profile_col"></th>
                         <td>
-                            <div th:each="option : ${options}" class="profile_option">
-                                <span th:text="${option.optionname}"></span>
+                            <div class="profile_options_container">
+                                <div th:each="option : ${options}" class="profile_option">
+                                    <span th:text="${'* ' + option.optionname}"></span>
+                                </div>
                             </div>
+
                         </td>
                         <td class="last_col">
                             <a th:href="@{/mypage/changeIndicator}" th:text="#{지표_수정}" class="profile_edit_btn"></a>
