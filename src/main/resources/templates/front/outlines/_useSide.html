@@ -16,15 +16,15 @@
         <h2><div class="user_info" th:text="${member.nickName}"></div></h2>
         <h2><div class="user_info" th:text="${member.email}"></div></h2>
 
-        <div class="follow_info">
-            <a th:href="@{/mypage/useFollow?mode=follower}">
-                <span class='num' th:text="${@followService.totalFollowers}"></span> <span class="txt">followers</span>
-            </a>
+<!--        <div class="follow_info">-->
+<!--            <a th:href="@{/mypage/useFollow?mode=follower}">-->
+<!--                <span class='num' th:text="${@followService.totalFollowers}"></span> <span class="txt">followers</span>-->
+<!--            </a>-->
 
-            <a th:href="@{/mypage/useFollow?mode=following}">
-                <span class='num' th:text="${@followService.totalFollowings}"></span> <span class="txt">following</span>
-            </a>
-        </div>
+<!--            <a th:href="@{/mypage/useFollow?mode=following}">-->
+<!--                <span class='num' th:text="${@followService.totalFollowings}"></span> <span class="txt">following</span>-->
+<!--            </a>-->
+<!--        </div>-->
     </div>
 
 </aside>
