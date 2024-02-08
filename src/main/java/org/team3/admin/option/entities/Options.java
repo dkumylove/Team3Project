@@ -1,7 +1,9 @@
 package org.team3.admin.option.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.team3.board.entities.CommentData;
 import org.team3.commons.entities.Base;
 import org.team3.member.Authority;
 import org.team3.member.entities.Member;
@@ -20,7 +22,9 @@ public class Options extends Base {
     @Id
     private String optionname;
     private String category;
-    private boolean active=true;
+    private boolean active;
+    private String details;
+    private boolean optsboard;
 
     @ManyToMany(mappedBy = "option")
     @ToString.Exclude
@@ -28,5 +32,11 @@ public class Options extends Base {
     public int getMemberCount() {
         return this.members.size();
     }
+
+    @Transient
+    @JsonIgnore
+    private List<CommentData> comments;
+
+    private int commentCount; // 댓글 수
 
 }

@@ -5,10 +5,11 @@
          th:text="${err}"></div>
 
     <h2>보조지표 등록</h2>
-    <table class="table_cols">
+    <table class="table_cols mb30">
         <tr>
             <th width="180">사용여부</th>
             <td>
+
                 <input type="radio" name="active" value="true" id="active_true"
                        th:field="*{active}">
                 <label for="active_true">사용</label>
@@ -19,13 +20,36 @@
             </td>
         </tr>
 
+
         <tr>
             <th width="180">보조지표등록</th>
             <td>
                 <textarea name="saveoption" th:field="*{options}" placeholder="이름_카테고리를 입력해주세요. 다른 지표 등록시 줄개행 해주세요. ex)MACD_trend"></textarea>
             </td>
         </tr>
+    </table>
 
+    <h2>보조지표 게시판 등록</h2>
+    <table class="table_cols mb30">
+        <tr>
+            <th width="180">사용여부</th>
+            <td>
+                <input type="radio" name="optsboard" value="true" id="optsboard_true"
+                       th:field="*{optsboard}">
+                <label for="optsboard_true">사용</label>
+
+                <input type="radio" name="optsboard" value="false" id="optsboard_false"
+                       th:field="*{optsboard}">
+                <label for="optsboard_false">미사용</label>
+            </td>
+        </tr>
+
+        <tr>
+            <th width="180">보조지표 게시판</th>
+            <td>
+                <textarea name="saveboard" th:field="*{details}" placeholder="게시판 상세설명을 입력하세요. 다른 지표 등록시 줄개행 해주세요."></textarea>
+            </td>
+        </tr>
 
     </table>
 

@@ -156,10 +156,13 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 
 /* 마이페이지 내 프로필 */
 .profile_col { min-width:150px; height: 50px; text-align: left;  }
-.profile_edit_btn { width:150px; line-height: 15px; background: var(--main-color); border-radius: 5px; color:var(--font-color); padding: 0 10px; }
+.profile_edit_btn { width:150px; line-height: 15px; background: var(--main-color); border-radius: 5px; color:var(--font-color); padding: 5px 10px; }
 .profile_padding_left_30 { padding-left: 30px; }
 .width_100 { min-width:100px; }
-.last_col { min-width:70px; width:80%; text-align: right; }
+.last_col { min-width:70px; width:50%; text-align: right; }
+.last_col2 { min-width:70px; width:80%; text-align: right; }
+.profile_option {display: block; margin-bottom: 10px;}
+.profile_options_container { column-count: 3; column-gap: 20px;}
 
 
 /* 페이징 공통 S */

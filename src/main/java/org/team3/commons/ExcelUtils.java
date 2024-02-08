@@ -78,6 +78,7 @@ public class ExcelUtils {
         return getData(filePath, cellNums, sheetNo).stream().map(s -> Arrays.stream(s).collect(Collectors.joining(delimiter))).toList();
     }
 
+
     public String getCellData(XSSFCell cell) {
         if (cell == null) return "";
 
@@ -87,6 +88,22 @@ public class ExcelUtils {
         }
 
         return Objects.requireNonNullElse(cell.getStringCellValue(), "");
+    }
+
+    /**
+     * 엑셀의 한 열을 리스트로 반환
+     *
+     * @param filePath : 엑셀 파일 경로
+     * @param columnNum : 추출할 열 번호 (0부터 시작)
+     * @param sheetNo : 엑셀 시트 번호 (0부터 시작)
+     * @return 엑셀의 한 열을 담고 있는 리스트
+     */
+    public List<String> getColumnData(String filePath, int columnNum, int sheetNo) {
+        List<String[]> data = getData(filePath, new int[]{columnNum}, sheetNo);
+        if (data == null || data.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return data.stream().map(row -> row[0]).collect(Collectors.toList());
     }
 
     /**
