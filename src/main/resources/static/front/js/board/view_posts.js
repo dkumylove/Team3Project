@@ -37,5 +37,4 @@ window.addEventListener("DOMContentLoaded", function(){
             }
         })
         .catch(err => console.error(err));
-
 });

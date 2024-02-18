@@ -1,5 +1,6 @@
 package org.team3.member.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -43,6 +44,7 @@ public class Member extends Base {
 
     private boolean act = true; // 활동 여부 : 이다은(1월 24일) true로 디폴트값 설정
 
+    @JsonIgnore
     @ToString.Exclude  // 순환참조 방지
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Authorities> authorities = new ArrayList<>();
@@ -54,6 +56,7 @@ public class Member extends Base {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @JsonIgnore
     @ManyToMany
     @ToString.Exclude
     @JoinTable(

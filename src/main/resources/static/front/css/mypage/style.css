@@ -64,7 +64,6 @@
 .posts_page .items > .item:nth-of-type(2n) { background: #f8f8f8; }
 
 
-
 .posts_page .items .post_info { width: 360px; text-align: right; padding: 10px; }
 .posts_page .items .post_info span + span { margin-left: 15px; }
 .posts_page .items .subject { flex-grow: 1; padding: 10px; }
@@ -87,8 +86,6 @@
 .depth_6 { text-indent: 100px; }
 .depth_7 { text-indent: 120px; }
 .depth_8 { text-indent: 140px; }
-
-.view_posts { border-top: 1px solid #d5d5d5; }
 
 /* 내 코멘트 */
 .comment { padding: 10px; }
@@ -134,6 +131,18 @@
 .save_post_page .save_btn_div > a { padding-top: 10px; width: 120px; height: 40px; text-align: center; align-items: center; }
 .save_post_page .undo_btn { width: 70px; height: 40px; background: var(--sub-color2); border:1px solid var(--sub-color2) ; border-radius:5px; }
 .save_post_page .undo_btn:hover { background: var(--main-color); color: var(--font-color); }
+
+/* 최근본글 목록 */
+/*.view_posts { border-top: 1px solid #d5d5d5; }*/
+/*.view_posts .items > .item { border-bottom: 1px solid #d5d5d5; align-items: center; }*/
+
+/*.view_posts .items .board_no { padding: 0 20px}*/
+/*.view_posts .items .subject .post_info_1 { display:flex; justify-content: space-between; padding: 10px; }*/
+/*.view_posts .items .subject_1 { margin-left: 10px; flex-grow: 1;}*/
+/*.view_posts .items .poster { text-align: right; margin-right: 15px; flex-grow: 1;}*/
+/*.view_posts .items .subject_2 {display:flex;}*/
+/*.view_posts .items .toggle-icons {padding: 0 20px}*/
+
 
 /*.save_btn_div { display:flex; justify-content: space-between; }
 .undo_btn { background: var(--sub-color2); border:1px solid var(--sub-color2) ; border-radius:5px; }
