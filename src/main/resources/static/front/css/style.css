@@ -163,6 +163,30 @@ select { border: 1px solid #d5d5d5; height: 35px;}
 .last_col2 { min-width:70px; width:80%; text-align: right; }
 .profile_option {display: block; margin-bottom: 10px;}
 .profile_options_container { column-count: 3; column-gap: 20px;}
+.login_status {
+    width: 100%;
+    .last_col {
+        width: 70px;
+    }
+    .profile_col {
+        width: 305px;
+        padding-right: 85px;
+        text-align: right;
+    }
+    .sec_indicator {
+        th {
+            vertical-align: top;
+            line-height: 50px;
+        }
+       td {
+           padding: 15px 0;
+
+       }
+        .last_col {
+            vertical-align: top;
+        }
+    }
+}
 
 
 /* 페이징 공통 S */
