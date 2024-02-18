@@ -11,6 +11,7 @@
 ## ⚙️기술스텍
 
 ## 🔎UesrFlow
+![SOC플로우차트.png](/img/SOC플로우차트.png)
 
 ## 📑기능명세
 
