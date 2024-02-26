@@ -32,6 +32,9 @@
 ## 📋ERD
 ![엔티티다이어그램1.png](/img/엔티티다이어그램1.png)
 
+## 🎥시연영상
+<iframe width="1044" height="587" src="https://youtu.be/2ZI5ST2YZhU?si=LER77efcT0tc6NRt" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## 📑기능명세
 
 <details>
