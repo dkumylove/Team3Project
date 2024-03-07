@@ -38,6 +38,11 @@
 
 [![Video Label](img/메인스크린.png)](https://youtu.be/2ZI5ST2YZhU?si=LER77efcT0tc6NRt)
 
+## 📝 PPT
+
+[SOC_TEAM3_PPT.pdf](https://github.com/dkumylove/Team3Project/blob/master/file/502_team3_soc_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8ppt.pdf)
+
+
 ## 📑기능명세
 
 <details>
